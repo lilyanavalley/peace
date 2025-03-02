@@ -14,13 +14,16 @@ env:
   CAGRO_TERM_COLOR: always
 
 jobs:
-  ubuntu:
+
+  testing:
+    uses: ./.github/workflows/test.yaml
+
+  deploying:
     runs-on: ubuntu-latest
     steps:
 
       - uses: actions/checkout@v4
       - uses: Swatinem/rust-cache@v2 # Cache build deps for faster building later.
-      - uses: ./.github/workflows/test.yaml
 
       - name: Log in to the Container registry
         uses: docker/login-action@v3.3.0
