@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  packages: write
 
 env:
   CAGRO_TERM_COLOR: always
