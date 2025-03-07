@@ -29,6 +29,7 @@ web-sys                 = "0.3.70"
 
 [profile.release]
 opt-level = 2 # fast and small wasm
+overflow-checks = true # see: https://github.com/lilyanavalley/peace/security/dependabot/1
 
 # Optimize all dependencies even in debug builds:
 [profile.dev.package."*"]
