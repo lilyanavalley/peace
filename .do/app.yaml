@@ -26,7 +26,7 @@ services:
       tag: latest
       deploy_on_push:
         enabled: true
-    instance_count: 2
+    instance_count: 1
     instance_size_slug: basic-xxs
     http_port: 8080
     run_command: trunk serve --release
