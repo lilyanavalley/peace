@@ -17,6 +17,7 @@ use log::{ debug, trace, info, warn, error };
 mod sharedstate;
 mod router;
 mod sidebar;
+mod mongodb_models;
 
 
 #[cfg(not(target_arch = "wasm32"))]
