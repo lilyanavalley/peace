@@ -11,11 +11,11 @@ region: tor
 
 ingress:
   rules:
-  - component:
-    name: egui-trunk
-    match:
-      path:
-        prefix: /
+    - match:
+        path:
+          prefix: /
+      component:
+        name: egui-trunk
 
 services:
   - name: egui-trunk
