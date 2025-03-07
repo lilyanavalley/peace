@@ -12,7 +12,7 @@ region: tor
 ingress:
   rules:
   - component:
-      name: root
+    name: egui-trunk
     match:
       path:
         prefix: /
