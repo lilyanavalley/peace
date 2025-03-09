@@ -19,8 +19,11 @@ eframe          = "0.31.0"  # Native & Web EGUI windowing system.
 image           = { version = "0.25.5", features = ["jpeg", "png"] }
 #^^^^           Image (en/de)coding library.
 log             = "0.4.25"  # Abstract logging facilities.
-mongodb         = "3.2.2" # MongoDB official driver.
+mongodb         = "3.2.2"   # MongoDB official driver.
 serde           = "1.0.218"
+
+[dev-dependencies]
+futures         = "0.3" # Used in async tests.
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 pretty_env_logger = "0.5.0"
