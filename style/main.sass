@@ -1,0 +1,260 @@
+
+// @use "sass:list"
+@use "sass:color"
+
+
+// 
+//  FONTS
+//
+// Sourced from fonts.google.com
+//
+
+/* Barlow Condensed */
+.barlow-condensed-thin 
+  font-family: "Barlow Condensed", sans-serif
+  font-weight: 100
+  font-style: normal
+
+  
+.barlow-condensed-light 
+  font-family: "Barlow Condensed", sans-serif
+  font-weight: 300
+  font-style: normal
+
+
+.barlow-condensed-semibold 
+  font-family: "Barlow Condensed", sans-serif
+  font-weight: 600
+  font-style: normal
+
+
+.barlow-condensed-bold 
+  font-family: "Barlow Condensed", sans-serif
+  font-weight: 700
+  font-style: normal
+
+
+/* Dosis */
+.dosis-400 
+  font-family: "Dosis", sans-serif
+  font-optical-sizing: auto
+  font-weight: 400
+  font-style: normal
+
+
+/* Ubuntu, Ubuntu Sans, Ubuntu Condensed, Ubuntu Mono */
+.ubuntu-light 
+  font-family: "Ubuntu", sans-serif
+  font-weight: 300
+  font-style: normal
+
+
+.ubuntu-regular 
+  font-family: "Ubuntu", sans-serif
+  font-weight: 400
+  font-style: normal
+
+
+.ubuntu-medium 
+  font-family: "Ubuntu", sans-serif
+  font-weight: 500
+  font-style: normal
+
+
+.ubuntu-bold 
+  font-family: "Ubuntu", sans-serif
+  font-weight: 700
+  font-style: normal
+
+
+.ubuntu-light-italic 
+  font-family: "Ubuntu", sans-serif
+  font-weight: 300
+  font-style: italic
+
+
+.ubuntu-regular-italic 
+  font-family: "Ubuntu", sans-serif
+  font-weight: 400
+  font-style: italic
+
+
+.ubuntu-medium-italic 
+  font-family: "Ubuntu", sans-serif
+  font-weight: 500
+  font-style: italic
+
+
+.ubuntu-bold-italic 
+  font-family: "Ubuntu", sans-serif
+  font-weight: 700
+  font-style: italic
+
+
+.ubuntu-condensed-regular 
+  font-family: "Ubuntu Condensed", sans-serif
+  font-weight: 400
+  font-style: normal
+
+
+.ubuntu-mono-regular 
+  font-family: "Ubuntu Mono", monospace
+  font-weight: 400
+  font-style: normal
+
+
+.ubuntu-mono-bold 
+  font-family: "Ubuntu Mono", monospace
+  font-weight: 700
+  font-style: normal
+
+
+.ubuntu-mono-regular-italic 
+  font-family: "Ubuntu Mono", monospace
+  font-weight: 400
+  font-style: italic
+
+
+.ubuntu-mono-bold-italic 
+  font-family: "Ubuntu Mono", monospace
+  font-weight: 700
+  font-style: italic
+
+
+.ubuntu-sans-400 
+  font-family: "Ubuntu Sans", sans-serif
+  font-optical-sizing: auto
+  font-weight: 400
+  font-style: normal
+  // font-variation-settings:
+    // "wdth" 100
+
+
+/* Flow Circular */
+.flow-circular-regular 
+  font-family: "Flow Circular", system-ui
+  font-weight: 400
+  font-style: normal
+
+
+/* Redacted Script */
+.redacted-script-regular 
+  font-family: "Redacted Script", cursive
+  font-weight: 400
+  font-style: normal
+
+
+/* Victor Mono */
+.victor-mono-400 
+  font-family: "Victor Mono", monospace
+  font-optical-sizing: auto
+  font-weight: 400
+  font-style: normal
+
+
+/* Fira Code */
+.fira-code-400 
+  font-family: "Fira Code", monospace
+  font-optical-sizing: auto
+  font-weight: 400
+  font-style: normal
+
+
+//
+//  DEFAULTS
+// Sets the page defaults for global theme.
+//
+
+:root 
+  
+  --color-brightwhite: #FFF
+  
+  --color-offwhite: #EEE
+  
+  --color-deepblack: #222
+  --color-deeperblack: #111
+  --color-vantablack: #000
+  
+  /* colors come from https://coolors.co/ffadad-ffd6a5-fdffb6-caffbf-9bf6ff-a0c4ff-bdb2ff-ffc6ff-fffffc */
+  --color-selectables-pink: #FFC6FF
+  --color-selectables-purple: #BDB2FF
+  --color-selectables-red: #FFADAD
+  --color-selectables-orange: #FFD6A5
+  --color-selectables-yellow: #FDFFB6
+  --color-selectables-green: #CAFFBF
+  --color-selectables-teal: #9BF6FF
+  --color-selectables-blue: #A0C4FF
+
+  --color-selectables-idle: var(--color-offwhite)
+  --color-selectables-active: #FFF
+  --color-selectables-disabled: #212020
+  
+  --color-logo-grad1: #ff92c5
+  --color-logo-grad2: #ffb0d5
+  --color-logo-grad3: #da74a3
+
+
+a
+
+  color: var(--color-selectables-idle)
+  box-shadow: none
+  background-color: none
+  text-decoration: none
+  font-weight: bolder
+  transition: color background-color box-shadow
+  transition-duration: .25s
+  transition-timing-function: ease-in-out
+  padding-left: .3rem
+  padding-right: .3rem
+
+  &:disabled
+    color: var(--color-vantablack)
+    cursor: pointer
+
+  &:hover, &:active, &:focus  
+    color: var(--color-vantablack)
+    background-color: var(--color-selectables-active)
+    box-shadow: var(--color-deepblack) 0 0 .5rem
+
+  &.without-link-symbol::before,
+  &.without-link-symbol::after
+    content: none
+
+  &::before
+    content: "[ "
+  
+  &::after 
+    content: " ]"
+
+  // &:any-link::after:hover,
+  // &:any-link::after:active,
+  // &:any-link::after:focus
+  //   color: var(--color-vantablack)
+  //   background-color: var(--color-brightwhite)
+
+html 
+  color: var(--color-brightwhite)
+  background-color: var(--color-vantablack)
+  height: 100%
+
+
+body 
+  font-family: Ubuntu Mono, sans-serif
+  margin: 0
+  height: 100%
+
+.suspense
+  color: var(--color-vantablack)
+  font-family: Flow Circular
+  font-size: 2rem
+  animation: 1s ease-in-out suspense infinite both
+  animation-name: suspense
+  user-select: none
+
+@keyframes suspense
+  0% 
+    color: var(--color-vantablack)
+  50% 
+    color: var(--color-deepblack)
+  100% 
+    color: var(--color-vantablack)

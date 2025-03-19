@@ -1,19 +1,12 @@
-# EditorConfig is awesome: https://editorconfig.org
-
 root = true
 
 [*]
-indent_style = space
-end_of_line = lf
-insert_final_newline = true
 charset = utf-8
+end_of_line = lf
+indent_style = space
 
-[*.{rs,toml,ron}]
+[*.{toml}]
 indent_size = 4
 
-[*.{js,ts,css,html,json,y?ml,md}]
+[*.{rs, js, ts, css, sass, md, json}]
 indent_size = 2
-
-[{DOCKERFILE}]
-indent_size = 2
-
