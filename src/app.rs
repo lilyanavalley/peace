@@ -29,7 +29,7 @@ pub fn App() -> impl IntoView {
     
     // content for this welcome page
     <Router>
-      <main class="flex flex-col h-full">
+      <main class="flex flex-col-reverse h-full">
         <Routes fallback=move || "Not found.">
           <Route path=StaticSegment("") view=HomePage/>
           <Route path=WildcardSegment("any") view=NotFound/>
