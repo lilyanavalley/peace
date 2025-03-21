@@ -1,3 +1,9 @@
+
+// mod components;
+// mod placeholders;
+pub mod server;
+
+
 #[cfg(feature = "ssr")]
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -7,10 +13,13 @@ async fn main() -> std::io::Result<()> {
   use leptos::config::get_configuration;
   use leptos_meta::MetaTags;
   use leptos_actix::{generate_route_list, LeptosRoutes};
-  use peace::app::*;
+  use mongodb;
+  use peace::{ app::* };
 
   let conf = get_configuration(None).unwrap();
   let addr = conf.leptos_options.site_addr;
+
+  let db_mongodb = mongodb::Client::with_uri_str("mongodb://localhost:27017").await.unwrap();
 
   HttpServer::new(move || {
     // Generate the list of routes in your Leptos App
@@ -48,6 +57,7 @@ async fn main() -> std::io::Result<()> {
         }
       })
       .app_data(web::Data::new(leptos_options.to_owned()))
+      .app_data(web::Data::new(db_mongodb.clone()))
     //.wrap(middleware::Compress::default())
   })
   .bind(&addr)?

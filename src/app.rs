@@ -1,10 +1,11 @@
+
 use leptos::prelude::*;
 use leptos_meta::*;
 use leptos_router::{
   components::{Route, Router, Routes},
   StaticSegment, WildcardSegment,
 };
-use serde:: { Serialize, Deserialize };
+use crate::{ components, placeholders };
 
 
 #[component]
@@ -26,7 +27,7 @@ pub fn App() -> impl IntoView {
 
     // sets the document title
     <Title text="Lily's Website ⚛️"/>
-    
+
     // content for this welcome page
     <Router>
       <main class="flex flex-col-reverse h-full">
@@ -43,27 +44,26 @@ pub fn App() -> impl IntoView {
 #[component]
 fn HomePage() -> impl IntoView {
   view! {
-    <RouterBar/>
+
+    <components::navigator::Navigator/>
     
     <div class="flex flex-col grow h-full overflow-auto">
   
       <div id="profile" class="flex flex-col self-center text-center border-0 rounded-full" style="margin-top: 2rem">
-        <img src="assets/avatar.png" class="self-center w-1/4 rounded-full" />
+        <img src="assets/avatar.png" class="self-center w-1/4 rounded-full" alt="Profile picture of Lily"/>
         <h2 class="self-center justify-self-center">Lily Ana Valley</h2>
       </div>
 
       <div id="profile-badges" class="w-3/4 self-center">
-        <p class="text-center">... 1</p>
+        <p class="text-center">{ placeholders::DESCRIPTION_SHORT }</p>
       </div>
 
-      <article class="w-3/4 self-center" style="margin: 2rem">
-      "
-        ... 2
-      "
+      <article class="w-3/4 self-center text-wrap hyphens-auto whitespace-pre-wrap" style="margin: 2rem">
+        { placeholders::DESCRIPTION_LONG }
       </article>
 
-      <FavoriteQuotes/>
-      <Footer/>
+      <components::favoritequotes::FavoriteQuotes/>
+      <components::footer::Footer/>
 
     </div>
   }
@@ -89,173 +89,4 @@ fn NotFound() -> impl IntoView {
   view! {
     <h1>"Not Found"</h1>
   }
-}
-
-// TODO: Consider moving the below items into their own modules.
-
-#[server]
-pub async fn quote_today() -> Result<ReturnedQuote, ServerFnError> {
-  
-  Ok(ReturnedQuote {
-    quotation:  "This is a quote!".to_string(),
-    citation:   "This is a citation".to_string()
-  })
-
-}
-
-#[derive(Clone, Debug, PartialEq, Eq, Serialize, Deserialize)]
-pub struct ReturnedQuote {
-  pub quotation:  String,
-  pub citation:   String,
-}
-
-/// Router Bar component.
-#[component]
-fn RouterBar() -> impl IntoView {
-  view! {
-    <div class="flex">
-      <For
-        each=move || ROUTERBAR_SAMPLE
-        key=|route| route.route
-        children=move |route: RouterBarItem| {
-          view! {
-            <a
-              class=move || format!("flex flex-col flex-auto font-normal text-center justify-center without-link-symbol {}", route.colorsa)
-              href={route.route}
-            >
-              <i style="margin: .5rem; margin-bottom: .1rem" class=move || format!("text-[30px] {}", route.icon)/>
-              <p style="margin: 0; margin-bottom: .5rem">{route.label}</p>
-            </a>
-          }
-        }
-      />
-    </div>
-  }
-}
-
-const ROUTERBAR_SAMPLE: [RouterBarItem; 4] = [
-  RouterBarItem {
-    icon: "ph-fill ph-flower",
-    label: "About",
-    route: "/",
-    colortw: "text-purple-300",
-    colorsa: "--color-selectables-purple"
-  },
-  RouterBarItem {
-    icon: "ph-fill ph-briefcase",
-    label: "Work",
-    route: "/work",
-    colortw: "text-purple-300",
-    colorsa: "--color-selectables-violet"
-  },
-  RouterBarItem {
-    icon: "ph-fill ph-paper-plane-tilt",
-    label: "Contact",
-    route: "/contact",
-    colortw: "text-purple-300",
-    colorsa: "--color-selectables-purple"
-  },
-  RouterBarItem {
-    icon: "ph-fill ph-chats-circle",
-    label: "Ask",
-    route: "/ama",
-    colortw: "text-purple-300",
-    colorsa: "--color-selectables-blue"
-  },
-];
-
-struct RouterBarItem {
-  icon: &'static str,
-  label: &'static str,
-  route: &'static str,
-  colortw: &'static str,
-  colorsa: &'static str
-}
-
-#[component]
-fn FavoriteQuotes() -> impl IntoView {
-
-  view! {
-    // ! there's a hydration problem around this line.
-    <div class="flex flex-col text-[var(--color-offwhite)] border-t-2 border-[#988]" style="margin-top: 2rem">
-      <p class="flex flex-col text-[#988] text-center">
-        <i class="ph ph-quotes"/>
-        quote of the day
-      </p>
-      
-      // ! This suspense might be expecting a div of the same kind between fallback and normal.
-      // TODO: Consider modifying the div classes and consult the open Leptos Book page on Suspense.
-      <Suspense
-        fallback=move || view! {
-          <div class="suspense">
-            pending pending pending
-          </div>
-          <p class="suspense">
-            -- me, uwu uwu owo uwu
-          </p>
-        }>
-
-        {move || leptos::prelude::Suspend::new(async move {
-          let quote_today = quote_today().await.unwrap();
-          view! {
-
-            <div class="self-center before:content-['❝'] after:content-['❞'] text-[var(--color-selectables-red)] victor-mono-400 w-3/4">
-              {quote_today.quotation}
-            </div>
-            <p class="self-center before:content-['–'] italic text-[.8rem] text-[var(--color-selectables-red)] victor-mono-400 w-3/4">
-              {quote_today.citation}
-            </p>
-
-          }
-        })}
-
-      </Suspense>
-
-    </div>
-  }
-
-}
-
-#[component]
-fn Footer() -> impl IntoView {
-  view! {
-    <div class="text-center text-[#666] border-t-2 border-t-neutral-800">
-      <p class="text-xs m-1">the website of</p>
-      <p class="text-xs m-3 mb-1">Lily Ana Valley</p>
-      <p class="text-xs m-1 ">
-        <a href="https://github.com/lilyanavalley/peace" class="text-[var(--color-selectables-pink)]">
-          <i class="ph-fill ph-github-logo"/>
-          Source
-        </a>
-        <a class="text-[#FFF]" disabled>
-          <i class="ph-fill ph-asterisk"/>
-          Issues
-        </a>
-        <a href="https://www.gnu.org/licenses/agpl-3.0.en.html" class="text-[var(--color-selectables-blue)]">
-          <i class="ph-fill ph-scroll"/>
-          AGPL-3
-        </a>
-      </p>
-    </div>
-  }
-}
-
-#[cfg(feature = "ssr")]
-pub mod api {
-
-  use mongodb;
-  use leptos::*;
-  use leptos::prelude::*;
-  use actix_web::web;
-
-  pub const MONGODB_D_PROFILE:  &'static str = "profile";
-  pub const MONGODB_C_PROFILE_QUOTES: &'static str = "quotes";
-
-  /// Retrieve a quote for *today*.
-  async fn mongodb_database(mongodb: actix_web::web::Data<mongodb::Client>, database: &str) -> Result<mongodb::Database, ServerFnError> {
-
-    Ok(mongodb.database(database))
-
-  }
-
 }
