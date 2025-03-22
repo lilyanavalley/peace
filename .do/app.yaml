@@ -15,10 +15,10 @@ ingress:
         path:
           prefix: /
       component:
-        name: egui-trunk
+        name: leptos-ssr
 
 services:
-  - name: egui-trunk
+  - name: leptos-ssr
     image:
       registry_type: GHCR
       registry: ghcr.io
@@ -28,8 +28,7 @@ services:
         enabled: true
     instance_count: 1
     instance_size_slug: basic-xxs
-    http_port: 8080
-    run_command: trunk serve --release
+    # http_port: 8080
 
 databases:
   - name: mongodb
