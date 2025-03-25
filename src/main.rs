@@ -1,6 +1,8 @@
 
 // mod components;
 // mod placeholders;
+
+#[cfg(feature = "ssr")]
 pub mod server;
 
 
