@@ -7,19 +7,20 @@ use phosphor_leptos::*;
 #[component]
 pub fn Navigator() -> impl IntoView {
   view! {
-    <div id="navigator" class="flex">
+    <div id="navigator" class="flex bg-[var(--color-deeperblack)]">
       <For
         each=move || ROUTERBAR_SAMPLE
         key=|route| route.route
         children=move |route: RouterBarItem| {
           view! {
             <a
-              class=move || format!("flex flex-col flex-auto font-normal text-center justify-center without-link-symbol {}", route.colorsa)
+              class="flex flex-col flex-auto font-normal items-center justify-center without-link-symbol"
               href={route.route}
             >
-              // <i style="margin: .5rem; margin-bottom: .1rem" class=move || format!("text-[30px] {}", route.icon)/>
-              <Icon icon=route.icon weight=IconWeight::Duotone/>
-              <p style="margin: 0; margin-bottom: .5rem">{route.label}</p>
+              <p style="margin: .5rem; margin-bottom: .1rem;">
+                <Icon icon=route.icon size="2rem" weight=IconWeight::Duotone/>
+              </p>
+              <p style="margin: .5rem; margin-top: 0;">{route.label}</p>
             </a>
           }
         }
@@ -30,44 +31,34 @@ pub fn Navigator() -> impl IntoView {
 
 const ROUTERBAR_SAMPLE: [RouterBarItem; 4] = [
   RouterBarItem {
-    icon: FLOWER_TULIP,
-    // icon: "ph ph-flower",
+    icon: FLOWER,
     label: "About",
     route: "/",
-    colortw: "text-purple-300",
-    colorsa: "--color-selectables-purple"
+    colorsa: "--color-selectables-pink"
   },
   RouterBarItem {
     icon: BRIEFCASE,
-    // icon: "ph ph-flower",
     label: "Work",
     route: "/work",
-    colortw: "text-purple-300",
-    colorsa: "--color-selectables-violet"
+    colorsa: "--color-selectables-red"
   },
   RouterBarItem {
     icon: PAPER_PLANE_TILT,
-    // icon: "ph ph-flower",
     label: "Contact",
     route: "/contact",
-    colortw: "text-purple-300",
-    colorsa: "--color-selectables-purple"
+    colorsa: "--color-selectables-yellow"
   },
   RouterBarItem {
     icon: CHATS_CIRCLE,
-    // icon: "ph ph-flower",
     label: "Ask",
     route: "/ama",
-    colortw: "text-purple-300",
     colorsa: "--color-selectables-blue"
   },
 ];
 
 struct RouterBarItem {
   icon: phosphor_leptos::IconData,
-  // icon: &'static str,
   label: &'static str,
   route: &'static str,
-  colortw: &'static str,
   colorsa: &'static str
 }
