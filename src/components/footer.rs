@@ -11,15 +11,15 @@ pub fn Footer() -> impl IntoView {
       <p class="text-xs m-3 mb-1">Lily Ana Valley</p>
       <p class="text-xs m-1 ">
         <a href="https://github.com/lilyanavalley/peace" class="text-[var(--color-selectables-pink)]">
-          <div style="translateY(.2rem)"><Icon icon=GITHUB_LOGO/></div>
+          <Icon icon=GITHUB_LOGO/>
           Source
         </a>
         <a href="https://github.com/lilyanavalley/peace/issues" class="text-[#FFF]">
-          <div style="translateY(.2rem)"><Icon icon=ASTERISK/></div>
+          <Icon icon=ASTERISK/>
           Issues
         </a>
         <a href="https://www.gnu.org/licenses/agpl-3.0.en.html" class="text-[var(--color-selectables-blue)]">
-          <div style="translateY(.2rem)"><Icon icon=SCROLL/></div>
+          <Icon icon=SCROLL/>
           License
         </a>
       </p>
