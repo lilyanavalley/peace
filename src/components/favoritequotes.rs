@@ -1,7 +1,7 @@
 
 use leptos::prelude::*;
 use serde:: { Serialize, Deserialize };
-// use actix_web::web;
+use phosphor_leptos::*;
 
 
 #[server]
@@ -25,11 +25,12 @@ pub fn FavoriteQuotes() -> impl IntoView {
 
   view! {
     // ! there's a hydration problem around this line.
-    <div class="flex flex-col text-[var(--color-offwhite)]" style="margin-top: 2rem">
-      <p class="flex flex-col text-[#988] text-center">
-        <i class="ph ph-quotes"/>
-        quote of the day
-      </p>
+    <div class="flex flex-col text-[var(--color-offwhite)]" style="margin: 2rem">
+
+      <div class="flex flex-col text-[#988] items-center">
+        <Icon icon=QUOTES size="1.5rem"/>
+        <p>quote of the day</p>
+      </div>
       
       // ! This suspense might be expecting a div of the same kind between fallback and normal.
       // TODO: Consider modifying the div classes and consult the open Leptos Book page on Suspense.
