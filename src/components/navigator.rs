@@ -7,7 +7,7 @@ use phosphor_leptos::*;
 #[component]
 pub fn Navigator() -> impl IntoView {
   view! {
-    <div class="flex">
+    <div id="navigator" class="flex">
       <For
         each=move || ROUTERBAR_SAMPLE
         key=|route| route.route
