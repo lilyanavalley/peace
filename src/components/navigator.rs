@@ -1,5 +1,6 @@
 
 use leptos::prelude::*;
+use phosphor_leptos::*;
 
 
 /// Router Bar component.
@@ -16,7 +17,8 @@ pub fn Navigator() -> impl IntoView {
               class=move || format!("flex flex-col flex-auto font-normal text-center justify-center without-link-symbol {}", route.colorsa)
               href={route.route}
             >
-              <i style="margin: .5rem; margin-bottom: .1rem" class=move || format!("text-[30px] {}", route.icon)/>
+              // <i style="margin: .5rem; margin-bottom: .1rem" class=move || format!("text-[30px] {}", route.icon)/>
+              <Icon icon=route.icon weight=IconWeight::Duotone/>
               <p style="margin: 0; margin-bottom: .5rem">{route.label}</p>
             </a>
           }
@@ -28,28 +30,32 @@ pub fn Navigator() -> impl IntoView {
 
 const ROUTERBAR_SAMPLE: [RouterBarItem; 4] = [
   RouterBarItem {
-    icon: "ph-fill ph-flower",
+    icon: FLOWER_TULIP,
+    // icon: "ph ph-flower",
     label: "About",
     route: "/",
     colortw: "text-purple-300",
     colorsa: "--color-selectables-purple"
   },
   RouterBarItem {
-    icon: "ph-fill ph-briefcase",
+    icon: BRIEFCASE,
+    // icon: "ph ph-flower",
     label: "Work",
     route: "/work",
     colortw: "text-purple-300",
     colorsa: "--color-selectables-violet"
   },
   RouterBarItem {
-    icon: "ph-fill ph-paper-plane-tilt",
+    icon: PAPER_PLANE_TILT,
+    // icon: "ph ph-flower",
     label: "Contact",
     route: "/contact",
     colortw: "text-purple-300",
     colorsa: "--color-selectables-purple"
   },
   RouterBarItem {
-    icon: "ph-fill ph-chats-circle",
+    icon: CHATS_CIRCLE,
+    // icon: "ph ph-flower",
     label: "Ask",
     route: "/ama",
     colortw: "text-purple-300",
@@ -58,7 +64,8 @@ const ROUTERBAR_SAMPLE: [RouterBarItem; 4] = [
 ];
 
 struct RouterBarItem {
-  icon: &'static str,
+  icon: phosphor_leptos::IconData,
+  // icon: &'static str,
   label: &'static str,
   route: &'static str,
   colortw: &'static str,
