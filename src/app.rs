@@ -5,16 +5,17 @@ use leptos_router::{
   components::{Route, Router, Routes},
   StaticSegment, WildcardSegment,
 };
+use phosphor_leptos::*;
 use crate::{ components, placeholders };
 
 
 #[component]
 pub fn App() -> impl IntoView {
-  // Provides context that manages stylesheets, titles, meta tags, etc.
+  // ? Provides context that manages stylesheets, titles, meta tags, etc.
   provide_meta_context();
 
   view! {
-    // injects a stylesheet into the document <head>
+    // ? injects a stylesheet into the document <head>
     // id=leptos means cargo-leptos will hot-reload this stylesheet
     <Stylesheet id="leptos" href=format!("/pkg/{}.css", env!("CARGO_PKG_NAME"))/>
     <Link rel="preconnect" href="https://unpkg.com"/>
@@ -22,8 +23,6 @@ pub fn App() -> impl IntoView {
     <Link rel="preconnect" href="https://fonts.gstatic.com"/>
     <Link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@100;300;600;700&family=Dosis:wght@200..800&family=Fira+Code:wght@300..700&family=Flow+Circular&family=Redacted+Script&family=Ubuntu+Condensed&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet"/>
     <Link rel="shortcut icon" type_="image/ico" href="/favicon.ico"/>
-
-    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
 
     // sets the document title
     <Title text="Lily's Website ⚛️"/>
@@ -33,6 +32,7 @@ pub fn App() -> impl IntoView {
       <main class="flex flex-col-reverse h-full">
         <Routes fallback=move || "Not found.">
           <Route path=StaticSegment("") view=HomePage/>
+          <Route path=StaticSegment("work") view=Work/>
           <Route path=WildcardSegment("any") view=NotFound/>
         </Routes>
       </main>
@@ -61,6 +61,32 @@ fn HomePage() -> impl IntoView {
       <article class="w-3/4 self-center text-wrap hyphens-auto whitespace-pre-wrap" style="margin: 2rem">
         { placeholders::DESCRIPTION_LONG }
       </article>
+
+      <components::favoritequotes::FavoriteQuotes/>
+      <components::footer::Footer/>
+
+    </div>
+  }
+}
+
+#[component]
+fn Work() -> impl IntoView {
+  view! {
+
+    <components::navigator::Navigator/>
+    
+    <div id="portfolio" class="flex flex-col grow h-full overflow-auto">
+
+      <h1 class="text-center">Work</h1>
+
+      <div class="flex flex-col grow h-full overflow-auto self-center w-3/4">
+        
+        <a class="flex items-center border-x-2 rounded-lg border-[var(--color-selectables-green)] hover:border-[var(--color-brightwhite)] without-link-symbol" href="https://github.com/lilyanavalley/">
+          <img src="favicon.ico" alt="sample project name icon"/>
+          <div class="dosis-400" style="margin: .5rem">Sample Project Name</div>
+        </a>
+
+      </div>
 
       <components::favoritequotes::FavoriteQuotes/>
       <components::footer::Footer/>
