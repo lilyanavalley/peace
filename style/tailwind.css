@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@theme {
+    --animation-rainbowswirl: rainbow 10s ease-in-out infinite;
+    @keyframes rainbow {
+        0% {color: var(--color-selectables-pink)}
+        10% {color: var(--color-selectables-purple)}
+        20% {color: var(--color-selectables-blue)}
+        30% {color: var(--color-selectables-teal)}
+        40% {color: var(--color-selectables-green)}
+        50% {color: var(--color-selectables-yellow)}
+        60% {color: var(--color-selectables-orange)}
+        70% {color: var(--color-selectables-red)}
+        80% {color: #ffadd5}
+        90% {color: #ffadff}
+        100% {color: var(--color-selectables-pink)}
+    }
+}
