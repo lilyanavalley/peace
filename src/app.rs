@@ -31,9 +31,10 @@ pub fn App() -> impl IntoView {
     <Router>
       <main class="flex flex-col-reverse h-full">
         <Routes fallback=move || "Not found.">
-          <Route path=StaticSegment("") view=HomePage/>
-          <Route path=StaticSegment("work") view=Work/>
-          <Route path=WildcardSegment("any") view=NotFound/>
+          <Route path=WildcardSegment("any") view=Wip />
+          // <Route path=StaticSegment("") view=HomePage/>
+          // <Route path=StaticSegment("work") view=Work/>
+          // <Route path=WildcardSegment("any") view=NotFound/>
         </Routes>
       </main>
     </Router>
@@ -135,6 +136,16 @@ fn NotFound() -> impl IntoView {
 
       </div>
       <components::footer::Footer/>
+    </div>
+  }
+}
+
+#[component]
+fn Wip() -> impl IntoView {
+  view! {
+    <div class="flex flex-col grow h-full overflow-auto justify-center items-center">
+      <Icon icon=FLOWER size="3rem" weight=IconWeight::Duotone/>
+      <p class="victor-mono-400 italic">content coming soon</p>
     </div>
   }
 }
