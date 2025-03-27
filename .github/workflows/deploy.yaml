@@ -3,7 +3,7 @@ name: Deploy to DO Apps
 on:
   push:
     tags:
-      - "v/*.*"
+      - "v/**"
     branches:
       - live
 

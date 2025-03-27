@@ -13,13 +13,13 @@ RUN cargo binstall cargo-leptos -y
 RUN rustup target add wasm32-unknown-unknown
 
 # Peace build
-WORKDIR /peace
+WORKDIR /app
 COPY . .
 RUN cargo leptos build --release -vv
 
 # Peace runner
 FROM debian:bookworm-slim as runtime
-WORKDIR /peace
+WORKDIR /app
 RUN apt-get update -y \
   && apt-get install -y --no-install-recommends openssl ca-certificates \
   && apt-get autoremove -y \
@@ -27,13 +27,13 @@ RUN apt-get update -y \
   && rm -rf /var/lib/apt/lists/*
 
 # Copy the server binary to the /app directory
-COPY --from=builder /peace/target/release/peace /app/
+COPY --from=builder /app/target/release/peace /app/
 
 # /target/site contains our JS/WASM/CSS, etc.
-COPY --from=builder /peace/target/site /app/site
+COPY --from=builder /app/target/site /app/site
 
 # Copy Cargo.toml if it’s needed at runtime
-COPY --from=builder /peace/Cargo.toml /app/
+COPY --from=builder /app/Cargo.toml /app/
 
 ENV RUST_LOG="warn"
 ENV LEPTOS_SITE_ADDR="0.0.0.0:3000"
