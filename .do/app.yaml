@@ -6,32 +6,42 @@ alerts:
 features:
   - buildpack-stack=ubuntu-22
 
-name: peace-web
+name: peace-prod
 region: tor
 
 ingress:
   rules:
-    - match:
-        path:
-          prefix: /
-      component:
-        name: leptos-ssr
-
+  - component:
+      name: peace-pws
+      preserve_path_prefix: true
+    match:
+      path:
+        prefix: /
 services:
-  - name: leptos-ssr
+  - dockerfile_path: /Dockerfile
+    envs:
+    - key: MONGODB_URI
+      scope: RUN_TIME
+      value: ${db-mongodb-tor1-94843.DATABASE_URL}
+    - key: CA_CERT
+      scope: RUN_TIME
+      value: ${db-mongodb-tor1-94843.CA_CERT}
+    http_port: 3000
     image:
-      registry_type: GHCR
-      registry: ghcr.io
-      repository: lilyanavalley/peace
-      tag: latest
       deploy_on_push:
         enabled: true
+      registry: ghcr.io
+      registry_type: GHCR
+      repository: lilyanavalley/peace
+      tag: latest
     instance_count: 1
-    instance_size_slug: basic-xxs
-    # http_port: 8080
+    instance_size_slug: apps-s-1vcpu-2gb
+    name: peace-pws
+    source_dir: /
 
 databases:
-  - name: mongodb
+  - cluster_name: db-mongodb-tor1-94843
     engine: MONGODB
+    name: db-mongodb-tor1-94843
+    production: true
     version: "7"
-    production: false
