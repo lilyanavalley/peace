@@ -1,0 +1,38 @@
+
+:root
+  --syntax-pastel-pink: #FFC6FF
+  --syntax-pastel-purple: #BDB2FF
+  --syntax-pastel-red: #FFADAD
+  --syntax-pastel-orange: #FFD6A5
+  --syntax-pastel-yellow: #FDFFB6
+  --syntax-pastel-green: #CAFFBF
+  --syntax-pastel-teal: #9BF6FF
+  --syntax-pastel-blue: #A0C4FF
+
+.source
+  color: #EEE
+
+.storage
+  
+  &.modifier
+    color: var(--syntax-pastel-pink)
+
+  &.type
+    color: var(--syntax-pastel-purple)
+
+.meta
+  &.function.parameters
+    color: var(--syntax-pastel-blue)
+
+.punctuation
+  &.separator
+    color: var(--syntax-pastel-teal)
+
+  &.section.block
+    color: var(--syntax-pastel-blue)
+
+.support.type
+  color: var(--syntax-pastel-green)
+
+.entity.name.function.rust
+  color: var(--syntax-pastel-blue)

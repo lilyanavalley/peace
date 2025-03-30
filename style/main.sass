@@ -1,6 +1,7 @@
 
 // @use "sass:list"
 @use "sass:color"
+@use "terminaux"
 
 
 // 
@@ -235,6 +236,40 @@ a
   //   color: var(--color-vantablack)
   //   background-color: var(--color-brightwhite)
 
+button
+  display: flex
+  align-items: center
+  justify-content: center
+  color: var(--color-vantablack)
+  border: 0
+  background-color: var(--color-selectables-idle)
+  border: 0
+  border-radius: .5rem
+  cursor: pointer
+  padding: .2rem
+  width: min-content
+  height: min-content
+  transition: color .25s, background-color .25s
+
+  &:hover, &:focus
+    color: var(--color-selectables-active)
+    background-color: var(--color-vantablack)
+
+  &:active
+    color: var(--color-selectables-blue)
+    background-color: var(--color-deeperblack)
+
+  & > svg
+    margin-left: .25rem
+    margin-right: .25rem
+
+code, pre
+  font-family: 'Fira Code'
+  font-size: small
+
+  & > *
+    margin: 0
+
 html 
   color: var(--color-brightwhite)
   background-color: var(--color-vantablack)
@@ -245,6 +280,25 @@ body
   font-family: Ubuntu Mono, sans-serif
   margin: 0
   height: 100%
+
+.tooltip
+  display: inline-block
+  position: relative
+  cursor: help
+
+  & > span
+    color: #AAA
+    position: absolute
+    visibility: hidden
+    opacity: 0
+    right: -175%
+    bottom: 22%
+    z-index: 1
+    transition: opacity .3s
+
+  &:hover span, &:active span, &:focus
+    visibility: visible
+    opacity: 1
 
 .suspense
   color: var(--color-vantablack)
