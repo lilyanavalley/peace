@@ -1,19 +1,23 @@
 # Rust nightly
-FROM rustlang/rust:nightly-bullseye as builder
+FROM rustlang/rust:nightly-bullseye AS builder
 
 # Install build dependencies
 RUN apt-get update -y \
 && apt-get install -y --no-install-recommends clang
 
 # Install binstall
-RUN curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+# RUN curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+RUN wget https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz
+RUN tar -xvf cargo-binstall-x86_64-unknown-linux-musl.tgz
+RUN cp cargo-binstall /usr/local/cargo/bin
 RUN cargo binstall cargo-leptos -y
 
 # Install wasm compiler
 RUN rustup target add wasm32-unknown-unknown
 
 # Peace build
-WORKDIR /app
+RUN mkdir -p /app
+WORKDIR /peace
 COPY . .
 RUN cargo leptos build --release -vv
 
