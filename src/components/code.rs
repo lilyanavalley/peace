@@ -17,6 +17,7 @@ pub fn Code(source: &'static str) -> impl IntoView {
   let mut plugins = Plugins::default();
   plugins.render.codefence_syntax_highlighter = Some(&adapter);
 
+  // TODO: interpret source code language and reflect that in the below format.
   let input = format!("```rust\n{}\n```", source);
   let output = markdown_to_html_with_plugins(&input, &options, &plugins);
   
