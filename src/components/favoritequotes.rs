@@ -23,8 +23,9 @@ pub struct ReturnedQuote {
 #[component]
 pub fn FavoriteQuotes() -> impl IntoView {
 
+  let quote = LocalResource::new(move || quote_today());
+
   view! {
-    // ! there's a hydration problem around this line.
     <div class="flex flex-col text-[var(--color-offwhite)]" style="margin: 2rem">
 
       <div class="flex flex-col text-[#988] items-center">
@@ -32,19 +33,17 @@ pub fn FavoriteQuotes() -> impl IntoView {
         <p>quote of the day</p>
       </div>
       
-      // ! This suspense might be expecting a div of the same kind between fallback and normal.
-      // TODO: Consider modifying the div classes and consult the open Leptos Book page on Suspense.
       <Suspense fallback=move || view! {
         <div id="quote-quotation" class="suspense self-center text-[var(--color-selectables-red)] w-3/4">
-          pending pending pending
+          "pending pending pending"
         </div>
         <p id="quote-citation" class="suspense self-center text-[.8rem] text-[var(--color-selectables-red)] w-3/4">
-          -- me, uwu uwu owo uwu
+          "-- me, uwu uwu owo uwu"
         </p>
       }>
 
         { move || Suspend::new( async move {
-          let quote = quote_today().await.unwrap();
+          let quote = quote.await.unwrap();
           view! {
             <div id="quote-quotation" class="self-center before:content-['❝'] after:content-['❞'] text-[var(--color-selectables-red)] victor-mono-400 w-3/4">
               {quote.quotation}
