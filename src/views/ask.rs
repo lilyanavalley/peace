@@ -1,7 +1,7 @@
 
 use leptos::prelude::*;
 use phosphor_leptos::*;
-use crate::components;
+use crate:: { components, placeholders };
 
 
 #[component]
@@ -11,14 +11,13 @@ pub fn Ask() -> impl IntoView {
     
     <div class="flex flex-col self-center w-3/4">
       <components::article::Article>
-        <components::article::Markdown markdown="Questions about [Rust]()? Maybe, you (and other visitors) would like to know something oddly specific to Technology, Art, Copyleft and/or the Human Condition? Ask me anything, *Reddit AMA* style.
-
-An account or social media platform is not required to ask me questions. All questions are anonymous, yet public.".to_string()/>
+        <components::article::Markdown markdown=placeholders::ASK_DESCRIPTION_MD.to_string()/>
       </components::article::Article>
 
     </div>
 
     // Sample questions list.
+    // TODO: Replace with logic over placeholder content.
     <div id="questions" class="flex flex-col self-center fira-code-400 bg-[var(--color-vantablack)] w-3/4">
       <div style="margin: 1rem; padding: 1rem; border-radius: 2rem;" class="flex flex-col bg-[var(--color-deeperblack)] b-[.25rem] b-solid b-[#222]">
         <div class="" style="margin-bottom: 1rem;">
@@ -44,11 +43,11 @@ An account or social media platform is not required to ask me questions. All que
         <div class="text-[.9rem]">
             <a href="#" class="text-[var(--color-selectables-red)]">
               <Icon icon=EYE/>
-              "Request a Review"
+              { placeholders::ASK_REVIEW }
             </a>
             <a href="#" class="text-[var(--color-selectables-blue)]">
               <Icon icon=QUOTES/>
-              "Ask a Similar Question"
+              { placeholders::ASK_ASKSIMILAR }
             </a>
         </div>
       </div>

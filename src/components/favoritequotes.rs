@@ -2,6 +2,7 @@
 use leptos::prelude::*;
 use serde:: { Serialize, Deserialize };
 use phosphor_leptos::*;
+use crate::placeholders;
 
 
 #[server]
@@ -30,7 +31,7 @@ pub fn FavoriteQuotes() -> impl IntoView {
 
       <div class="flex flex-col text-[#988] items-center">
         <Icon icon=QUOTES size="1.5rem"/>
-        <p>quote of the day</p>
+        <p>{ placeholders::FAVQUOTES }</p>
       </div>
       
       <Suspense fallback=move || view! {

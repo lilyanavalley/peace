@@ -2,6 +2,7 @@
 use leptos::{ prelude::*, logging::* };
 use phosphor_leptos::*;
 use super::article::{ SectionIcon, Markdown };
+use crate::placeholders;
 
 
 /// 'Handlebar' -- Easy-access button to customize the site for site accessibility.
@@ -38,10 +39,9 @@ pub fn Handlebar() -> impl IntoView {
     >
       <div class="flex justify-center fixed h-full w-full opacity-100 bg-[var(--color-vantablack)] z-10">
         <div class="flex flex-col h-full items-center w-3/4">
-          <h1>"Accessibility & Accomodations"</h1>
+          <h1>{ placeholders::ACCESSIBILITY }</h1>
           <article>
-            "Adjust content appearances for enhanced readability, navigation and personal preference."
-            <Markdown markdown="Should these accommodations not satisfy, kindly [open an issue](https://github.com/lilyanavalley/peace/issues) on this site's GitHub page.".to_string()/>
+            <Markdown markdown={ placeholders::ACCESSIBILITY_DESCRIPTION_MD.to_string() }/>
           </article>
           <div id="accessibility" class="w-full">
 

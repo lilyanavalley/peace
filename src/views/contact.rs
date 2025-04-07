@@ -24,14 +24,14 @@ pub fn ContactStart() -> impl IntoView {
       // ? Introduction to Contact Component.
       <article class="w-3/4 self-center text-wrap">
 
-        <p>"Have a question or statement? Send me a direct message! An account or specific social media platform is not necessary to contact me."</p>
+        <p>{ placeholders::CONTACT_DESCRIPTION }</p>
 
-        "Once you send a message, your browser will remember our conversation history. You will need to return periodically for updates. If your browser has privacy-centric features that delete Browser Cookies, you should also note the **SCID** to return to conversations in the future in case your browser doesn't do so automatically."
+        <components::article::Markdown markdown={ placeholders::CONTACT_INSTRUCTIONS_MD.to_string() }/>
 
         <components::article::SectionIcon
           icon=KEY
         > 
-          <components::article::Markdown markdown="You may [encrypt messages](https://emailselfdefense.fsf.org/en/) using my public key:".to_string()/>
+          <components::article::Markdown markdown={ placeholders::CONTACT_PGP_INSTRUCTIONS_MD.to_string() }/>
           <components::code::Plain text={ placeholders::PGPKEY } />
         </components::article::SectionIcon>
       </article>
@@ -60,7 +60,7 @@ pub fn ContactStart() -> impl IntoView {
           // ? Warning bubble with 'respect me' text.
           <div class="flex items-center text-[#AAA] p-[.5rem]">
             <div style="margin: .25rem"><Icon icon=INFO size="2rem"/></div>
-            <p>"Not all messages recieve replies. Please be respectful and treat me as you wish to be treated."</p>
+            <p>{ placeholders::CONTACT_BE_NICE }</p>
           </div>
 
         </form>
@@ -72,7 +72,7 @@ pub fn ContactStart() -> impl IntoView {
         <components::article::Spacer/>
 
         <components::article::SectionReveal
-          revealer_text="Privacy & Confidentiality Statement".to_string()
+          revealer_text={ placeholders::CONTACT_PRIVACY_REVEALER.to_string() }
           icon=BINOCULARS
         >
 
@@ -80,7 +80,7 @@ pub fn ContactStart() -> impl IntoView {
             icon=CLOUD
           >
             <components::article::Markdown
-              markdown="This portal relays messages to/from a Web Service operated by me via [DigitalOcean](#) in a Datacenter located at *Toronto, Canada*. Messages are passed through the public Internet using [HTTPS](#), [Application-Level Encryption](#), and [At-Rest Encryption](#).".to_string()
+              markdown={ placeholders::CONTACT_PRIVACY_SECT_CLOUD_MD.to_string() }
             />
           </components::article::SectionIcon>
 
@@ -88,7 +88,7 @@ pub fn ContactStart() -> impl IntoView {
             icon=DATABASE
           >
             <components::article::Markdown
-              markdown="On submission, connection metadata, browser session and city geolocation is recorded strictly for spam prevention. Once a conversation has ended *or* 72 hours elapses without further contact, [my server deletes our conversation history](). Backups are performed and retained for a maximum of one week with encrypted/hashed+salted forms of active correspondence.".to_string()
+              markdown={ placeholders::CONTACT_PRIVACY_SECT_ANTISPAM_MD.to_string() }
             />
           </components::article::SectionIcon>
             
@@ -96,7 +96,7 @@ pub fn ContactStart() -> impl IntoView {
             icon=BINOCULARS
           >
             <components::article::Markdown
-              markdown="Preventative measures such as these help to ensure confidentiality, but *do **not** absolutely guarantee confidentiality*. Unforeseen circumstances may expose correspondence; Anything from [phishing]() attempts to a peek over the shoulder... Especially where confidentiality is crucial, please practice safe, sane and secure computer use. And, if you notice anything incorrect, please file a complaint ASAP on the the [GitHub Issues page for this Web Service]().".to_string()
+              markdown={ placeholders::CONTACT_PRIVACY_SECT_CLIENTSIDE_MD.to_string() }
             />
           </components::article::SectionIcon>
 
