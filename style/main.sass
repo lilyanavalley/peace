@@ -188,7 +188,7 @@
 
   --color-selectables-idle: var(--color-offwhite)
   --color-selectables-active: #FFF
-  --color-selectables-disabled: #212020
+  --color-selectables-disabled: #AAA
   
   --color-logo-grad1: #ff92c5
   --color-logo-grad2: #ffb0d5
@@ -197,7 +197,7 @@
 
 a
 
-  color: var(--color-selectables-idle)
+  color: var(--color-selectables-blue)
   box-shadow: none
   background-color: none
   text-decoration: none
@@ -209,13 +209,12 @@ a
   padding-right: .3rem
 
   &:disabled
-    color: var(--color-vantablack)
+    color: var(--color-selectables-disabled)
     cursor: pointer
 
-  &:hover, &:active, &:focus  
+  &:hover, &:focus
     color: var(--color-vantablack)
     background-color: var(--color-selectables-active)
-    box-shadow: var(--color-deepblack) 0 0 .5rem
 
   &.without-link-symbol::before,
   &.without-link-symbol::after
@@ -241,27 +240,40 @@ button
   align-items: center
   justify-content: center
   color: var(--color-vantablack)
-  border: 0
   background-color: var(--color-selectables-idle)
-  border: 0
+  border: .25rem solid var(--color-vantablack)
   border-radius: .5rem
+  font-family: 'Ubuntu Sans'
+  font-size: 1rem
   cursor: pointer
-  padding: .2rem
-  width: min-content
-  height: min-content
-  transition: color .25s, background-color .25s
+  padding: .5rem
+  // width: min-content
+  // height: min-content
+  transition: color .25s, background-color .25s, border-color .25s
 
   &:hover, &:focus
     color: var(--color-selectables-active)
     background-color: var(--color-vantablack)
+    border-color: var(--color-selectables-active)
 
-  &:active
-    color: var(--color-selectables-blue)
-    background-color: var(--color-deeperblack)
+  // &:active
+  //   color: var(--color-selectables-blue)
+  //   background-color: var(--color-deeperblack)
+  //   border-color: var(--color-selectables-blue)
+
+  &:disabled
+    color: var(--color-vantablack)
+    background-color: var(--color-selectables-disabled)
+    border-color: var(--color-vantablack)
+    cursor: not-allowed
+
+    &:hover, &:focus
+      color: var(--color-vantablack)
+      background-color: var(--color-selectables-disabled)
+      border-color: var(--color-vantablack)
 
   & > svg
-    margin-left: .25rem
-    margin-right: .25rem
+    margin: .25rem
 
 code, pre
   font-family: 'Fira Code'
@@ -269,6 +281,51 @@ code, pre
 
   & > *
     margin: 0
+
+input
+  color: #FFF
+  background-color: #000
+  border: 4px solid #333
+  border-radius: 1rem
+  font-family: 'Ubuntu Sans'
+  font-size: 1.2rem
+  transition: color .25s, background-color .25s, border-color .25s
+
+  &:hover, &:focus
+    color: #000
+    border-color: #EEE
+    background-color: #FFF
+
+  &[type=submit]
+    color: var(--color-vantablack)
+    font-weight: bold
+    font-size: 1.2rem
+    background-color: var(--color-selectables-idle)
+    border: 0
+    border-radius: 1rem
+    cursor: pointer
+    padding: .2rem
+
+  &[type=submit]:hover, &[type=submit]:focus
+    color: #FFF
+    background-color: #000
+
+textarea
+  color: #FFF
+  background-color: #000
+  border: 4px solid #333
+  border-radius: 1rem
+  font-family: 'Ubuntu Mono'
+  font-size: 1.1rem
+  padding: .5rem
+  transition: color .25s, background-color .25s, border-color .25s
+  resize: none
+
+  &:hover, &:focus
+    color: #000
+    border-color: #EEE
+    background-color: #FFF
+
 
 html 
   color: var(--color-brightwhite)
@@ -280,6 +337,86 @@ body
   font-family: Ubuntu Mono, sans-serif
   margin: 0
   height: 100%
+
+h1, h2, h3, h4, h5, h6
+  font-family: 'Victor Mono'
+  font-style: italic
+
+#accessibility
+  font-family: 'Ubuntu Sans'
+  font-weight: bold
+  font-size: 1.2rem
+
+  & > section > div
+    margin-bottom: 1rem
+
+#navigator
+  display: flex
+  justify-content: space-evenly
+  border-top: 4px solid var(--color-deepblack)
+  box-shadow: #000 0 0 1rem
+  z-index: 1
+
+  & > a
+    display: flex
+    flex-direction: column
+    flex-grow: 1
+    justify-content: center
+    align-items: center
+    padding: .2rem
+
+    &::before
+      content: unset
+    &::after
+      content: unset
+
+    &:nth-child(1)
+      color: var(--color-selectables-purple)
+      &:hover, &:focus
+        color: var(--color-vantablack)
+        background-color: var(--color-selectables-purple)
+
+    &:nth-child(2)
+      color: var(--color-selectables-pink)
+      &:hover, &:focus
+        color: var(--color-vantablack)
+        background-color: var(--color-selectables-pink)
+
+    &:nth-child(3)
+      color: var(--color-selectables-red)
+      &:hover, &:focus
+        color: var(--color-vantablack)
+        background-color: var(--color-selectables-red)
+
+    &:nth-child(4)
+      color: var(--color-selectables-orange)
+      &:hover, &:focus
+        color: var(--color-vantablack)
+        background-color: var(--color-selectables-orange)
+    
+    &:nth-child(5)
+      color: var(--color-selectables-yellow)
+      &:hover, &:focus
+        color: var(--color-vantablack)
+        background-color: var(--color-selectables-yellow)
+
+    &:nth-child(6)
+      color: var(--color-selectables-green)
+      &:hover, &:focus
+        color: var(--color-vantablack)
+        background-color: var(--color-selectables-green)
+    
+    &:nth-child(7)
+      color: var(--color-selectables-teal)
+      &:hover, &:focus
+        color: var(--color-vantablack)
+        background-color: var(--color-selectables-teal)
+
+    &:nth-child(8)
+      color: var(--color-selectables-blue)
+      &:hover, &:focus
+        color: var(--color-vantablack)
+        background-color: var(--color-selectables-blue)
 
 .tooltip
   display: inline-block

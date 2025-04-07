@@ -1,7 +1,17 @@
 
 use leptos::prelude::*;
 use phosphor_leptos::*;
+use comrak;
 
+
+#[component]
+pub fn Markdown(markdown: String) -> impl IntoView {
+  let markdown = comrak::markdown_to_html(&markdown, &comrak::Options::default());
+  view! {
+    <div inner_html=markdown>
+    </div>
+  }
+}
 
 #[component]
 pub fn Article(children: ChildrenFn) -> impl IntoView {
@@ -56,9 +66,9 @@ pub fn SectionReveal(children: ChildrenFn, revealer_text: String, icon: &'static
   };
 
   view! {
-    <section class="flex flex-col items-center justify-center" style="margin-top: 2rem; margin-bottom: 2rem;">
+    <section class="flex flex-col items-center justify-center b-1 bg-[var(--color-deepblack)]" style="border-radius: 1rem; margin-top: 2rem; margin-bottom: 2rem; padding: 1rem;">
       
-      <button on:click=show class="self-center" style="margin-bottom: .5rem">
+      <button on:click=show class="self-center" style="margin: .5rem">
         <Icon icon=icon size="1.5rem"/>
         { revealer_text }
       </button>

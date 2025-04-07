@@ -1,10 +1,23 @@
 
-pub const DESCRIPTION_SHORT:    &'static str = "Short profile description~~~";
+pub const DESCRIPTION_SHORT:    &'static str = "Multidisciplinary Software Engineer, student of Computer Science, 2D and 3D Artist";
 
-pub const DESCRIPTION_LONG:     &'static str = "Qui a apprit quelque chose aujourd'hui? T'as vidé ton cache? Stationnement! Y'aura peut être un peu de changement. C'est toi qui vois mais c'est main droite / main gauche. Ne fais pas gaffe à la maquette, je l'ai fait en 5 minutes. Non mais ça va, c'est pas non plus la feature de l'année! T'es sûr de toi poulet? Massse! Stand up bitches! Reboot les switchs et ça devrait aller mieux. Les maquettes arrivent bientôt.
+pub const DESCRIPTION_LONG:     &'static str = "Hi there, welcome to my little corner of the Internet! This is where I showcase my projects, contributions, ramblings, beliefs and ideas in [Open Source Software](https://en.wikipedia.org/wiki/Open-source_software) or other equally nerdy subjects.
 
-Tu feras gaffe à l'interlignage. C'est bien d'un pull --rebase qu'on parle? Non mais masse! Théoriquement, ça marche. T'es passé à mi-temps ou quoi? Au fait, y'a un inmail à faire ce matin. C'est pas très quali ça les gars. Fais un composer update. Les maquettes arrivent bientôt. Qui a apprit quelque chose aujourd'hui? T'as vidé ton cache? Ne fais pas gaffe à la maquette, je l'ai fait en 5 minutes.
+When I started writing Shell Scripts in my adolescence, I found myself at a gateway of many Special Interests and curiosities… Back then, I didn’t realize a passion for technology had just been sparked, and would continue to burn brightly throughout the years. I’ve spent an unfathomable amount of time at a keyboard since, and truthfully, I there’s nothing else I would rather have spend that time on.
 
-Non mais ça va, c'est pas non plus la feature de l'année! Théoriquement, ça marche. Stand up bitches! Y'aura peut être un peu de changement. Au fait, y'a un inmail à faire ce matin. C'est toi qui vois mais c'est main droite / main gauche. Fais un composer update. T'es sûr de toi poulet? C'est pas très quali ça les gars. Massse! C'est bien d'un pull --rebase qu'on parle? Reboot les switchs et ça devrait aller mieux.
+ Today, studying Computer Science, Anthropology and Psychology, I’ve found unique value in technology and teachings which favor of common social interests and public benefit. Movements akin to the [Free Software Foundation](https://fsf.org) and the [Free Art License](http://artlibre.org/) (*published in Françias*; [available in English](https://artlibre.org/licence/lal/en/)) are some of my favorite references for sustaining a '*Copyleft*' attitude; inspiring optimism for a freer and fairer world where ingenuity, integrity and ethics prevails for the betterment of Humanity.
 
-Stationnement! Tu feras gaffe à l'interlignage. Non mais masse! T'es passé à mi-temps ou quoi? Théoriquement, ça marche. Ne fais pas gaffe à la maquette, je l'ai fait en 5 minutes. C'est bien d'un pull --rebase qu'on parle? Massse! C'est toi qui vois mais c'est main droite / main gauche. Qui a apprit quelque chose aujourd'hui? Stand up bitches! Y'aura peut être un peu de changement. Au fait, y'a un inmail à faire ce matin.";
+In my free time, I administer a small [HomeLab](lab/) for testing, benchmarking and seeding [FOSS Torrents](https://fosstorrents.com/) to the community. I also practice experimental music production, embedded software engineering, FDM printing, 3D modeling and pencil art. 
+
+For questions or inquiries, [Contact](contact/) me directly, or publish a public question via [Ask Me Anything](ask/). And, thank you visting!
+
+#### My Fun Facts:
+- 🦀 [Rust](https://rust-lang.org) fanatic
+  - [The Website You're Browsing](https://github.com/lilyanavalley/peace) was written with the [Leptos](https://leptos.dev/) Framework using Rust. Yes, I'm that fanatic about Rust.
+- 🥑 Favorite fruit is Avocado
+- 💜 Favorite color is Purple
+- 🐧 Daily-driving GNU Linux
+- 🟩 Playing Minecraft very, very often
+- ⌨️ Hoping to build a DIY RP2040-based Mechanical Keyboard";
+
+pub const PGPKEY: &'static str = "(pretend there's a PGP public key here!)";
