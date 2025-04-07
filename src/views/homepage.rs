@@ -18,7 +18,7 @@ pub fn HomePage() -> impl IntoView {
       <p class="text-center">{ placeholders::DESCRIPTION_SHORT.to_string() }</p>
     </div>
 
-    <article class="w-3/4 self-center text-justify" style="margin: 2rem">
+    <article class="w-3/4 self-center" style="margin: 2rem">
       <components::article::Markdown
         markdown = { placeholders::DESCRIPTION_LONG_MD.to_string() }
       />
