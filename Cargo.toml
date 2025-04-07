@@ -53,6 +53,7 @@ ssr = [
   "leptos_meta/ssr",
   "leptos_router/ssr",
 ]
+wip = []
 
 [profile.wasm-release]
 inherits = "release"

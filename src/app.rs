@@ -2,13 +2,38 @@
 use leptos::prelude::*;
 use leptos_meta::*;
 use leptos_router::{
-  components::{Route, Router, Routes},
-  StaticSegment, WildcardSegment,
+  *,
+  components::*,
 };
 use phosphor_leptos::*;
 use crate::{ components, placeholders };
 
 
+#[cfg(feature="wip")]
+#[component]
+pub fn App() -> impl IntoView {
+  provide_meta_context();
+  view! {
+    <Stylesheet id="leptos" href=format!("/pkg/{}.css", env!("CARGO_PKG_NAME"))/>
+    <Link rel="preconnect" href="https://unpkg.com"/>
+    <Link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <Link rel="preconnect" href="https://fonts.gstatic.com"/>
+    <Link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@100;300;600;700&family=Dosis:wght@200..800&family=Fira+Code:wght@300..700&family=Flow+Circular&family=Redacted+Script&family=Ubuntu+Condensed&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet"/>
+    <Link rel="shortcut icon" type_="image/ico" href="/favicon.ico"/>
+
+    // sets the document title
+    <Title text="Lily's Website ⚛️"/>
+    <Router>
+
+      <Routes fallback=|| "not found">
+        <Route path=StaticSegment("") view=Wip />
+      </Routes>
+
+    </Router>
+  }
+}
+
+#[cfg(not(feature="wip"))]
 #[component]
 pub fn App() -> impl IntoView {
   // ? Provides context that manages stylesheets, titles, meta tags, etc.
