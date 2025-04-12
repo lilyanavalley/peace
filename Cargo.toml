@@ -6,21 +6,6 @@ edition = "2021"
 [lib]
 crate-type = ["cdylib", "rlib"]
 
-# ! REMOVE
-# TODO: Remove and keep out of commit. Dirty work.
-##### LINKER FIX
-# See: https://github.com/leptos-rs/leptos/issues/3148
-[target.nightly-aarch64-apple-darwin]
-linker = "rust-lld"
-# NOTE: `rustdoc` doesn't currently respect the `linker` setting — keep an eye
-# on this issue: https://github.com/rust-lang/rust/issues/125657
-rustdocflags = ["-Clink-arg=-fuse-ld=lld"]
-
-[target.nightly-x86_64-apple-darwin]
-linker = "rust-lld"
-rustdocflags = ["-Clink-arg=-fuse-ld=lld"]
-##### END LINKER FIX
-
 [dependencies]
 leptos = { version = "0.7.7", features = ["nightly"] }
 leptos_meta = { version = "0.7.7", features = ["ssr"] }
