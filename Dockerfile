@@ -17,7 +17,7 @@ RUN rustup target add wasm32-unknown-unknown
 
 # Peace build
 RUN mkdir -p /app
-WORKDIR /peace
+WORKDIR /app
 COPY . .
 RUN cargo leptos build --release -vv
 
