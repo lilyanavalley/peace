@@ -1,5 +1,7 @@
 # Rust nightly
-FROM rustlang/rust:nightly-bullseye AS builder
+FROM rustlang/rust:nightly-bookworm AS builder
+
+ENV RUST_BACKTRACE=full
 
 # Install build dependencies
 RUN apt-get update -y \
@@ -18,12 +20,12 @@ RUN rustup target add wasm32-unknown-unknown
 
 # Peace build
 RUN mkdir -p /app
-WORKDIR /peace
+WORKDIR /app
 COPY . .
 RUN cargo leptos build --release -vv
 
 # Peace runner
-FROM debian:bookworm-slim as runtime
+FROM debian:bookworm-slim AS runtime
 WORKDIR /app
 RUN apt-get update -y \
   && apt-get install -y --no-install-recommends openssl ca-certificates \
@@ -40,6 +42,7 @@ COPY --from=builder /app/target/site /app/site
 # Copy Cargo.toml if it’s needed at runtime
 COPY --from=builder /app/Cargo.toml /app/
 
+ENV RUST_BACKTRACE=1
 ENV RUST_LOG="warn"
 ENV LEPTOS_SITE_ADDR="0.0.0.0:3000"
 ENV LEPTOS_SITE_ROOT="site"
