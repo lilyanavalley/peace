@@ -3,7 +3,8 @@ FROM rustlang/rust:nightly-bullseye AS builder
 
 # Install build dependencies
 RUN apt-get update -y \
-&& apt-get install -y --no-install-recommends clang
+&& apt-get install -y --no-install-recommends build-essential clang pkg-config libssl-dev ca-certificates openssl
+RUN openssl version
 
 # Install binstall
 # RUN curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
