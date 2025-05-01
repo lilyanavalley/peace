@@ -1,5 +1,6 @@
 
 use leptos::{ prelude::*, logging::* };
+use log:: { trace, debug, info, warn, error };
 use phosphor_leptos::*;
 use super::article::{ SectionIcon, Markdown };
 use crate::placeholders;
@@ -12,8 +13,8 @@ pub fn Handlebar() -> impl IntoView {
   let (open_handlebar, set_open_handlebar) = signal(false);
 
   let show = move|_| {
-    if open_handlebar.get() { *set_open_handlebar.write() = false; }
-    else { *set_open_handlebar.write() = true; }
+    if open_handlebar.get() { set_open_handlebar.update(|h| *h = false); }
+    else { set_open_handlebar.update(|h| *h = true); }
   };
 
   view! {

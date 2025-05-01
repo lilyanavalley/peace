@@ -1,10 +1,12 @@
 
-use leptos::prelude::*;
+use leptos::{ prelude::*, html, logging::log };
 use leptos_meta::*;
 use leptos_router::{
   *,
   components::*,
 };
+use leptos_hotkeys::*;
+use log:: { trace, debug, info, warn, error };
 use phosphor_leptos::*;
 use crate::{ components, placeholders, views::* };
 
@@ -36,6 +38,7 @@ pub fn App() -> impl IntoView {
 #[cfg(not(feature="wip"))]
 #[component]
 pub fn App() -> impl IntoView {
+
   // ? Provides context that manages stylesheets, titles, meta tags, etc.
   provide_meta_context();
 
@@ -57,18 +60,45 @@ pub fn App() -> impl IntoView {
       <main class="flex flex-col h-full">
         <div class="flex flex-col grow h-full overflow-auto">
           <Routes fallback=|| "not found">
-            <Route path=StaticSegment("/") view=homepage::HomePage/>
-            <Route path=StaticSegment("/work") view=work::Work/>
-            <ParentRoute path=path!("/contact") view=contact::Contact>
-              <Route path=path!(":cid") view=contact::ContactUpdate/>
-              <Route path=path!("") view=contact::ContactStart/>
-            </ParentRoute>
-            <Route path=StaticSegment("/ask") view=ask::Ask/>
-            <Route path=path!("/*any") view=notfound::NotFound/>
+
+            <Route path=StaticSegment("/") view=HomePage/>
+          
+            // <ParentRoute path=path!("/authentication") view=Authenticate>
+            //   <Route path=path!("/otp/:code") view=OtpCode/>
+            //   <Route path=path!("/register") view=WebauthnKeyRegister/>
+            //   <Route path=path!("/keys") view=WebauthnKeys/>
+            //   <Route path=path!("/sessions") view=AuthenticateSessions/>
+            //   <Route path=path!("/logout") view=AuthenticateLogout/>
+            //   <Route path=path!("") view=AuthenticateStart/>
+            // </ParentRoute>
+          
+            <Route path=StaticSegment("/work") view=Work/>
+          
+            // <ParentRoute path=path!("/contact") view=contact::Contact>
+            //   // <Route path=path!(":cid") view=contact::ContactUpdate/>
+            //   // <Route path=path!("") view=contact::ContactStart/>
+            //   </ParentRoute>
+            <Route path=StaticSegment("/contact") view=ContactAlternative/> // ? this route is temporary.
+          
+            // * Remember to re-enable the navigator item too.
+            <Route path=StaticSegment("/ask") view=Ask/>
+
+            <Route path=StaticSegment("/stats") view=Stats/>
+          
+            <Route path=path!("/*any") view=NotFound/>
+          
           </Routes>
           <components::favoritequotes::FavoriteQuotes/>
           <components::footer::Footer/>
           <components::accessibility::Handlebar/>
+          <noscript>
+            <div class="flex items-center justify-center text-[var(--color-selectables-red)]">
+              <div style="padding: .75rem; padding-right: 0"><Icon icon=COFFEE size="1.5rem"/></div>
+              <p style="padding: .75rem; margin: 0">
+                "JavaScript is absent from this Browser so some features may not work as expected"
+              </p>
+            </div>
+          </noscript>
         </div>
         <components::navigator::Navigator/>
       </main>

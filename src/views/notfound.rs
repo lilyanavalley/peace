@@ -36,7 +36,7 @@ pub fn NotFound() -> impl IntoView {
 
           <a class="text-[var(--color-selectables-red)]" href="https://github.com/lilyanavalley/peace/issues">
             <Icon icon=ASTERISK/>
-            " open an issue"
+            "open an issue"
           </a>
           
           " on this site's GitHub repo."

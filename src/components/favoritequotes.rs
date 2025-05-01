@@ -1,5 +1,7 @@
 
 use leptos::prelude::*;
+use leptos::logging::log;
+use log::{ trace, info, warn, error, debug };
 use serde:: { Serialize, Deserialize };
 use phosphor_leptos::*;
 use crate::placeholders;
@@ -24,7 +26,7 @@ pub struct ReturnedQuote {
 #[component]
 pub fn FavoriteQuotes() -> impl IntoView {
 
-  let quote = LocalResource::new(move || quote_today());
+  let quote = OnceResource::new(quote_today());
 
   view! {
     <div class="flex flex-col text-[var(--color-offwhite)]" style="margin: 2rem">
@@ -58,6 +60,6 @@ pub fn FavoriteQuotes() -> impl IntoView {
       </Suspense>
 
     </div>
-  }
+  }.into_any()
 
 }

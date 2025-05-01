@@ -15,7 +15,11 @@ pub fn HomePage() -> impl IntoView {
     </div>
 
     <div id="profile-badges" class="w-3/4 self-center">
-      <p class="text-center">{ placeholders::DESCRIPTION_SHORT.to_string() }</p>
+      <p class="text-center">
+        <components::article::Markdown
+          markdown = { placeholders::DESCRIPTION_SHORT.to_string() }
+        />
+      </p>
     </div>
 
     <article class="w-3/4 self-center" style="margin: 2rem">
