@@ -226,8 +226,22 @@ a
   &::after 
     content: " ]"
 
+  // Changes link style for KoFi Markdown button
+  &[href^="https://ko-fi.com"], &[href^="https://github.com/sponsors/"]
+    padding: unset
+    opacity: .8
+    transition: opacity .25s
+    &:hover, &:focus
+      background-color: unset
+      opacity: 1
+    &::before
+      content: none
+    &::after
+      content: none
+
   & > svg
-    transform: translateY(.2rem)
+    transform: translateY(.1rem)
+    margin-right: .3rem
 
   // &:any-link::after:hover,
   // &:any-link::after:active,
@@ -334,7 +348,7 @@ html
 
 
 body 
-  font-family: Ubuntu Mono, sans-serif
+  font-family: Victor Mono, sans-serif
   margin: 0
   height: 100%
 
