@@ -1,10 +1,147 @@
 
-pub const DESCRIPTION_SHORT:    &'static str = "Short profile description~~~";
+pub const DESCRIPTION_SHORT:    &'static str = "*a lily on a valley grown for software engineering, social causes and artistry*";
+pub const DESCRIPTION_LONG_MD:     &'static str = "Hello, welcome to my tiny corner of the Internet! My projects, contributions, beliefs and ideas in [Open Source Software](https://en.wikipedia.org/wiki/Open-source_software) (or differential yet equally nerdy subjects) are showcased here.
 
-pub const DESCRIPTION_LONG:     &'static str = "Qui a apprit quelque chose aujourd'hui? T'as vidé ton cache? Stationnement! Y'aura peut être un peu de changement. C'est toi qui vois mais c'est main droite / main gauche. Ne fais pas gaffe à la maquette, je l'ai fait en 5 minutes. Non mais ça va, c'est pas non plus la feature de l'année! T'es sûr de toi poulet? Massse! Stand up bitches! Reboot les switchs et ça devrait aller mieux. Les maquettes arrivent bientôt.
+As for myself, I'm `{age}` years old. Quite a lot of my personal life can be elided, with the most notable points being: I started my journey in digital art at a very young age. Around the same time, I was also curious about the sciences of computers and electronics down to their very fundamentals. Soon after, I learned to write batch scripts, wrote very rudimentary game mods and continued studying for the arts of such things up to today.
 
-Tu feras gaffe à l'interlignage. C'est bien d'un pull --rebase qu'on parle? Non mais masse! Théoriquement, ça marche. T'es passé à mi-temps ou quoi? Au fait, y'a un inmail à faire ce matin. C'est pas très quali ça les gars. Fais un composer update. Les maquettes arrivent bientôt. Qui a apprit quelque chose aujourd'hui? T'as vidé ton cache? Ne fais pas gaffe à la maquette, je l'ai fait en 5 minutes.
+ With interests in Computer Science, Anthropology and Psychology, I find value in the technologies and teachings of social causes and public benefit. Movements akin to the [Free Software Foundation](https://fsf.org) and the [Free Art License](http://artlibre.org/) (*published in Françias*; [available in English](https://artlibre.org/licence/lal/en/)) are some of my favorite references for sustaining an ethical, '*Copyleft*' attitude; inspiring optimism for a freer and fairer world where ingenuity, integrity and ethics prevails in technology for the betterment of Humanity.
 
-Non mais ça va, c'est pas non plus la feature de l'année! Théoriquement, ça marche. Stand up bitches! Y'aura peut être un peu de changement. Au fait, y'a un inmail à faire ce matin. C'est toi qui vois mais c'est main droite / main gauche. Fais un composer update. T'es sûr de toi poulet? C'est pas très quali ça les gars. Massse! C'est bien d'un pull --rebase qu'on parle? Reboot les switchs et ça devrait aller mieux.
+My hobbies include music production (with synthesizers and a [Digitakt]()), writing fanfic and novels strictly for myself, CAD/3D printing, pencil art and calligraphy. I’m practicing more self-care too, which as it turns out, is very important for one’s wellbeing. There’s a lot of smaller things to boast, but… you can rightly imagine they’re very nerdy at this point so I’ll save you the words.
 
-Stationnement! Tu feras gaffe à l'interlignage. Non mais masse! T'es passé à mi-temps ou quoi? Théoriquement, ça marche. Ne fais pas gaffe à la maquette, je l'ai fait en 5 minutes. C'est bien d'un pull --rebase qu'on parle? Massse! C'est toi qui vois mais c'est main droite / main gauche. Qui a apprit quelque chose aujourd'hui? Stand up bitches! Y'aura peut être un peu de changement. Au fait, y'a un inmail à faire ce matin.";
+In ceasing my endless ramblings, I’d also like to take a moment to appreciate and thank-you for stopping by today! For questions or inquiries, [Contact](contact/) me.
+
+₍^⸝⸝> ·̫ <⸝⸝^₎
+
+#### My Fun Facts:
+- 🥑 Fruitfully enjoying a good Avocado
+- 🐧 Daily-driving GNU Linux (Ubuntu w/ Xen Hypervisor) and Mac OS.
+	- 🙂‍↕️Yes, I know… Macs and Apple. I know. Worse yet, I have no justification for my behaviors and choices. I even have an iPhone… Flay me already, I’m guilty.
+	- See also my [[Workstations & Software]] list
+- 🟩 Playing survival Minecraft (Java & Bedrock)
+- ☕️ Enjoying locally roasted coffees
+- ⌨️ Building a 70% DIY RP2040-based Kailh Purple Mechanical Keyboard with home-brewed firmware
+- 🛜 Using Espressif IDF and select ESP32 chips w/ HomeAssistant
+- 🦊 A tail-wearing, ear-donning Furry (hi furs! 👋)
+- ⚙️ Considers itself to be more of 'thing' than a Human being
+-  🧠 Neurodivergent
+- 🏳️‍🌈 Has many pride flags
+	- 🩵🩷🤍🩷🩵 
+	- 💙💛🩷 
+	- 🖤🩶🤍💜 
+	- 🩷💙♾️ 
+- Also has CLI flags `-la` `-vv` `-h` 🤭
+
+---
+⭐️ My work and content is free, and I hope you find it useful! If you do, and you have the funds to spare, please consider supporting me:
+
+[![GitHub Sponsors](https://img.shields.io/badge/GitHub%20Sponsors-Donate%20on%20GitHub%20Sponsors-181717?style=flat&logo=github&logoColor=white)](https://github.com/sponsors/lilyanavalley)
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/L4L01DWUOJ)
+
+*Of course, donations are not required, but they **are** very appreciated!*
+";
+
+pub const ASK_DESCRIPTION_MD: &'static str = "Questions about [Rust]()? Maybe, you (and other visitors) would like to know something oddly specific to Technology, Art, Copyleft and/or the Human Condition? Ask me anything, *Reddit AMA* style.
+
+An account or social media platform is not required to ask me questions. All questions are anonymous, yet public.";
+pub const ASK_ASKSIMILAR: &'static str = "Ask a Similar Question";
+pub const ASK_REVIEW: &'static str = "Request a Review";
+
+pub const CONTACT_DESCRIPTION: &'static str = "Have a question or statement? Send me a direct message! An account or specific social media platform is not necessary to contact me.";
+pub const CONTACT_INSTRUCTIONS_MD: &'static str = "Once you send a message, your browser will remember our conversation history. You will need to return periodically for updates. If your browser has privacy-centric features that delete Browser Cookies, you should also note the **SCID** to return to conversations in the future in case your browser doesn't do so automatically.";
+pub const CONTACT_PGP_INSTRUCTIONS_MD: &'static str = "You may [encrypt messages](https://emailselfdefense.fsf.org/en/) using my public key:";
+pub const PGPKEY: &'static str = "-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+mFMEZ8Mw9hMJKyQDAwIIAQEHAgMEIKYIB6z+9OlIfVFTnxMmWBTPPSRqc6VmtOhK
+J+o/e2cCCcQ2TJPURKc1Oe6NU+qDLxHgzRD2hBdrJe+tD/GEs7QpTGlseSBBbmEg
+VmFsbGV5IDxtc2xpbHl2YWxsZXlAaWNsb3VkLmNvbT6ImQQTEwgAQRYhBCCXBnXw
+3QdimlciKTeIXPe545KYBQJnwzD2AhsDBQkFo5qABQsJCAcCAiICBhUKCQgLAgQW
+AgMBAh4HAheAAAoJEDeIXPe545KYfxoBAIGeBVV+4fEmNztFDGsPmU/kWIAo3IxI
+Xhu01wqmE9q2AP9I8oUAKCRP3sGc2D1zWW1Z8dDwy9nzae/5ODAroUAx6LhXBGfD
+MPYSCSskAwMCCAEBBwIDBHQ7UbOounXaiD9a7iFVuIS+MAbjFyjbx1n1ORhqf1uy
+BWTG9zhoMa6G+S/07/0+jiZVeqIo7bGyUfKns3WWnjoDAQgHiH4EGBMIACYWIQQg
+lwZ18N0HYppXIik3iFz3ueOSmAUCZ8Mw9gIbDAUJBaOagAAKCRA3iFz3ueOSmAtG
+AQCV+6KaiUqSnPCoyykwhf6KwB5UMONoJNyfd8pvyXsxmAEAm5YXPvc6WC71sykk
+OnB4nbOV7ZZVvZCuAsI6FEb+/bs=
+=8avv
+-----END PGP PUBLIC KEY BLOCK-----";
+pub const CONTACT_BE_NICE: &'static str = "Not all messages recieve replies. Please be respectful and treat me as you wish to be treated.";
+pub const CONTACT_PRIVACY_REVEALER: &'static str = "Privacy & Confidentiality Statement";
+pub const CONTACT_PRIVACY_SECT_CLOUD_MD: &'static str = "This portal relays messages to/from a Web Service operated by me via [DigitalOcean](#) in a Datacenter located at *Toronto, Canada*. Messages are passed through the public Internet using [HTTPS](#), [Application-Level Encryption](#), and [At-Rest Encryption](#).";
+pub const CONTACT_PRIVACY_SECT_ANTISPAM_MD: &'static str = "On submission, connection metadata, browser session and city geolocation is recorded strictly for spam prevention. Once a conversation has ended *or* 72 hours elapses without further contact, [my server deletes our conversation history](). Backups are performed and retained for a maximum of one week with encrypted/hashed+salted forms of active correspondence.";
+pub const CONTACT_PRIVACY_SECT_CLIENTSIDE_MD: &'static str = "Preventative measures such as these help to ensure confidentiality, but *do **not** absolutely guarantee confidentiality*. Unforeseen circumstances may expose correspondence; Anything from [phishing]() attempts to a peek over the shoulder... Especially where confidentiality is crucial, please practice safe, sane and secure computer use. And, if you notice anything incorrect, please file a complaint ASAP on the the [GitHub Issues page for this Web Service]().";
+
+// ? Alternative contact page while the chat is being built.
+pub const CONTACT_ALTERNATIVE: &'static str = "To get in touch with me, you'll need a **Matrix** or **Telegram**[1] account.
+
+📧 You may notice there's no email address here... and that's entirely on purpose. I don't trust email to reliably find
+its way to my inbox, avoiding spam and snooping unless the average visitor is privy to PGP. If you still require my email address, please ask me over those channels.
+
+### Matrix
+Message [@lilflwr:catgirl.cloud](https://matrix.to/#/@lilflwr:catgirl.cloud) directly, or scan this QR code to see my profile:
+
+```
+
+    █▀▀▀▀▀█ ▀▄▄▀▀ ▀ ▀ █▄▄ █▀▀▀▀▀█    
+    █ ███ █   ▀ ██ █▄▄ ██ █ ███ █    
+    █ ▀▀▀ █  ▀▄▀▄▄▀ █▄▀▀  █ ▀▀▀ █    
+    ▀▀▀▀▀▀▀ █ █▄▀▄▀▄▀ █▄█ ▀▀▀▀▀▀▀    
+    ▀█▄█▀▄▀▄▄█▀▀▄▄██ ▀▄▀  ▀▄▄ ▄▄▀    
+    ▄ ▀ ▀█▀▄ ▄██▄  ▀█▄▄▄▄███▄▄▀ ▄    
+      ▄█▄▄▀█ ▀ ▀▀ ▄▄█▄▄ █▄█▄▄▄▄▄█    
+    █▄▄ ▄▄▀ ▄▄▄█▀ ▀█  ▄██▀▄▄█ █ █    
+    █ █▄▄▀▀▄▄ ▀▄▄▀▄█ ▄ ▄▀▀  ▄▀▄▄     
+    ██▄▀▄▄▀█ █▄▀▄█ ▀█  ▀  ▄ ██▄ ▀    
+    ▀▀▀ ▀ ▀ █ █ ▀ ██ ▀  █▀▀▀██▀▀     
+    █▀▀▀▀▀█  █▄ ▀  ▀█▄█▀█ ▀ █▀       
+    █ ███ █ ███ ▄▀███▄▀▀▀█▀▀▀▀ ▀▄    
+    █ ▀▀▀ █ ▄▄█ ▄▄██▄▀█ ▀▄▄██▄█▀█    
+    ▀▀▀▀▀▀▀ ▀ ▀▀▀  ▀   ▀▀▀           
+
+```
+
+----
+### Telegram
+Message [@LeviathanDevious](https://t.me/LeviathanDevious) or scan this QR code to see my profile:
+
+```
+
+    █▀▀▀▀▀█ ▄▀▀▄█ ▀█  █▀▀▀▀▀█    
+    █ ███ █ ▀██▄█ █ ▀ █ ███ █    
+    █ ▀▀▀ █ █▄ ▀▄█ █▀ █ ▀▀▀ █    
+    ▀▀▀▀▀▀▀ █▄▀▄█ ▀ ▀ ▀▀▀▀▀▀▀    
+    █▀ █▄▄▀█▄ █▀▄▀▀ ▄▄██▀ ▀▀▄    
+    █   ▀█▀▄▀▀▀▄▄██▄█▀▄▀█  ▀▀    
+    ▀█  ▄▀▀█ ▄▄▀█▀  ▀███ █▄▀█    
+    ▀▄▀ ▄ ▀▀ ▀▄█ ▄▄▄█  ▀█ ▀▄▀    
+    ▀▀▀▀  ▀ █▄▀██ ▄██▀▀▀██▀ ▄    
+    █▀▀▀▀▀█ ▀ █ █▀  █ ▀ ██▄▀▀    
+    █ ███ █ ▄  ▀▄▄▀ █▀▀███▄      
+    █ ▀▀▀ █ ▄▄▄ ▄█▄██▄ ▀▀▄▀ ▀    
+    ▀▀▀▀▀▀▀ ▀▀▀ ▀▀  ▀▀▀▀   ▀▀    
+
+```
+
+
+----
+### Footnotes
+[1]: To use *end-to-end encryption*, a 'secret chat' must be started instead of Telegram's default chat mode. Additionally, the secret sauce known as Telegram's cloud infrastructure makes it difficult to attest the platform's actual privacy, even with *e2e*. Use at your own discretion, or just DM me via Matrix instead.
+";
+
+pub const NOTFOUND: &'static str = "Not Found";
+pub const NOTFOUND_DESCRIPTION_MD: &'static str = "Requested page could not be located. If you expected something in particular, please [open an issue](https://github.com/lilyanavalley/peace/issues) on this site's GitHub repo.";
+
+pub const WIP: &'static str = "content coming soon";
+
+pub const ACCESSIBILITY: &'static str = "Accessibility & Accomodations";
+pub const ACCESSIBILITY_DESCRIPTION_MD: &'static str = "Adjust content appearances for enhanced readability, navigation and personal preference.
+
+Should these accommodations not satisfy, kindly [open an issue](https://github.com/lilyanavalley/peace/issues) on this site's GitHub page.";
+
+pub const FAVQUOTES: &'static str = "quote of the day";
+
+pub const FOOTER: &'static str = "the home of";
+pub const FOOTER_NAME: &'static str = "Lily Ana Valley";
+pub const FOOTER_SOURCE: &'static str = "Source";
+pub const FOOTER_ISSUES: &'static str = "Issues";
+pub const FOOTER_LICENSE: &'static str = "License";

@@ -1,5 +1,6 @@
 
 use leptos::prelude::*;
+use leptos_router::components::*;
 use phosphor_leptos::*;
 
 
@@ -7,25 +8,25 @@ use phosphor_leptos::*;
 #[component]
 pub fn Navigator() -> impl IntoView {
   view! {
-    <div id="navigator" class="flex bg-[var(--color-deeperblack)]">
+    <nav id="navigator" class="flex bg-[var(--color-deeperblack)]">
       <For
         each=move || ROUTERBAR_SAMPLE
         key=|route| route.route
         children=move |route: RouterBarItem| {
           view! {
-            <a
-              class="flex flex-col flex-auto font-normal items-center justify-center without-link-symbol"
+            <A
+              // class="flex flex-col flex-auto font-normal items-center justify-center without-link-symbol"
               href={route.route}
             >
               <p style="margin: .5rem; margin-bottom: .1rem;">
                 <Icon icon=route.icon size="2rem" weight=IconWeight::Duotone/>
               </p>
               <p style="margin: .5rem; margin-top: 0;">{route.label}</p>
-            </a>
+            </A>
           }
         }
       />
-    </div>
+    </nav>
   }
 }
 
@@ -51,7 +52,7 @@ const ROUTERBAR_SAMPLE: [RouterBarItem; 4] = [
   RouterBarItem {
     icon: CHATS_CIRCLE,
     label: "Ask",
-    route: "/ama",
+    route: "/ask",
     colorsa: "--color-selectables-blue"
   },
 ];

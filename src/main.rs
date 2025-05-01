@@ -1,35 +1,42 @@
 
-// mod components;
-// mod placeholders;
+// #![recursion_limit = "256"]
+#![warn(missing_docs)]
 
-#[cfg(feature = "ssr")]
 pub mod server;
-
 
 #[cfg(feature = "ssr")]
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+  // extern crate jsonwebtoken;
   use actix_files::Files;
-  use actix_web::*;
-  use leptos::prelude::*;
-  use leptos::config::get_configuration;
+  use actix_web:: { * , dev::*, body::* };
+  use leptos::{ prelude::*, config::get_configuration, logging::* };
   use leptos_meta::MetaTags;
   use leptos_actix::{generate_route_list, LeptosRoutes};
   use mongodb;
-  use peace::{ app::* };
+  // use webauthn_rs;
+  use chrono;
+  // use actix_web_grants::{ protect, authorities::AttachAuthorities };
+  // use actix_web_httpauth::{ middleware::HttpAuthentication, extractors::bearer::BearerAuth };
+  use serde::{Deserialize, Serialize};
+  use crate::server;
+  use peace::app::*;
 
-  let conf = get_configuration(None).unwrap();
-  let addr = conf.leptos_options.site_addr;
+  log!("Getting configurations...");
+  let leptos_config = get_configuration(None).unwrap();
+  let leptos_address = leptos_config.leptos_options.site_addr;
+  let peace_config = server::PeaceConfig::prime_envs();
 
+  // TODO: Use peace_config to set address.
   let db_mongodb = mongodb::Client::with_uri_str("mongodb://localhost:27017").await.unwrap();
 
   HttpServer::new(move || {
     // Generate the list of routes in your Leptos App
     let routes = generate_route_list(App);
-    let leptos_options = &conf.leptos_options;
+    let leptos_options = &leptos_config.leptos_options;
     let site_root = leptos_options.site_root.clone().to_string();
-
-    println!("listening on http://{}", &addr);
+    // let authenticator = HttpAuthentication::bearer(server::auth_validate);
+    // println!("listening on http://{}", &addr);
 
     App::new()
       // serve JS/WASM/CSS from `pkg`
@@ -58,11 +65,16 @@ async fn main() -> std::io::Result<()> {
           }
         }
       })
+      // .service(
+      //   web::scope("authenticate/")
+      //     .wrap(authenticator)
+      // )
       .app_data(web::Data::new(leptos_options.to_owned()))
       .app_data(web::Data::new(db_mongodb.clone()))
-    //.wrap(middleware::Compress::default())
+      // .app_data(web::Data::new(peace_config.clone()))
+      // .wrap(middleware::from_fn(server::rate_limit))
   })
-  .bind(&addr)?
+  .bind(&leptos_address)?
   .run()
   .await
 }

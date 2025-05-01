@@ -5,6 +5,25 @@ use comrak::plugins::syntect::SyntectAdapterBuilder;
 use comrak::{ markdown_to_html_with_plugins, Options, Plugins };
 
 
+#[component]
+pub fn Plain(text: &'static str) -> impl IntoView {
+  view! {
+    <div class="border-4 border-[var(--color-deepblack)] rounded-[1rem]" style="margin-top: 1rem; margin-bottom: 1rem;">
+      
+    <pre style="padding: .5rem; margin: 0; overflow: scroll" inner_html=text></pre>
+    
+      <div class="flex items-center justify-between bg-[var(--color-deepblack)] border-t-4 border-[var(--color-deepblack)]" style="padding: .25rem; padding-left: .5rem; padding-right: .5rem; border-radius: .75rem;">
+        
+        <button class="flex flex-row">
+          <Icon icon=COPY size="1.2rem"/>
+          <b style="margin-right: .25rem">Copy</b>
+        </button>
+
+      </div>
+
+    </div>
+  }
+}
 
 #[component]
 pub fn Code(source: &'static str) -> impl IntoView {
@@ -17,6 +36,7 @@ pub fn Code(source: &'static str) -> impl IntoView {
   let mut plugins = Plugins::default();
   plugins.render.codefence_syntax_highlighter = Some(&adapter);
 
+  // TODO: interpret source code language and reflect that in the below format.
   let input = format!("```rust\n{}\n```", source);
   let output = markdown_to_html_with_plugins(&input, &options, &plugins);
   
