@@ -1,6 +1,6 @@
 
 // #![recursion_limit = "256"]
-// mod placeholders;
+#![warn(missing_docs)]
 
 pub mod server;
 
