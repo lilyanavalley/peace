@@ -1,5 +1,5 @@
 
-// mod components;
+// #![recursion_limit = "256"]
 // mod placeholders;
 
 #[cfg(feature = "ssr")]
