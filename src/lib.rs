@@ -10,6 +10,9 @@ pub mod views;
 #[wasm_bindgen::prelude::wasm_bindgen]
 pub fn hydrate() {
   use app::*;
+  use wasm_bindgen_console_logger::DEFAULT_LOGGER;
   console_error_panic_hook::set_once();
+  log::set_logger(&DEFAULT_LOGGER).unwrap();
+  log::set_max_level(log::LevelFilter::Info);
   leptos::mount::hydrate_body(App);
 }
