@@ -30,7 +30,7 @@ pub fn Navigator() -> impl IntoView {
   }
 }
 
-const ROUTERBAR_SAMPLE: [RouterBarItem; 4] = [
+const ROUTERBAR_SAMPLE: [RouterBarItem; 3] = [
   RouterBarItem {
     icon: FLOWER,
     label: "About",
