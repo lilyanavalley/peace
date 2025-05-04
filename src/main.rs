@@ -2,14 +2,25 @@
 // #![recursion_limit = "256"]
 #![warn(missing_docs)]
 
+#[cfg(feature = "ssr")]
 pub mod server;
+
+#[cfg(any(feature = "ssr", feature = "hydrate"))]
+use peace::{
+  app::*,
+  config,
+  placeholders
+};
+
+// #[cfg(any(feature = "ssr", feature = "hydrate"))]
 
 #[cfg(feature = "ssr")]
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+  use std::sync::Mutex;
   // extern crate jsonwebtoken;
   use actix_files::Files;
-  use actix_web:: { * , dev::*, body::* };
+  use actix_web:: { * , dev::*, body::*, web::Data };
   use leptos::{ prelude::*, config::get_configuration, logging::* };
   use leptos_meta::MetaTags;
   use leptos_actix::{generate_route_list, LeptosRoutes};
@@ -19,16 +30,23 @@ async fn main() -> std::io::Result<()> {
   // use actix_web_grants::{ protect, authorities::AttachAuthorities };
   // use actix_web_httpauth::{ middleware::HttpAuthentication, extractors::bearer::BearerAuth };
   use serde::{Deserialize, Serialize};
-  use crate::server;
-  use peace::app::*;
+
 
   log!("Getting configurations...");
   let leptos_config = get_configuration(None).unwrap();
   let leptos_address = leptos_config.leptos_options.site_addr;
-  let peace_config = server::PeaceConfig::prime_envs();
+  let mut peace_config = config::PeaceConfig::prime_envs();
 
-  // TODO: Use peace_config to set address.
-  let db_mongodb = mongodb::Client::with_uri_str("mongodb://localhost:27017").await.unwrap();
+  let db_mongodb = mongodb::Client::with_options(
+    mongodb::options::ClientOptions::builder().hosts(peace_config.get_mongodb_uris())
+      .app_name(Some("peacelily".to_string()))
+      .build()
+  ).unwrap();
+
+  peace_config.prime_qotd(&db_mongodb).await.unwrap();
+  let peace_config = Data::new(Mutex::new(peace_config));
+  log!("Configurations loaded.");
+  log!("Starting server...");
 
   HttpServer::new(move || {
     // Generate the list of routes in your Leptos App
@@ -71,7 +89,7 @@ async fn main() -> std::io::Result<()> {
       // )
       .app_data(web::Data::new(leptos_options.to_owned()))
       .app_data(web::Data::new(db_mongodb.clone()))
-      // .app_data(web::Data::new(peace_config.clone()))
+      .app_data(web::Data::clone(&peace_config))
       // .wrap(middleware::from_fn(server::rate_limit))
   })
   .bind(&leptos_address)?

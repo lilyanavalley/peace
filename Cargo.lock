@@ -3020,7 +3020,7 @@ dependencies = [
 
 [[package]]
 name = "peace"
-version = "0.5.0"
+version = "0.6.0"
 dependencies = [
  "actix-files",
  "actix-web",
@@ -3042,6 +3042,7 @@ dependencies = [
  "serde",
  "wasm-bindgen",
  "wasm-bindgen-console-logger",
+ "web-sys",
  "webauthn-rs",
 ]
 

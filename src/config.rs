@@ -1,7 +1,8 @@
 
 use leptos::prelude::*;
 use serde::{Deserialize, Serialize};
-use webauthn_rs;
+#[cfg(feature = "ssr")]
+use mongodb;
 
 
 const PEACE_WEBAUTHN_ID:      &'static str = "PEACE_WEBAUTHN_ID";
@@ -12,15 +13,18 @@ const PEACE_MONGODB_URIS:     &'static str = "PEACE_MONGODB_URIS";
 
 #[derive(Clone)]
 pub struct PeaceConfig {
-  webauthn_rp_id:     String,
-  webauthn_rp_origin: String,
-  webauthn_rp_name:   Option<String>,
-  webauthn_timeout:   std::time::Duration,
-  mongodb_uris:       Vec<mongodb::options::ServerAddress>
+  pub webauthn_rp_id:     String,
+  pub webauthn_rp_origin: String,
+  pub webauthn_rp_name:   Option<String>,
+  pub webauthn_timeout:   std::time::Duration,
+  pub quotes:             quote_queue::QuoteDocument,
+  #[cfg(feature = "ssr")]
+  mongodb_uris:           Vec<mongodb::options::ServerAddress>,
 }
 
 impl PeaceConfig {
 
+  #[cfg(feature = "ssr")]
   pub fn prime_envs() -> Self {
     let mut config = PeaceConfig::default();
     let envs = std::env::vars();
@@ -41,7 +45,11 @@ impl PeaceConfig {
 
   }
 
+  #[cfg(feature = "ssr")]
   fn parse_mongodb_uris(uris: String) -> Vec<mongodb::options::ServerAddress> {
+
+    use webauthn_rs;
+
     // TODO: more complicated logic may be implemented to prevent downstream errors from occuring due to bad input.
     let mut returnable = Vec::new();
     for each_uri in uris.split(',') {
@@ -52,8 +60,20 @@ impl PeaceConfig {
     returnable
   }
 
+  #[cfg(feature = "ssr")]
+  pub async fn prime_qotd(&mut self, mongodb: &mongodb::Client) -> mongodb::error::Result<()> {
+    self.quotes = quote_server::fetch(mongodb).await?;
+    Ok(())
+  }
+
+  #[cfg(feature = "ssr")]
+  pub fn get_mongodb_uris(&self) -> Vec<mongodb::options::ServerAddress> {
+    self.mongodb_uris.clone()
+  }
+
 }
 
+#[cfg(feature = "ssr")]
 impl Default for PeaceConfig {
   fn default() -> Self {
     PeaceConfig {
@@ -61,9 +81,105 @@ impl Default for PeaceConfig {
       webauthn_rp_origin: "127.0.0.1:3000".to_string(),
       webauthn_rp_name:   None,
       webauthn_timeout:   webauthn_rs::DEFAULT_AUTHENTICATOR_TIMEOUT,
-      mongodb_uris:       Vec::new()
+      mongodb_uris:       vec!["localhost:27017".parse().unwrap()],
+      quotes:             quote_queue::QuoteDocument::default()
     }
   }
+}
+
+#[cfg(any(feature = "ssr", feature = "hydrate"))]
+mod quote_queue {
+
+  use crate::components::favoritequotes::ReturnedQuote;
+  use leptos::logging::log;
+
+
+  #[derive(Default, Clone)]
+  pub struct QuoteDocument {
+    pub quote:  Option<ReturnedQuote>, // * The quote to be displayed.
+    pub expire: Option<u64>, // * Expiration time of quote queue in unix epoch.
+  }
+
+  impl QuoteDocument {
+    
+    pub fn returned_quote(&self) -> Option<ReturnedQuote> {
+      self.quote.clone()
+    }
+
+    #[cfg(feature = "ssr")]
+    pub async fn queued_or_fetching(&mut self, mongodb: &mongodb::Client) -> mongodb::error::Result<()> {
+      use super::quote_server::fetch;
+      if self.expires() && self.expired() {
+        log!("QuoteDocument::queued_or_fetching - expired, fetching new quote");
+        let quote = fetch(mongodb).await?;
+        self.quote = quote.quote;
+        self.expire = quote.expire;
+      }
+      Ok(())
+    }
+  
+    pub fn expired(&self) -> bool {
+      if let Some(future_time) = self.expire {
+        let expires = future_time.lt(
+          &std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .unwrap()
+            .as_secs()
+          );
+          expires
+      } else {
+        false
+      }
+    }
+  
+    pub fn expires(&self) -> bool {
+      self.expire.is_some()
+    }
+
+  }
+
+
+}
+
+#[cfg(feature = "ssr")]
+mod quote_server {
+  
+  use mongodb;
+  use leptos::logging::log;
+  use crate::components::favoritequotes::ReturnedQuote;
+  use super::quote_queue::QuoteDocument;
+
+  const PROFILE_DB_COLLECTION_QUOTES: &'static str = "quotes";
+  const PROFILE_DB_DATABASE: &'static str = "profile";
+
+    
+  pub async fn fetch(mongodb: &mongodb::Client) -> mongodb::error::Result<QuoteDocument> {
+
+    let mut collection = mongodb
+      .database(PROFILE_DB_DATABASE)
+      .collection::<ReturnedQuote>(PROFILE_DB_COLLECTION_QUOTES)
+      .aggregate([mongodb::bson::doc! { "$sample": { "size": 1 } }])
+      .with_type::<ReturnedQuote>()
+      .await?;
+
+    let quote = collection.deserialize_current().ok();
+    
+    // Set expiration time for a future Unix Epoch timestamp, returning `None` if bounds of u64 overflow.
+    let expire = Some(
+      std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .unwrap()
+        .as_secs()
+        .wrapping_add(86400) // 24 hours
+    );
+
+    Ok(QuoteDocument {
+      quote,
+      expire
+    })
+
+  }
+
 }
 
 #[cfg(test)]
@@ -132,7 +248,7 @@ mod tests {
     assert_eq!(config.webauthn_rp_id, "127.0.0.1".to_string()); // Address set to localhost.
     assert_eq!(config.webauthn_timeout, std::time::Duration::from_secs(300)); // Webauthn timeout default is 300s.
 
-    assert!(config.mongodb_uris.is_empty()); // No mongodb servers specified by default.
+    assert_eq!(config.mongodb_uris, vec!["localhost:27017"]); // No mongodb servers specified by default.
 
   }
 

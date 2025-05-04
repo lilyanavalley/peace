@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @theme {
+
     --animation-rainbowswirl: rainbow 10s ease-in-out infinite;
     @keyframes rainbow {
         0% {color: var(--color-selectables-pink)}
@@ -16,5 +17,13 @@
         80% {color: #ffadd5}
         90% {color: #ffadff}
         100% {color: var(--color-selectables-pink)}
+    }
+
+    --animation-fader: fader 2s ease-in-out 1;
+    @keyframes fader {
+        0% { opacity: 0; }
+        15% { opacity: 1; }
+        85% { opacity: 1; }
+        100% { opacity: 0; }
     }
 }

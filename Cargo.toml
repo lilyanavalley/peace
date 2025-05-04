@@ -1,10 +1,25 @@
 [package]
 name = "peace"
-version = "0.5.0"
+version = "0.6.0"
 edition = "2021"
 
 [lib]
 crate-type = ["cdylib", "rlib"]
+
+# # ! REMOVE
+# # TODO: Remove and keep out of commit. Dirty work.
+# ##### LINKER FIX
+# # See: https://github.com/leptos-rs/leptos/issues/3148
+# [target.nightly-aarch64-apple-darwin]
+# linker = "rust-lld"
+# # NOTE: `rustdoc` doesn't currently respect the `linker` setting — keep an eye
+# # on this issue: https://github.com/rust-lang/rust/issues/125657
+# rustdocflags = ["-Clink-arg=-fuse-ld=lld"]
+
+# [target.nightly-x86_64-apple-darwin]
+# linker = "rust-lld"
+# rustdocflags = ["-Clink-arg=-fuse-ld=lld"]
+# ##### END LINKER FIX
 
 [dependencies]
 leptos = { version = "0.7.7", features = ["nightly"] }
@@ -15,8 +30,6 @@ actix-files = { version = "0.6.6", optional = true }
 actix-web = { version = "4.10.2", optional = true, features = ["macros", "secure-cookies"] }
 mongodb = { version = "3.2.2", optional = true }
 console_error_panic_hook = { version = "0.1", optional = true }
-# console_log = "1.0.0"
-# wasm-logger = "^0.2"
 wasm-bindgen-console-logger = "0.1.1"
 log = "0.4.27"
 http = { version = "1.0.0", optional = true }
@@ -30,6 +43,7 @@ leptos_hotkeys = "0.2.2"
 actix-web-grants = { version = "^4.1", optional = true }
 actix-web-httpauth = { version = "^0.8", optional = true }
 jsonwebtoken = { version = "^9.3", optional = true }
+web-sys = { version = "*", features = ["Clipboard", "Navigator", "Window"] }
 
 [features]
 csr = ["leptos/csr"]
@@ -57,7 +71,8 @@ wip = []
 
 [profile.wasm-release]
 inherits = "release"
-opt-level = 'z'
+# opt-level = 'z'
+opt-level = 2
 lto = true
 codegen-units = 1
 panic = "abort"
