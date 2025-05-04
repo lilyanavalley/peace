@@ -2,9 +2,9 @@
 pub const DESCRIPTION_SHORT:    &'static str = "*a lily on a valley grown for software engineering, social causes and artistry*";
 pub const DESCRIPTION_LONG_MD:     &'static str = "Hello, welcome to my tiny corner of the Internet! My projects, contributions, beliefs and ideas in [Open Source Software](https://en.wikipedia.org/wiki/Open-source_software) (or differential yet equally nerdy subjects) are showcased here.
 
-As for myself, I'm `{age}` years old. Quite a lot of my personal life can be elided, with the most notable points being: I started my journey in digital art at a very young age. Around the same time, I was also curious about the sciences of computers and electronics down to their very fundamentals. Soon after, I learned to write batch scripts, wrote very rudimentary game mods and continued studying for the arts of such things up to today.
+Quite a lot of my personal life can be elided, with the most notable points being: I started my journey in digital art at a very young age. Around the same time, I was also curious about the sciences of computers and electronics down to their very fundamentals. Soon after, I learned to write batch scripts, wrote very rudimentary game mods and continued studying for the arts of such things up to today.
 
- With interests in Computer Science, Anthropology and Psychology, I find value in the technologies and teachings of social causes and public benefit. Movements akin to the [Free Software Foundation](https://fsf.org) and the [Free Art License](http://artlibre.org/) (*published in Françias*; [available in English](https://artlibre.org/licence/lal/en/)) are some of my favorite references for sustaining an ethical, '*Copyleft*' attitude; inspiring optimism for a freer and fairer world where ingenuity, integrity and ethics prevails in technology for the betterment of Humanity.
+With interests in Computer Science, Anthropology and Psychology, I find value in the technologies and teachings of social causes and public benefit. Movements akin to the [Free Software Foundation](https://fsf.org) and the [Free Art License](http://artlibre.org/) (*published in Françias*; [available in English](https://artlibre.org/licence/lal/en/)) are some of my favorite references for sustaining an ethical, '*Copyleft*' attitude; inspiring optimism for a freer and fairer world where ingenuity, integrity and ethics prevails in technology for the betterment of Humanity.
 
 My hobbies include music production (with synthesizers and a [Digitakt]()), writing fanfic and novels strictly for myself, CAD/3D printing, pencil art and calligraphy. I’m practicing more self-care too, which as it turns out, is very important for one’s wellbeing. There’s a lot of smaller things to boast, but… you can rightly imagine they’re very nerdy at this point so I’ll save you the words.
 
@@ -46,6 +46,67 @@ pub const ASK_DESCRIPTION_MD: &'static str = "Questions about [Rust]()? Maybe, y
 An account or social media platform is not required to ask me questions. All questions are anonymous, yet public.";
 pub const ASK_ASKSIMILAR: &'static str = "Ask a Similar Question";
 pub const ASK_REVIEW: &'static str = "Request a Review";
+
+pub const WORK_MD: &'static str = "## Projects
+
+
+### Peace / `peacelily`
+📜 License `AGPL-3` | 🌐 [GitHub Repo](https://github.com/lilyanavalley/peace)
+
+The website you’re currently browsing, based off of Rust web framework [Leptos](https://leptos.rs). It’s the successor to a previous personal website I worked on called `lavender`, made with [Rocket](https://rocket.rs) and pure HTML/CSS. This newer iteration focuses on the use of WASM and reactive web development.
+
+Eventually, I’d like to transform Peace into a completely customizable profile/portfolio service that others can use for their own purposes.
+
+----
+### *Codename* Experiment A / `exa`
+📜 License `GPL-3` | 🌐 [GitHub Repo](https://github.com/lilyanavalley/exa)
+
+Using the Fyrox game engine, `exa` is an exploration of game development in Rust. Currently, the direction of the game and its gameplay loop is '*to be determined*' but its source code is available.
+
+This particular project spawned off of an earlier alpha build on the concept of trading, marketing and corporate expansion; illustrating capitalistic values, exploits and the political corruption it fosters in an otherworldly society of Humans, Animalkin, Eldrich Horrors and Monsters. `exa` could hold the same tone, but I’m not quite sure where I want to go with it yet.
+
+----
+### *Codename* Experiment B / `exb`
+ 🤷 Unreleased
+
+An experimental game, still yet to be determined.
+
+----
+### BoreGUI
+(Pronounced *bore-gooey*)
+📜 License `GPL-3` | 🌐 [GitHub Repo](https://github.com/lilyanavalley/boregui)
+
+Graphical user interface for [Borg Backup](). I really like using Borg on my servers and wanted to extend its usage to desktop environments. Written in Rust utilizing the `egui` framework.
+
+----
+### `dots-rust-leptos`
+📜 `Public Domain` | 🌐 [GitHub Repo](https://github.com/lilyanavalley/dots-rust-leptos)
+
+Dot files which initialize a working Rust & Leptos development environment, particularly for my own use within GitHub Codespaces.
+
+----
+### `dots-workstation`
+ 🤷 Unreleased
+
+Dot files for initializing and updating personal workstations with the apps, tools and libraries I’d need to feel comfy. This includes updated Python, Rust, C/C++ environments and the IDEs for them.
+
+----
+### *Codename* `keys`
+ 🤷 Unreleased
+
+Pair of firmware and desktop application packages for DIY keyboards. Keys is an exploration of the RP2040 chip and embedded Rust development. Its accompanying desktop application offers customizable layouts, layers, macros, 'overlay HUD', plugin API and additionally writes its settings to the keyboard for portability.
+
+Sadly, I’m not quite comfortable sharing this project until it’s proven stable enough not to brick hardware. 😅
+
+
+----
+## Contributions
+
+
+### `conduwuit`
+📜 License `Apache-2` | 🌐 [My Fork](https://github.com/lilyanavalley/conduwuit)
+Matrix chat server, originally a [hard fork of conduit by girlbossceo (aka: June/Strawberry/puppygock)](https://github.com/girlbossceo/conduwuit) and archived after some time. Since I found it to be very cool, I’ve forked it and have been poking about with it.  Many thanks go to Strawberry and the project’s contributors!
+";
 
 pub const CONTACT_DESCRIPTION: &'static str = "Have a question or statement? Send me a direct message! An account or specific social media platform is not necessary to contact me.";
 pub const CONTACT_INSTRUCTIONS_MD: &'static str = "Once you send a message, your browser will remember our conversation history. You will need to return periodically for updates. If your browser has privacy-centric features that delete Browser Cookies, you should also note the **SCID** to return to conversations in the future in case your browser doesn't do so automatically.";

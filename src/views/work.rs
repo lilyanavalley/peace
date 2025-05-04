@@ -1,20 +1,16 @@
 
 use leptos::prelude::*;
 use phosphor_leptos::*;
+use crate::{ placeholders, components };
 
 
 #[component]
 pub fn Work() -> impl IntoView {
   view! {
-    <h1 class="text-center">Work</h1>
-
-    <div class="flex flex-col grow h-full overflow-auto self-center w-3/4">
-      
-      <a class="flex items-center border-x-2 rounded-lg border-[var(--color-selectables-green)] hover:border-[var(--color-brightwhite)] without-link-symbol" href="https://github.com/lilyanavalley/">
-        <img src="favicon.ico" alt="sample project name icon"/>
-        <div class="dosis-400" style="margin: .5rem">Sample Project Name</div>
-      </a>
-
-    </div>
+    <article class="w-3/4 self-center" style="margin: 2rem">
+      <components::article::Markdown
+        markdown = { placeholders::WORK_MD.to_string() }
+      />
+    </article>
   }
 }
