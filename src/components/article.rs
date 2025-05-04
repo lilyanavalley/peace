@@ -6,7 +6,9 @@ use comrak;
 
 #[component]
 pub fn Markdown(markdown: String) -> impl IntoView {
-  let markdown = comrak::markdown_to_html(&markdown, &comrak::Options::default());
+  let mut options = comrak::Options::default();
+  options.render.hardbreaks = true;
+  let markdown = comrak::markdown_to_html(&markdown, &options);
   view! {
     <div inner_html=markdown>
     </div>
