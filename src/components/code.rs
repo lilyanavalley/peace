@@ -7,17 +7,37 @@ use comrak::{ markdown_to_html_with_plugins, Options, Plugins };
 
 #[component]
 pub fn Plain(text: &'static str) -> impl IntoView {
+
+  let (do_copy, set_do_copy) = create_signal(false);
+  let copy_to_clipboard = move |_| {
+    set_do_copy.update(|v| *v = true);
+    web_sys::window()
+      .unwrap()
+      .navigator()
+      .clipboard()
+      .write_text(text);
+  };
+
   view! {
-    <div class="border-4 border-[var(--color-deepblack)] rounded-[1rem]" style="margin-top: 1rem; margin-bottom: 1rem;">
+    <div class="border-4 border-[var(--color-deepblack)] rounded-[1rem] bg-[var(--color-vantablack)] max-w-full" style="margin-top: 1rem; margin-bottom: 1rem;">
       
     <pre style="padding: .5rem; margin: 0; overflow: scroll" inner_html=text></pre>
     
       <div class="flex items-center justify-between bg-[var(--color-deepblack)] border-t-4 border-[var(--color-deepblack)]" style="padding: .25rem; padding-left: .5rem; padding-right: .5rem; border-radius: .75rem;">
         
-        <button class="flex flex-row">
+        <button class="flex flex-row" on:click=copy_to_clipboard>
           <Icon icon=COPY size="1.2rem"/>
           <b style="margin-right: .25rem">Copy</b>
         </button>
+
+        <Show
+          when= move || { do_copy.get() == true }
+          fallback=|| view! {}
+        >
+          <div class="opacity-0 animate-(--animation-fader) text-[var(--color-selectables-green)]">
+            <span>"Copied!"</span>
+          </div>
+        </Show>
 
       </div>
 
@@ -28,7 +48,15 @@ pub fn Plain(text: &'static str) -> impl IntoView {
 #[component]
 pub fn Code(source: &'static str) -> impl IntoView {
 
-  // let markdown = markdown_to_html(markdown, &Options::default());
+  let (do_copy, set_do_copy) = create_signal(false);
+  let copy_to_clipboard = move |_| {
+    set_do_copy.update(|v| *v = true);
+    web_sys::window()
+      .unwrap()
+      .navigator()
+      .clipboard()
+      .write_text(source);
+  };
 
   let builder = SyntectAdapterBuilder::new().css();
   let adapter = builder.build();
@@ -41,21 +69,34 @@ pub fn Code(source: &'static str) -> impl IntoView {
   let output = markdown_to_html_with_plugins(&input, &options, &plugins);
   
   view! {
-    <div class="border-4 border-[var(--color-deepblack)] rounded-[1rem]" style="margin-top: 1rem; margin-bottom: 1rem;">
+    <div class="border-4 border-[var(--color-deepblack)] rounded-[1rem] bg-[var(--color-vantablack)] max-w-full" style="margin-top: 1rem; margin-bottom: 1rem;">
     
       <pre style="padding: .5rem; margin: 0; overflow: scroll" inner_html=output></pre>
       
       <div class="flex items-center justify-between bg-[var(--color-deepblack)] border-t-4 border-[var(--color-deepblack)]" style="padding: .25rem; padding-left: .5rem; padding-right: .5rem; border-radius: .75rem;">
         
-        <div class="tooltip">
-          <Icon icon=FILE_RS size="1.5rem" color="#AAA"/>
-          <span>"Rust"</span>
-        </div>
+        <div class="flex items-center">
         
-        <button class="flex flex-row">
-          <Icon icon=COPY size="1.2rem"/>
-          <b style="margin-right: .25rem">Copy</b>
-        </button>
+          <button class="flex flex-row" on:click=copy_to_clipboard>
+            <Icon icon=COPY size="1.2rem"/>
+            <b style="margin-right: .25rem">Copy</b>
+          </button>
+
+          <div class="tooltip" style="margin-left: .5rem">
+            <Icon icon=FILE_RS size="1.5rem" color="#AAA"/>
+            <span>"Rust"</span>
+          </div>
+
+        </div>
+
+        <Show
+          when= move || { do_copy.get() == true }
+          fallback=|| view! {}
+        >
+          <div class="opacity-0 animate-(--animation-fader) text-[var(--color-selectables-green)]">
+            <span>"Copied!"</span>
+          </div>
+        </Show>
 
       </div>
 
