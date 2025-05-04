@@ -2,8 +2,6 @@ name: Deploy to DO Apps
 
 on:
   push:
-    tags:
-      - "v/**"
     branches:
       - live
 
