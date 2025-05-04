@@ -49,12 +49,12 @@ const ROUTERBAR_SAMPLE: [RouterBarItem; 4] = [
     route: "/contact",
     colorsa: "--color-selectables-yellow"
   },
-  RouterBarItem {
-    icon: CHATS_CIRCLE,
-    label: "Ask",
-    route: "/ask",
-    colorsa: "--color-selectables-blue"
-  },
+  // RouterBarItem {
+  //   icon: CHATS_CIRCLE,
+  //   label: "Ask",
+  //   route: "/ask",
+  //   colorsa: "--color-selectables-blue"
+  // },
 ];
 
 struct RouterBarItem {

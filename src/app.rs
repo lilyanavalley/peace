@@ -81,7 +81,7 @@ pub fn App() -> impl IntoView {
             <Route path=StaticSegment("/contact") view=ContactAlternative/> // ? this route is temporary.
           
             // * Remember to re-enable the navigator item too.
-            <Route path=StaticSegment("/ask") view=Ask/>
+            // <Route path=StaticSegment("/ask") view=Ask/>
 
             <Route path=StaticSegment("/stats") view=Stats/>
           
@@ -90,7 +90,7 @@ pub fn App() -> impl IntoView {
           </Routes>
           <components::favoritequotes::FavoriteQuotes/>
           <components::footer::Footer/>
-          <components::accessibility::Handlebar/>
+          // <components::accessibility::Handlebar/>
           <noscript>
             <div class="flex items-center justify-center text-[var(--color-selectables-red)]">
               <div style="padding: .75rem; padding-right: 0"><Icon icon=COFFEE size="1.5rem"/></div>
