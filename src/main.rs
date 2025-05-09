@@ -39,7 +39,7 @@ async fn main() -> std::io::Result<()> {
   log!("peace configurating...");
   let mut peace_config = config::PeaceConfig::prime_envs();
   log!("mongodb client setup...");
-  let db_mongodb = peace_config.mongodb_setup();
+  let db_mongodb = peace_config.mongodb_setup().await;
 
   log!("priming quote of the day...");
   peace_config.prime_qotd(&db_mongodb).await.unwrap();
