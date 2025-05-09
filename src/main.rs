@@ -32,22 +32,21 @@ async fn main() -> std::io::Result<()> {
   use serde::{Deserialize, Serialize};
 
 
-  log!("Getting configurations...");
-  let leptos_config = get_configuration(None).unwrap();
+  log!("leptos configurating...");
+  let leptos_config = get_configuration(Some("Cargo.toml")).unwrap();
   let leptos_address = leptos_config.leptos_options.site_addr;
+
+  log!("peace configurating...");
   let mut peace_config = config::PeaceConfig::prime_envs();
+  log!("mongodb client setup...");
+  let db_mongodb = peace_config.mongodb_setup();
 
-  let db_mongodb = mongodb::Client::with_options(
-    mongodb::options::ClientOptions::builder().hosts(peace_config.get_mongodb_uris())
-      .app_name(Some("peacelily".to_string()))
-      .build()
-  ).unwrap();
-
+  log!("priming quote of the day...");
   peace_config.prime_qotd(&db_mongodb).await.unwrap();
+  log!("...ready!");
   let peace_config = Data::new(Mutex::new(peace_config));
-  log!("Configurations loaded.");
+  
   log!("Starting server...");
-
   HttpServer::new(move || {
     // Generate the list of routes in your Leptos App
     let routes = generate_route_list(App);
@@ -56,6 +55,7 @@ async fn main() -> std::io::Result<()> {
     // let authenticator = HttpAuthentication::bearer(server::auth_validate);
     // println!("listening on http://{}", &addr);
 
+    log!("...app launch initiated.");
     App::new()
       // serve JS/WASM/CSS from `pkg`
       .service(Files::new("/pkg", format!("{site_root}/pkg")))
