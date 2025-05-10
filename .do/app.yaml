@@ -12,20 +12,23 @@ region: tor
 ingress:
   rules:
   - component:
-      name: peace-pws
+      name: peace-prod
       preserve_path_prefix: true
     match:
       path:
         prefix: /
+
 services:
   - dockerfile_path: /Dockerfile
     envs:
-    - key: MONGODB_URI
+    - key: PEACE_MONGODB_URIS
       scope: RUN_TIME
       value: ${db-mongodb-tor1-94843.DATABASE_URL}
-    - key: CA_CERT
+      type: SECRET
+    - key: MONGODB_CA_CERT
       scope: RUN_TIME
       value: ${db-mongodb-tor1-94843.CA_CERT}
+      type: SECRET
     http_port: 3000
     image:
       deploy_on_push:
@@ -36,12 +39,12 @@ services:
       tag: latest
     instance_count: 1
     instance_size_slug: apps-s-1vcpu-2gb
-    name: peace-pws
+    name: peace-prod
     source_dir: /
 
 databases:
-  - cluster_name: db-mongodb-tor1-94843
+  - cluster_name: db-mongodb-tor1-prod
     engine: MONGODB
-    name: db-mongodb-tor1-94843
+    name: db-mongodb-tor1-prod
     production: true
     version: "7"
