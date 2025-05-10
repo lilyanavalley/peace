@@ -43,8 +43,8 @@ services:
     source_dir: /
 
 databases:
-  - cluster_name: db-mongodb-tor1-prod
+  - cluster_name: db-mongodb-tor1-94843
     engine: MONGODB
-    name: db-mongodb-tor1-prod
+    name: db-mongodb-tor1-94843
     production: true
     version: "7"

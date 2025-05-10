@@ -12,8 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: Swatinem/rust-cache@v2 # Cache build deps for faster building later.
-      # - name: Install build deps
-      #   run: sudo apt install -y pkg-config
-      - run: rustup toolchain install stable --profile minimal
+      - name: Install build dependencies
+        run: apt-get update -y && apt-get install -y --no-install-recommends build-essential clang pkg-config libssl-dev ca-certificates openssl
+      - name: Fetch binstall binary
+        run: wget https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz
+      - name: Install binstall binary
+        run: tar -xvf cargo-binstall-x86_64-unknown-linux-musl.tgz && cp cargo-binstall /usr/local/cargo/bin
+      - name: Install cargo-leptos
+        run: cargo binstall cargo-leptos -y
+      - run: rustup toolchain install nightly --profile minimal
       - name: Run tests
-        run: cargo test --workspace --verbose
+        run: cargo leptos test
