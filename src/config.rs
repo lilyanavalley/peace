@@ -1,8 +1,10 @@
 
-use leptos::prelude::*;
+use leptos::{ prelude::*, logging::* };
 use serde::{Deserialize, Serialize};
 #[cfg(feature = "ssr")]
 use mongodb;
+#[cfg(feature = "ssr")]
+use std::future::Future;
 
 
 const PEACE_WEBAUTHN_ID:      &'static str = "PEACE_WEBAUTHN_ID";
@@ -10,6 +12,8 @@ const PEACE_WEBAUTHN_ORIGIN:  &'static str = "PEACE_WEBAUTHN_ORIGIN";
 const PEACE_WEBAUTHN_NAME:    &'static str = "PEACE_WEBAUTHN_NAME";
 const PEACE_WEBAUTHN_TIMEOUT: &'static str = "PEACE_WEBAUTHN_TIMEOUT";
 const PEACE_MONGODB_URIS:     &'static str = "PEACE_MONGODB_URIS";
+const RAW_CA_CERT:            &'static str = "MONGODB_CA_CERT";
+const FILEPATH_CA:            &'static str = "ca.crt";
 
 #[derive(Clone)]
 pub struct PeaceConfig {
@@ -19,13 +23,18 @@ pub struct PeaceConfig {
   pub webauthn_timeout:   std::time::Duration,
   pub quotes:             quote_queue::QuoteDocument,
   #[cfg(feature = "ssr")]
-  mongodb_uris:           Vec<mongodb::options::ServerAddress>,
+  mongodb_uris:           Option<String>,
+  #[cfg(feature = "ssr")]
+  mongodb_tls:            Option<mongodb::options::Tls>,
 }
 
 impl PeaceConfig {
 
   #[cfg(feature = "ssr")]
   pub fn prime_envs() -> Self {
+    use std::str::FromStr;
+
+    log!("reading environment:");
     let mut config = PeaceConfig::default();
     let envs = std::env::vars();
 
@@ -36,8 +45,20 @@ impl PeaceConfig {
         PEACE_WEBAUTHN_ORIGIN   => config.webauthn_rp_origin = each_value,
         PEACE_WEBAUTHN_NAME     => config.webauthn_rp_name = Some(each_value),
         PEACE_WEBAUTHN_TIMEOUT  => config.webauthn_timeout = std::time::Duration::from_secs(each_value.parse::<u64>().unwrap()),
-        PEACE_MONGODB_URIS      => config.mongodb_uris = Self::parse_mongodb_uris(each_value),
-        _ => ()
+        PEACE_MONGODB_URIS      => config.mongodb_uris = Some(each_value),
+        RAW_CA_CERT             => {
+          log!("  🔑 {each_key} defines a TLS setup");
+          log!("  🔑   → dumping CA cert to disk");
+          Self::make_cert_file(each_value).unwrap();
+          config.mongodb_tls = Some(
+            mongodb::options::Tls::from(
+              mongodb::options::TlsOptions::builder()
+                .allow_invalid_certificates(false)
+                .ca_file_path(Some(std::path::PathBuf::from_str(FILEPATH_CA).unwrap()))
+                .build())
+          )
+        },
+        _ => log!("  〰️ {each_key}"),
       }
     }
 
@@ -46,18 +67,15 @@ impl PeaceConfig {
   }
 
   #[cfg(feature = "ssr")]
-  fn parse_mongodb_uris(uris: String) -> Vec<mongodb::options::ServerAddress> {
+  fn make_cert_file(cert: String) -> std::io::Result<()> {
+    use std::io::Write;
 
-    use webauthn_rs;
+    log!("making cert file at {FILEPATH_CA}");
+    let mut buffer = cert.as_bytes();
+    let mut file = std::fs::File::create(FILEPATH_CA)?;
+    file.write_all(&mut buffer)?;
 
-    // TODO: more complicated logic may be implemented to prevent downstream errors from occuring due to bad input.
-    let mut returnable = Vec::new();
-    for each_uri in uris.split(',') {
-      if let Ok(each_uri) = mongodb::options::ServerAddress::parse(each_uri) {
-        returnable.push(each_uri);
-      } else { leptos::logging::warn!("env {PEACE_MONGODB_URIS} specifies invalid uri: {each_uri}"); }
-    }
-    returnable
+    Ok(())
   }
 
   #[cfg(feature = "ssr")]
@@ -66,9 +84,33 @@ impl PeaceConfig {
     Ok(())
   }
 
+  // #[cfg(feature = "ssr")]
+  // pub fn get_mongodb_uris(&self) -> Vec<mongodb::options::ServerAddress> {
+  //   self.mongodb_uris.clone()
+  // }
+
   #[cfg(feature = "ssr")]
-  pub fn get_mongodb_uris(&self) -> Vec<mongodb::options::ServerAddress> {
-    self.mongodb_uris.clone()
+  pub async fn mongodb_setup(&mut self) -> mongodb::Client {
+
+    if self.mongodb_uris.is_none() {
+      warn!("there are NO mongodb addresses configured!");
+      log!("falling back to localhost address: mongodb://127.0.0.1:27017");
+      self.mongodb_uris = Some(String::from("mongodb://127.0.0.1:27017"));
+    }
+
+    let options = Self::parse_mongodb_uris(self.mongodb_uris.clone().unwrap()).await.unwrap();
+
+    mongodb::Client::with_options(
+      options
+      // .tls(self.mongodb_tls)
+    ).unwrap()
+
+  }
+
+  #[cfg(feature = "ssr")]
+  async fn parse_mongodb_uris(uris: String) -> mongodb::error::Result<mongodb::options::ClientOptions> {
+    log!("unparsed uris: {uris}");
+    mongodb::options::ClientOptions::parse(uris).await
   }
 
 }
@@ -81,8 +123,9 @@ impl Default for PeaceConfig {
       webauthn_rp_origin: "127.0.0.1:3000".to_string(),
       webauthn_rp_name:   None,
       webauthn_timeout:   webauthn_rs::DEFAULT_AUTHENTICATOR_TIMEOUT,
-      mongodb_uris:       vec!["localhost:27017".parse().unwrap()],
-      quotes:             quote_queue::QuoteDocument::default()
+      mongodb_uris:       None,
+      mongodb_tls:        None,
+      quotes:             quote_queue::QuoteDocument::default(),
     }
   }
 }
@@ -155,13 +198,17 @@ mod quote_server {
     
   pub async fn fetch(mongodb: &mongodb::Client) -> mongodb::error::Result<QuoteDocument> {
 
-    let mut collection = mongodb
+    log!("reading quote collection");
+    let collection = mongodb
       .database(PROFILE_DB_DATABASE)
       .collection::<ReturnedQuote>(PROFILE_DB_COLLECTION_QUOTES)
       .aggregate([mongodb::bson::doc! { "$sample": { "size": 1 } }])
       .with_type::<ReturnedQuote>()
-      .await?;
+      .await;
 
+    let collection = collection?;
+
+    log!("deserializing quote...");
     let quote = collection.deserialize_current().ok();
     
     // Set expiration time for a future Unix Epoch timestamp, returning `None` if bounds of u64 overflow.
@@ -173,6 +220,7 @@ mod quote_server {
         .wrapping_add(86400) // 24 hours
     );
 
+    log!("quote enqueued!");
     Ok(QuoteDocument {
       quote,
       expire
@@ -198,23 +246,8 @@ mod tests {
     let webauthn_origin = "test.example.com:8080";
     let webauthn_name = "Testing";
     let webauthn_timeout = "60";
-    
-    #[cfg(not(target_family = "unix"))]
-    let mongodb_uris = "localhost:1000,127.0.0.1:1001";
-    #[cfg(not(target_family = "unix"))]
-    let mongodb_uris_hardtruth = vec![
-      ServerAddress::Tcp { host: "localhost".to_string(), port: Some(1000) },
-      ServerAddress::Tcp { host: "127.0.0.1".to_string(), port: Some(1001) },
-    ];
-
-    #[cfg(target_family = "unix")]
-    let mongodb_uris = "localhost:1000,127.0.0.1:1001,unix://socket.sock";
-    #[cfg(target_family = "unix")]
-    let mongodb_uris_hardtruth = vec![
-      ServerAddress::Tcp { host: "localhost".to_string(), port: Some(1000) },
-      ServerAddress::Tcp { host: "127.0.0.1".to_string(), port: Some(1001) },
-      ServerAddress::Unix { path: std::path::PathBuf::from("unix://socket.sock") },
-    ];
+    let mongodb_uris = "mongodb://localhost:2025";
+    let mongodb_tls_ca_cert = "";
 
     // * Vars are (temporarily) set for detection for `prime_envs()`
     unsafe {
@@ -223,6 +256,7 @@ mod tests {
       env::set_var(PEACE_WEBAUTHN_NAME, webauthn_name);
       env::set_var(PEACE_WEBAUTHN_TIMEOUT, webauthn_timeout);
       env::set_var(PEACE_MONGODB_URIS, mongodb_uris);
+      env::set_var(PEACE_MONGODB_TLS, mongodb_tls_ca_cert);
     }
 
     // * PeaceConfig should pull the vars above and populate itself with those parsed values.
@@ -232,7 +266,8 @@ mod tests {
     assert_eq!(config.webauthn_rp_origin.as_str(), webauthn_origin);
     assert_eq!(config.webauthn_rp_name, Some(webauthn_name.to_string()));
     assert_eq!(config.webauthn_timeout, Duration::from_secs(webauthn_timeout.parse::<u64>().unwrap()));
-    assert_eq!(config.mongodb_uris, mongodb_uris_hardtruth);
+    assert_eq!(config.mongodb_uris, Some(String::from(mongodb_uris)));
+    assert!(config.mongodb_tls.is_some());
 
   }
 
@@ -248,7 +283,8 @@ mod tests {
     assert_eq!(config.webauthn_rp_id, "127.0.0.1".to_string()); // Address set to localhost.
     assert_eq!(config.webauthn_timeout, std::time::Duration::from_secs(300)); // Webauthn timeout default is 300s.
 
-    assert_eq!(config.mongodb_uris, vec!["localhost:27017"]); // No mongodb servers specified by default.
+    assert!(config.mongodb_uris.is_none()); // No mongodb servers specified by default.
+    assert!(config.mongodb_tls.is_none()); // No tls by default.
 
   }
 
