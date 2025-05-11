@@ -19,7 +19,8 @@ jobs:
       - name: Fetch binstall binary
         run: wget https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz
       - name: Install binstall binary
-        run: tar -xvf cargo-binstall-x86_64-unknown-linux-musl.tgz && cp cargo-binstall /usr/local/cargo/bin
+        # ? this was changed from `/usr/local/cargo/bin` to hopefully solve this 'No such file or directory' error.
+        run: tar -xvf cargo-binstall-x86_64-unknown-linux-musl.tgz && cp cargo-binstall ~/.cargo/bin
       - name: Install cargo-leptos
         run: cargo binstall cargo-leptos -y
       - name: Run tests
