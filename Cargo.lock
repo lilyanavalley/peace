@@ -3020,7 +3020,7 @@ dependencies = [
 
 [[package]]
 name = "peace"
-version = "0.7.0"
+version = "0.7.3"
 dependencies = [
  "actix-files",
  "actix-web",
@@ -3039,6 +3039,7 @@ dependencies = [
  "log",
  "mongodb",
  "phosphor-leptos",
+ "proc-macro-error2",
  "serde",
  "wasm-bindgen",
  "wasm-bindgen-console-logger",
