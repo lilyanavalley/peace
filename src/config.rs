@@ -188,7 +188,7 @@ mod quote_queue {
 mod quote_server {
   
   use mongodb;
-  use leptos::logging::log;
+  use leptos::logging::*;
   use crate::components::favoritequotes::ReturnedQuote;
   use super::quote_queue::QuoteDocument;
 
@@ -209,7 +209,10 @@ mod quote_server {
     let collection = collection?;
 
     log!("deserializing quote...");
-    let quote = collection.deserialize_current().ok();
+    let quote = collection.deserialize_current().unwrap_or({
+      error!("quote can't be deserialized!");
+      ReturnedQuote::default()
+    });
     
     // Set expiration time for a future Unix Epoch timestamp, returning `None` if bounds of u64 overflow.
     let expire = Some(
@@ -222,7 +225,7 @@ mod quote_server {
 
     log!("quote enqueued!");
     Ok(QuoteDocument {
-      quote,
+      quote: Some(quote),
       expire
     })
 
