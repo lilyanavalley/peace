@@ -50,6 +50,7 @@ web-sys = { version = "*", features = ["Clipboard", "Navigator", "Window"] }
 proc-macro-error = { version = "^2.0", package = "proc-macro-error2" }
 
 [features]
+default = ["ssr", "hydrate"]
 csr = ["leptos/csr"]
 hydrate = [
   "dep:console_error_panic_hook",

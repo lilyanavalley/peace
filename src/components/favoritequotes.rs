@@ -31,9 +31,7 @@ pub async fn quote_today() -> Result<ReturnedQuote, ServerFnError> {
   }
 
   else {
-    Err(ServerFnError::ServerError(
-      "No quote available".to_string()
-    ))
+    Ok(ReturnedQuote::default())
   }
 
 }
