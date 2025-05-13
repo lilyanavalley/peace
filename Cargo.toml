@@ -46,6 +46,9 @@ actix-web-httpauth = { version = "^0.8", optional = true }
 jsonwebtoken = { version = "^9.3", optional = true }
 web-sys = { version = "*", features = ["Clipboard", "Navigator", "Window"] }
 
+# ? Fix for: https://osv.dev/vulnerability/RUSTSEC-2024-0370
+proc-macro-error = { version = "^2.0", package = "https://crates.io/crates/proc-macro-error2" }
+
 [features]
 csr = ["leptos/csr"]
 hydrate = [
