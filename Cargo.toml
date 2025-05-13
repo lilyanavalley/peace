@@ -50,6 +50,7 @@ web-sys = { version = "*", features = ["Clipboard", "Navigator", "Window"] }
 yaml-rust = { version = "^0.10", package = "yaml-rust2" }
 
 [features]
+default = ["ssr", "hydrate"]
 csr = ["leptos/csr"]
 hydrate = [
   "dep:console_error_panic_hook",
