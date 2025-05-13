@@ -234,10 +234,13 @@ mod quote_server {
 }
 
 #[cfg(test)]
+#[cfg(feature = "ssr")]
 mod tests {
 
   use super::*;
+  use super::PeaceConfig;
   use std::{ env, time::Duration };
+  // #[cfg(feature = "ssr")]
   use mongodb::options::ServerAddress;
 
 
@@ -259,7 +262,7 @@ mod tests {
       env::set_var(PEACE_WEBAUTHN_NAME, webauthn_name);
       env::set_var(PEACE_WEBAUTHN_TIMEOUT, webauthn_timeout);
       env::set_var(PEACE_MONGODB_URIS, mongodb_uris);
-      env::set_var(PEACE_MONGODB_TLS, mongodb_tls_ca_cert);
+      env::set_var(RAW_CA_CERT, mongodb_tls_ca_cert);
     }
 
     // * PeaceConfig should pull the vars above and populate itself with those parsed values.

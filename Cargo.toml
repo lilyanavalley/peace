@@ -47,6 +47,7 @@ jsonwebtoken = { version = "^9.3", optional = true }
 web-sys = { version = "*", features = ["Clipboard", "Navigator", "Window"] }
 
 [features]
+default = ["ssr", "hydrate"]
 csr = ["leptos/csr"]
 hydrate = [
   "dep:console_error_panic_hook",
