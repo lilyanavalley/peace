@@ -48,6 +48,9 @@ web-sys = { version = "*", features = ["Clipboard", "Navigator", "Window"] }
 
 # ? Fix for: https://osv.dev/vulnerability/RUSTSEC-2024-0370
 proc-macro-error = { version = "^2.0", package = "proc-macro-error2" }
+# ? Fix for: https://osv.dev/list?q=RUSTSEC-2024-0320
+yaml-rust = { version = "^0.10", package = "yaml-rust2" }
+
 
 [features]
 default = ["ssr", "hydrate"]
