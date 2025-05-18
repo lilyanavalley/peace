@@ -4,3 +4,4 @@ dist/
 end2end/
 .github/
 .do/
+ca.crt

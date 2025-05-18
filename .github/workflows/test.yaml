@@ -24,4 +24,4 @@ jobs:
       - name: Install cargo-leptos
         run: cargo binstall cargo-leptos -y
       - name: Run tests
-        run: cargo leptos test
+        run: cargo leptos test --features ssr,hydrate
