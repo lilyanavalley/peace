@@ -9,7 +9,7 @@ use crate::components::*;
 #[component]
 pub fn Navigator() -> impl IntoView {
   view! {
-    <nav class="navbar">
+    <nav class="navbar shadow-2xl">
       <div class="navbar-start">
         <div class="dropdown p-0">
           <div tabindex="0" role="button" class="btn btn-sm btn-primary btn-wide md:hidden">

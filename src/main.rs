@@ -76,7 +76,7 @@ async fn main() -> std::io::Result<()> {
                 <HydrationScripts options=leptos_options.clone()/>
                 <MetaTags/>
               </head>
-              <body>
+              <body class="flex flex-col h-full w-full">
                 <App/>
               </body>
             </html>

@@ -8,7 +8,7 @@ use leptos_router::{
 use leptos_hotkeys::*;
 use log:: { trace, debug, info, warn, error };
 use phosphor_leptos::*;
-use crate::{ components, placeholders, views::* };
+use crate::{ components::*, placeholders, views::* };
 
 
 #[cfg(feature="wip")]
@@ -59,46 +59,52 @@ pub fn App() -> impl IntoView {
 
     // content for this welcome page
     <Router>
-      <main class="h-full w-full">
-        <div class="flex flex-col w-full h-full overflow-auto">
-          <components::navigator::Navigator/>
-          <noscript>
-            <div class="alert alert-soft alert-warning">
-            <Icon icon=WARNING size="1.5rem"/>
-            <span>"JavaScript is absent from this Browser so some features may not work as expected"</span>
-            </div>
-          </noscript>
-          <Routes fallback=|| "not found">
+      <Navigator/>
+      <main class="flex flex-col h-full w-full overflow-y-scroll overflow-x-hidden">
+        <noscript>
+          <div class="alert alert-warning">
+          <Icon icon=WARNING size="1.5rem"/>
+          <span>
+            <p class="m-0.5">"JavaScript is turned off. Some features may not work as expected."</p>
+            <a class="btn btn-sm m-0.5" href="https://www.enable-javascript.com/)">
+              "See a Fix"
+            </a>
+            // <a class="btn btn-sm m-0.5" href="js/">
+            //   "JS Usage Statement"
+            // </a>
+          </span>
+          </div>
+        </noscript>
+        <Routes fallback=|| "not found">
 
-            <Route path=StaticSegment("/") view=HomePage/>
-          
-            // <ParentRoute path=path!("/authentication") view=Authenticate>
-            //   <Route path=path!("/otp/:code") view=OtpCode/>
-            //   <Route path=path!("/register") view=WebauthnKeyRegister/>
-            //   <Route path=path!("/keys") view=WebauthnKeys/>
-            //   <Route path=path!("/sessions") view=AuthenticateSessions/>
-            //   <Route path=path!("/logout") view=AuthenticateLogout/>
-            //   <Route path=path!("") view=AuthenticateStart/>
-            // </ParentRoute>
-          
-            <Route path=StaticSegment("/work") view=Work/>
-          
-            // <ParentRoute path=path!("/contact") view=contact::Contact>
-            //   // <Route path=path!(":cid") view=contact::ContactUpdate/>
-            //   // <Route path=path!("") view=contact::ContactStart/>
-            //   </ParentRoute>
-            <Route path=StaticSegment("/contact") view=ContactAlternative/> // ? this route is temporary.
-          
-            // * Remember to re-enable the navigator item too.
-            // <Route path=StaticSegment("/ask") view=Ask/>
+          <Route path=StaticSegment("/") view=HomePage/>
+        
+          // <ParentRoute path=path!("/authentication") view=Authenticate>
+          //   <Route path=path!("/otp/:code") view=OtpCode/>
+          //   <Route path=path!("/register") view=WebauthnKeyRegister/>
+          //   <Route path=path!("/keys") view=WebauthnKeys/>
+          //   <Route path=path!("/sessions") view=AuthenticateSessions/>
+          //   <Route path=path!("/logout") view=AuthenticateLogout/>
+          //   <Route path=path!("") view=AuthenticateStart/>
+          // </ParentRoute>
+        
+          <Route path=StaticSegment("/work") view=Work/>
+        
+          // <ParentRoute path=path!("/contact") view=contact::Contact>
+          //   // <Route path=path!(":cid") view=contact::ContactUpdate/>
+          //   // <Route path=path!("") view=contact::ContactStart/>
+          //   </ParentRoute>
+          <Route path=StaticSegment("/contact") view=ContactAlternative/> // ? this route is temporary.
+        
+          // * Remember to re-enable the navigator item too.
+          // <Route path=StaticSegment("/ask") view=Ask/>
 
-            <Route path=StaticSegment("/stats") view=Stats/>
-          
-            <Route path=path!("/*any") view=NotFound/>
-          
-          </Routes>
-          <components::footer::Footer/>
-        </div>
+          <Route path=StaticSegment("/stats") view=Stats/>
+        
+          <Route path=path!("/*any") view=NotFound/>
+        
+        </Routes>
+        <Footer/>
       </main>
     </Router>
   }
