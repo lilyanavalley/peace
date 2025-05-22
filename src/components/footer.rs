@@ -8,7 +8,7 @@ use crate::components::FavoriteQuotes;
 #[component]
 pub fn Footer() -> impl IntoView {
   view! {
-    <div class="flex flex-col md:flex-row items-center justify-between text-center text-sm bg-[var(--color-base-200)]">
+    <div class="flex flex-col md:flex-row self-center items-center justify-between text-center text-sm bg-[var(--color-base-200)] w-full">
       <FavoriteQuotes/>
       <div class="m-6">
         <div class="m-2">
@@ -21,15 +21,15 @@ pub fn Footer() -> impl IntoView {
         </p>
         <span class="m-2">
           <a href="https://github.com/lilyanavalley/peace" class="btn btn-soft btn-accent btn-sm m-1">
-            // <Icon icon=GITHUB_LOGO/>
+            <Icon icon=GITHUB_LOGO/>
             { placeholders::FOOTER_SOURCE }
           </a>
           <a href="https://github.com/lilyanavalley/peace/issues" class="btn btn-soft btn-accent btn-sm m-1">
-            // <Icon icon=ASTERISK/>
+            <Icon icon=ASTERISK/>
             { placeholders::FOOTER_ISSUES }
           </a>
           <a href="https://www.gnu.org/licenses/agpl-3.0.en.html" class="btn btn-soft btn-accent btn-sm m-1">
-            // <Icon icon=SCROLL/>
+            <Icon icon=SCROLL/>
             { placeholders::FOOTER_LICENSE }
           </a>
         </span>
