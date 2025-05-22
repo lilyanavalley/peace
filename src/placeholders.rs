@@ -47,7 +47,7 @@ An account or social media platform is not required to ask me questions. All que
 pub const ASK_ASKSIMILAR: &'static str = "Ask a Similar Question";
 pub const ASK_REVIEW: &'static str = "Request a Review";
 
-pub const WORK_MD: &'static str = "## Projects
+pub const WORK_MD: &'static str = "# Projects
 
 
 ### Peace / `peacelily`
@@ -133,7 +133,9 @@ pub const CONTACT_PRIVACY_SECT_ANTISPAM_MD: &'static str = "On submission, conne
 pub const CONTACT_PRIVACY_SECT_CLIENTSIDE_MD: &'static str = "Preventative measures such as these help to ensure confidentiality, but *do **not** absolutely guarantee confidentiality*. Unforeseen circumstances may expose correspondence; Anything from [phishing]() attempts to a peek over the shoulder... Especially where confidentiality is crucial, please practice safe, sane and secure computer use. And, if you notice anything incorrect, please file a complaint ASAP on the the [GitHub Issues page for this Web Service]().";
 
 // ? Alternative contact page while the chat is being built.
-pub const CONTACT_ALTERNATIVE: &'static str = "To get in touch with me, you'll need a **Matrix** or **Telegram**[1] account.
+pub const CONTACT_ALTERNATIVE: &'static str = "# Contact
+
+To get in touch with me, you'll need a **Matrix** or **Telegram**[1] account.
 
 📧 You may notice there's no email address here... and that's entirely on purpose. I don't trust email to reliably find
 its way to my inbox, avoiding spam and snooping unless the average visitor is privy to PGP. If you still require my email address, please ask me over those channels.

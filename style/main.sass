@@ -10,39 +10,6 @@
 // Sourced from fonts.google.com
 //
 
-/* Barlow Condensed */
-.barlow-condensed-thin 
-  font-family: "Barlow Condensed", sans-serif
-  font-weight: 100
-  font-style: normal
-
-  
-.barlow-condensed-light 
-  font-family: "Barlow Condensed", sans-serif
-  font-weight: 300
-  font-style: normal
-
-
-.barlow-condensed-semibold 
-  font-family: "Barlow Condensed", sans-serif
-  font-weight: 600
-  font-style: normal
-
-
-.barlow-condensed-bold 
-  font-family: "Barlow Condensed", sans-serif
-  font-weight: 700
-  font-style: normal
-
-
-/* Dosis */
-.dosis-400 
-  font-family: "Dosis", sans-serif
-  font-optical-sizing: auto
-  font-weight: 400
-  font-style: normal
-
-
 /* Ubuntu, Ubuntu Sans, Ubuntu Condensed, Ubuntu Mono */
 .ubuntu-light 
   font-family: "Ubuntu", sans-serif
@@ -90,12 +57,6 @@
   font-family: "Ubuntu", sans-serif
   font-weight: 700
   font-style: italic
-
-
-.ubuntu-condensed-regular 
-  font-family: "Ubuntu Condensed", sans-serif
-  font-weight: 400
-  font-style: normal
 
 
 .ubuntu-mono-regular 
@@ -166,183 +127,49 @@
 // Sets the page defaults for global theme.
 //
 
-:root 
-  
-  --color-brightwhite: #FFF
-  
-  --color-offwhite: #EEE
-  
-  --color-deepblack: #222
-  --color-deeperblack: #111
-  --color-vantablack: #000
+:root
   
   /* colors come from https://coolors.co/ffadad-ffd6a5-fdffb6-caffbf-9bf6ff-a0c4ff-bdb2ff-ffc6ff-fffffc */
-  --color-selectables-pink: #FFC6FF
-  --color-selectables-purple: #BDB2FF
-  --color-selectables-red: #FFADAD
-  --color-selectables-orange: #FFD6A5
-  --color-selectables-yellow: #FDFFB6
-  --color-selectables-green: #CAFFBF
-  --color-selectables-teal: #9BF6FF
-  --color-selectables-blue: #A0C4FF
+  --color-pink: #FFC6FF
+  --color-purple: #BDB2FF
+  --color-red: #FFADAD
+  --color-orange: #FFD6A5
+  --color-yellow: #FDFFB6
+  --color-green: #CAFFBF
+  --color-teal: #9BF6FF
+  --color-blue: #A0C4FF
 
-  --color-selectables-idle: var(--color-offwhite)
-  --color-selectables-active: #FFF
-  --color-selectables-disabled: #AAA
-  
-  --color-logo-grad1: #ff92c5
-  --color-logo-grad2: #ffb0d5
-  --color-logo-grad3: #da74a3
+  --font-site-title:  "Victor Mono";      /* name of site text */
+  --font-article:     "Victor Mono";      /* article body text */
+  --font-input:       "Fira Code";        /* input and placeholder text */
+  --font-code:        "Fira Code";        /* code block text */
+  --font-suspense:    "Flow Circular";    /* application suspense font (which shows bars in place of loading text) */
+  --font-redact:      "Redacted Script";  /* application redaction/suspense/sample font (for anything not readable) */
 
+a:not(.link, .btn)
 
-a
-
-  color: var(--color-selectables-blue)
-  box-shadow: none
-  background-color: none
-  text-decoration: none
-  font-weight: bolder
-  transition: color background-color box-shadow
+  color: var(--color-primary)
+  background-color: unset
+  font-weight: bold
+  text-decoration: underline
+  transition: color, background-color
   transition-duration: .25s
   transition-timing-function: ease-in-out
-  padding-left: .3rem
-  padding-right: .3rem
-
-  &:disabled
-    color: var(--color-selectables-disabled)
-    cursor: pointer
 
   &:hover, &:focus
-    color: var(--color-vantablack)
-    background-color: var(--color-selectables-active)
+    color: var(--color-primary-content)
+    background-color: var(--color-primary)
 
-  &.without-link-symbol::before,
-  &.without-link-symbol::after
-    content: none
-
-  &::before
-    content: "[ "
   
-  &::after 
-    content: " ]"
+svg
+  display: unset
 
-  // Changes link style for KoFi Markdown button
-  &[href^="https://ko-fi.com"], &[href^="https://github.com/sponsors/"]
-    padding: unset
-    opacity: .8
-    transition: opacity .25s
-    &:hover, &:focus
-      background-color: unset
-      opacity: 1
-    &::before
-      content: none
-    &::after
-      content: none
-
-  & > svg
-    transform: translateY(.1rem)
-    margin-right: .3rem
-
-  // &:any-link::after:hover,
-  // &:any-link::after:active,
-  // &:any-link::after:focus
-  //   color: var(--color-vantablack)
-  //   background-color: var(--color-brightwhite)
-
-button
-  display: flex
-  align-items: center
-  justify-content: center
-  color: var(--color-vantablack)
-  background-color: var(--color-selectables-idle)
-  border: .25rem solid var(--color-vantablack)
-  border-radius: .5rem
-  font-family: 'Ubuntu Sans'
-  font-size: 1rem
-  cursor: pointer
-  padding: .5rem
-  // width: min-content
-  // height: min-content
-  transition: color .25s, background-color .25s, border-color .25s
-
-  &:hover, &:focus
-    color: var(--color-selectables-active)
-    background-color: var(--color-vantablack)
-    border-color: var(--color-selectables-active)
-
-  // &:active
-  //   color: var(--color-selectables-blue)
-  //   background-color: var(--color-deeperblack)
-  //   border-color: var(--color-selectables-blue)
-
-  &:disabled
-    color: var(--color-vantablack)
-    background-color: var(--color-selectables-disabled)
-    border-color: var(--color-vantablack)
-    cursor: not-allowed
-
-    &:hover, &:focus
-      color: var(--color-vantablack)
-      background-color: var(--color-selectables-disabled)
-      border-color: var(--color-vantablack)
-
-  & > svg
-    margin: .25rem
-
-code, pre
-  font-family: 'Fira Code'
-
-  & > *
-    margin: 0
-
-input
-  color: #FFF
-  background-color: #000
-  border: 4px solid #333
-  border-radius: 1rem
-  font-family: 'Ubuntu Sans'
-  font-size: 1.2rem
-  transition: color .25s, background-color .25s, border-color .25s
-
-  &:hover, &:focus
-    color: #000
-    border-color: #EEE
-    background-color: #FFF
-
-  &[type=submit]
-    color: var(--color-vantablack)
-    font-weight: bold
-    font-size: 1.2rem
-    background-color: var(--color-selectables-idle)
-    border: 0
-    border-radius: 1rem
-    cursor: pointer
-    padding: .2rem
-
-  &[type=submit]:hover, &[type=submit]:focus
-    color: #FFF
-    background-color: #000
-
-textarea
-  color: #FFF
-  background-color: #000
-  border: 4px solid #333
-  border-radius: 1rem
-  font-family: 'Ubuntu Mono'
-  font-size: 1.1rem
-  padding: .5rem
-  transition: color .25s, background-color .25s, border-color .25s
-  resize: none
-
-  &:hover, &:focus
-    color: #000
-    border-color: #EEE
-    background-color: #FFF
-
+img
+  display: unset
 
 html 
-  color: var(--color-brightwhite)
-  background-color: var(--color-vantablack)
+  color: var(--color-base-content)
+  background-color: var(--color-base-100)
   height: 100%
 
 
@@ -354,82 +181,40 @@ body
 h1, h2, h3, h4, h5, h6
   font-family: 'Victor Mono'
   font-style: italic
+  margin: 1rem
 
-#accessibility
+h1
+  font-size: 2rem
+  text-align: center
+h2
+  font-size: 1.75rem
+h3
+  font-size: 1.5rem
+h4
+  font-size: 1.25rem
+h5
+  border-bottom: 2px dashed var(--color-neutral)
+h6
+  border-bottom: 2px dotted var(--color-neutral)
+
+p 
+  margin-top: 1rem
+  margin-bottom: 1rem
+
+ul:not(.list, .dropdown-content)
+  margin: 1rem
+li:not(.list-row)
+  margin: .5rem
+
+hr
+  border-top: 2px solid var(--color-neutral)
+  margin: 2rem
+
+
+.accessibility
   font-family: 'Ubuntu Sans'
   font-weight: bold
   font-size: 1.2rem
-
-  & > section > div
-    margin-bottom: 1rem
-
-#navigator
-  display: flex
-  justify-content: space-evenly
-  border-top: 4px solid var(--color-deepblack)
-  box-shadow: #000 0 0 1rem
-  z-index: 1
-
-  & > a
-    display: flex
-    flex-direction: column
-    flex-grow: 1
-    justify-content: center
-    align-items: center
-    padding: .2rem
-
-    &::before
-      content: unset
-    &::after
-      content: unset
-
-    &:nth-child(1)
-      color: var(--color-selectables-purple)
-      &:hover, &:focus
-        color: var(--color-vantablack)
-        background-color: var(--color-selectables-purple)
-
-    &:nth-child(2)
-      color: var(--color-selectables-pink)
-      &:hover, &:focus
-        color: var(--color-vantablack)
-        background-color: var(--color-selectables-pink)
-
-    &:nth-child(3)
-      color: var(--color-selectables-red)
-      &:hover, &:focus
-        color: var(--color-vantablack)
-        background-color: var(--color-selectables-red)
-
-    &:nth-child(4)
-      color: var(--color-selectables-orange)
-      &:hover, &:focus
-        color: var(--color-vantablack)
-        background-color: var(--color-selectables-orange)
-    
-    &:nth-child(5)
-      color: var(--color-selectables-yellow)
-      &:hover, &:focus
-        color: var(--color-vantablack)
-        background-color: var(--color-selectables-yellow)
-
-    &:nth-child(6)
-      color: var(--color-selectables-green)
-      &:hover, &:focus
-        color: var(--color-vantablack)
-        background-color: var(--color-selectables-green)
-    
-    &:nth-child(7)
-      color: var(--color-selectables-teal)
-      &:hover, &:focus
-        color: var(--color-vantablack)
-        background-color: var(--color-selectables-teal)
-
-    &:nth-child(8)
-      color: var(--color-selectables-blue)
-      &:hover, &:focus
-        color: var(--color-vantablack)
-        background-color: var(--color-selectables-blue)
 
 .tooltip
   display: inline-block
@@ -451,17 +236,16 @@ h1, h2, h3, h4, h5, h6
     opacity: 1
 
 .suspense
-  color: var(--color-vantablack)
+  color: var(--color-base-300)
   font-family: Flow Circular
-  font-size: 2rem
   animation: 1s ease-in-out suspense infinite both
   animation-name: suspense
   user-select: none
 
 @keyframes suspense
   0% 
-    color: var(--color-vantablack)
+    color: var(--color-base-300)
   50% 
-    color: var(--color-deepblack)
+    color: var(--color-base-100)
   100% 
-    color: var(--color-vantablack)
+    color: var(--color-base-300)

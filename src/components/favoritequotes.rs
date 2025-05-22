@@ -57,18 +57,18 @@ pub fn FavoriteQuotes() -> impl IntoView {
   let quote = OnceResource::new(quote_today());
 
   view! {
-    <div class="flex flex-col text-[var(--color-offwhite)] border-t-3 border-b-3 border-t-[#988] border-b-[#988]" style="margin: 2rem">
+    <div class="self-center flex flex-col text-[var(--color-base-content)] m-6">
 
-      <div class="flex flex-col text-[#988] items-center" style="padding: 1rem">
+      <div class="flex flex-col items-center m-3">
         <Icon icon=QUOTES size="1.5rem"/>
         <p style="margin-top: 0; margin-bottom: 0;">{ placeholders::FAVQUOTES }</p>
       </div>
       
       <Suspense fallback=move || view! {
-        <div id="quote-quotation" class="suspense self-center text-[var(--color-selectables-red)] w-3/4">
+        <div id="quote-quotation" class="suspense">
           "pending pending pending"
         </div>
-        <p id="quote-citation" class="suspense self-center text-[.8rem] text-[var(--color-selectables-red)] w-3/4">
+        <p id="quote-citation" class="suspense">
           "-- me, uwu uwu owo uwu"
         </p>
       }>
@@ -77,14 +77,14 @@ pub fn FavoriteQuotes() -> impl IntoView {
           let mut quote = quote.await.unwrap_or_default();
           let citation = quote.citation.clone().unwrap_or_default();
           view! {
-            <div id="quote-quotation" class="self-center victor-mono-400 max-w-3/4">
+            <div id="quote-quotation" class="text-center m-1">
               <Markdown markdown={ quote.quotation } />
             </div>
             <Show
               when=move || { quote.citation.is_some() }
               fallback=move || view! {}
             >
-              <div id="quote-citation" class="self-center before:content-['–'] italic text-[.8rem] text-center victor-mono-400 w-3/4">
+              <div id="quote-citation" class="text-center text-[.8rem] m-2">
                 // ? Why the double clone, you ask? Because the compiler is a bit dumb and doesn't know that the
                 // ? citation is not going to be used again. 🤡
                 // TODO: Fix this.

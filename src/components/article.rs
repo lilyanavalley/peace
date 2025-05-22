@@ -48,7 +48,7 @@ pub fn Section(children: ChildrenFn) -> impl IntoView {
 #[component]
 pub fn SectionIcon(children: ChildrenFn, icon: &'static IconWeightData) -> impl IntoView {
   view! {
-    <section class="flex flex-col items-center justify-center" style="margin-top: 2rem; margin-bottom: 2rem;">
+    <section class="flex flex-col items-center justify-center mx-2">
       <Icon icon=icon weight=IconWeight::Fill size="1.5rem"/>
       { children() }
     </section>
@@ -68,9 +68,9 @@ pub fn SectionReveal(children: ChildrenFn, revealer_text: String, icon: &'static
   };
 
   view! {
-    <section class="flex flex-col items-center justify-center b-1 bg-[var(--color-deepblack)]" style="border-radius: 1rem; margin-top: 2rem; margin-bottom: 2rem; padding: 1rem;">
+    <section class="flex flex-col items-center justify-center b-1" style="border-radius: 1rem; margin-top: 2rem; margin-bottom: 2rem; padding: 1rem;">
       
-      <button on:click=show class="self-center" style="margin: .5rem">
+      <button on:click=show class="btn btn-soft self-center m-1">
         <Icon icon=icon size="1.5rem"/>
         { revealer_text }
       </button>
@@ -90,6 +90,6 @@ pub fn SectionReveal(children: ChildrenFn, revealer_text: String, icon: &'static
 #[component]
 pub fn Spacer() -> impl IntoView {
   view! {
-    <div style="margin-top: 2rem; margin-bottom: 4rem;"></div>
+    <div class="mx-2"></div>
   }
 }

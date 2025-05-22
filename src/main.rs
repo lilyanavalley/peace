@@ -68,15 +68,15 @@ async fn main() -> std::io::Result<()> {
         move || {
           view! {
             <!DOCTYPE html>
-            <html lang="en">
+            <html lang="en" data-theme="midnight">
               <head>
                 <meta charset="utf-8"/>
-                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1,viewport-fit=cover"/>
                 <AutoReload options=leptos_options.clone() />
                 <HydrationScripts options=leptos_options.clone()/>
                 <MetaTags/>
               </head>
-              <body>
+              <body class="flex flex-col h-full w-full">
                 <App/>
               </body>
             </html>

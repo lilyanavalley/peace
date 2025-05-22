@@ -1,7 +1,7 @@
 
 use leptos::prelude::*;
 use phosphor_leptos::*;
-use crate::{ placeholders, components::article::Markdown };
+use crate::{ placeholders, components::* };
 
 
 /// 404 - Not Found
@@ -22,28 +22,17 @@ pub fn NotFound() -> impl IntoView {
   }
 
   view! {
-    <div class="flex flex-col grow h-full overflow-auto">
-      <div class="flex flex-col flex-grow text-center justify-center">
+    <Autoscale>
+      <div class="flex flex-col flex-grow text-center justify-center items-center min-h-full">
 
-        <h1 class="dosis-400" style="font-size: 500%; margin: 0;">~ 404 ~</h1>
-        <h2 class="dosis-400" style="font-size: 200%; margin: 0;">{ placeholders::NOTFOUND }</h2>
+        <Icon icon=BUG size="3rem" weight=IconWeight::Duotone/>
+        <h1>"404: " { placeholders::NOTFOUND }</h1>
         
-        <article style="margin: 1rem;">
-
-          // <Markdown markdown={ placeholders::NOTFOUND_DESCRIPTION_MD.to_string() }/>
-
-          "Requested page could not be located. If you expected something in particular, please "
-
-          <a class="text-[var(--color-selectables-red)]" href="https://github.com/lilyanavalley/peace/issues">
-            <Icon icon=ASTERISK/>
-            "open an issue"
-          </a>
-          
-          " on this site's GitHub repo."
-
-        </article>
+        <Article>
+          <Markdown markdown={ placeholders::NOTFOUND_DESCRIPTION_MD.to_string() }/>
+        </Article>
 
       </div>
-    </div>
+    </Autoscale>
   }
 }

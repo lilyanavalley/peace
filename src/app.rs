@@ -8,7 +8,7 @@ use leptos_router::{
 use leptos_hotkeys::*;
 use log:: { trace, debug, info, warn, error };
 use phosphor_leptos::*;
-use crate::{ components, placeholders, views::* };
+use crate::{ components::*, placeholders, views::* };
 
 
 #[cfg(feature="wip")]
@@ -50,57 +50,61 @@ pub fn App() -> impl IntoView {
     <Link rel="preconnect" href="https://fonts.googleapis.com"/>
     <Link rel="preconnect" href="https://fonts.gstatic.com"/>
     <Link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@100;300;600;700&family=Dosis:wght@200..800&family=Fira+Code:wght@300..700&family=Flow+Circular&family=Redacted+Script&family=Ubuntu+Condensed&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet"/>
-    <Link rel="shortcut icon" type_="image/ico" href="/favicon.ico"/>
+    <Link rel="shortcut icon" type_="image/svg+xml" href="/assets/favicon.svg"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
 
     // sets the document title
-    <Title text="Lily's Website ⚛️"/>
+    <Title text="lily valley"/>
 
     // content for this welcome page
     <Router>
-      <main class="flex flex-col h-full">
-        <div class="flex flex-col grow h-full overflow-auto">
-          <Routes fallback=|| "not found">
+      <Navigator/>
+      <main class="flex flex-col h-full w-full overflow-y-scroll overflow-x-hidden">
+        <noscript>
+          <div class="alert alert-warning">
+          <Icon icon=WARNING size="1.5rem"/>
+          <span>
+            <p class="m-0.5">"JavaScript is turned off. Some features may not work as expected."</p>
+            <a class="btn btn-sm m-0.5" href="https://www.enable-javascript.com/)">
+              "See a Fix"
+            </a>
+            // <a class="btn btn-sm m-0.5" href="js/">
+            //   "JS Usage Statement"
+            // </a>
+          </span>
+          </div>
+        </noscript>
+        <Routes fallback=|| "not found">
 
-            <Route path=StaticSegment("/") view=HomePage/>
-          
-            // <ParentRoute path=path!("/authentication") view=Authenticate>
-            //   <Route path=path!("/otp/:code") view=OtpCode/>
-            //   <Route path=path!("/register") view=WebauthnKeyRegister/>
-            //   <Route path=path!("/keys") view=WebauthnKeys/>
-            //   <Route path=path!("/sessions") view=AuthenticateSessions/>
-            //   <Route path=path!("/logout") view=AuthenticateLogout/>
-            //   <Route path=path!("") view=AuthenticateStart/>
-            // </ParentRoute>
-          
-            <Route path=StaticSegment("/work") view=Work/>
-          
-            // <ParentRoute path=path!("/contact") view=contact::Contact>
-            //   // <Route path=path!(":cid") view=contact::ContactUpdate/>
-            //   // <Route path=path!("") view=contact::ContactStart/>
-            //   </ParentRoute>
-            <Route path=StaticSegment("/contact") view=ContactAlternative/> // ? this route is temporary.
-          
-            // * Remember to re-enable the navigator item too.
-            // <Route path=StaticSegment("/ask") view=Ask/>
+          <Route path=StaticSegment("/") view=HomePage/>
+        
+          // <ParentRoute path=path!("/authentication") view=Authenticate>
+          //   <Route path=path!("/otp/:code") view=OtpCode/>
+          //   <Route path=path!("/register") view=WebauthnKeyRegister/>
+          //   <Route path=path!("/keys") view=WebauthnKeys/>
+          //   <Route path=path!("/sessions") view=AuthenticateSessions/>
+          //   <Route path=path!("/logout") view=AuthenticateLogout/>
+          //   <Route path=path!("") view=AuthenticateStart/>
+          // </ParentRoute>
+        
+          <Route path=StaticSegment("/work") view=Work/>
+        
+          // <ParentRoute path=path!("/contact") view=contact::Contact>
+          //   // <Route path=path!(":cid") view=contact::ContactUpdate/>
+          //   // <Route path=path!("") view=contact::ContactStart/>
+          //   </ParentRoute>
+          <Route path=StaticSegment("/contact") view=ContactAlternative/> // ? this route is temporary.
+        
+          // * Remember to re-enable the navigator item too.
+          // <Route path=StaticSegment("/ask") view=Ask/>
 
-            <Route path=StaticSegment("/stats") view=Stats/>
-          
-            <Route path=path!("/*any") view=NotFound/>
-          
-          </Routes>
-          <components::favoritequotes::FavoriteQuotes/>
-          <components::footer::Footer/>
-          // <components::accessibility::Handlebar/>
-          <noscript>
-            <div class="flex items-center justify-center text-[var(--color-selectables-red)]">
-              <div style="padding: .75rem; padding-right: 0"><Icon icon=COFFEE size="1.5rem"/></div>
-              <p style="padding: .75rem; margin: 0">
-                "JavaScript is absent from this Browser so some features may not work as expected"
-              </p>
-            </div>
-          </noscript>
-        </div>
-        <components::navigator::Navigator/>
+          <Route path=StaticSegment("/stats") view=Stats/>
+        
+          <Route path=path!("/*any") view=NotFound/>
+        
+        </Routes>
+        <Footer/>
       </main>
     </Router>
   }
