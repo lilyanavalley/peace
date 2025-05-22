@@ -1,7 +1,7 @@
 
 use leptos::prelude::*;
 use phosphor_leptos::*;
-use crate::{ placeholders, components::article::Markdown };
+use crate::{ placeholders, components::* };
 
 
 /// 404 - Not Found
@@ -22,10 +22,10 @@ pub fn NotFound() -> impl IntoView {
   }
 
   view! {
-    <div class="flex flex-col grow h-full overflow-auto">
+    <Autoscale>
       <div class="flex flex-col flex-grow text-center justify-center">
 
-        <h1 class="dosis-400" style="font-size: 500%; margin: 0;">~ 404 ~</h1>
+        <h1 class="dosis-400" style="font-size: 500%; margin: 0;">"~ 404 ~"</h1>
         <h2 class="dosis-400" style="font-size: 200%; margin: 0;">{ placeholders::NOTFOUND }</h2>
         
         <article style="margin: 1rem;">
@@ -44,6 +44,6 @@ pub fn NotFound() -> impl IntoView {
         </article>
 
       </div>
-    </div>
+    </Autoscale>
   }
 }

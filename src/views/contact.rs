@@ -2,7 +2,7 @@
 use leptos::prelude::*;
 use leptos_router::nested_router::Outlet;
 use phosphor_leptos::*;
-use crate::{ components, placeholders };
+use crate::{ components::*, placeholders };
 
 
 // #[component]
@@ -131,20 +131,19 @@ use crate::{ components, placeholders };
 #[component]
 pub fn ContactAlternative() -> impl IntoView {
   view! {
-    <div id="contact" class="flex flex-col w-3/4 self-center">
-      <h1 class="text-center">"Contact"</h1>
-      <components::article::Article>
-        <components::article::Markdown
+    <Autoscale>
+      <Article>
+        <Markdown
           markdown = { placeholders::CONTACT_ALTERNATIVE.to_string() }
         />
-        <components::article::SectionReveal
+        <SectionReveal
           revealer_text = "My PGP Key".to_string()
           icon = KEY
         >
-          "Key by fingerprint `0x37885CF7B9E39298` output:"
-          <components::code::Plain text={ placeholders::PGPKEY }/>
-        </components::article::SectionReveal>
-      </components::article::Article>
-    </div>
+          <p>"Key by fingerprint `0x37885CF7B9E39298` output:"</p>
+          <Plain text={ placeholders::PGPKEY }/>
+        </SectionReveal>
+      </Article>
+    </Autoscale>
   }
 }
