@@ -19,13 +19,13 @@ pub fn Plain(text: &'static str) -> impl IntoView {
   };
 
   view! {
-    <div class="border-4 border-[var(--color-deepblack)] rounded-[1rem] bg-[var(--color-vantablack)] max-w-full" style="margin-top: 1rem; margin-bottom: 1rem;">
+    <div class="border-4 border-[var(--color-base-300)] bg-[var(--color-base-200)] max-w-full mx-1">
       
     <pre style="padding: .5rem; margin: 0; overflow: scroll" inner_html=text></pre>
     
-      <div class="flex items-center justify-between bg-[var(--color-deepblack)] border-t-4 border-[var(--color-deepblack)]" style="padding: .25rem; padding-left: .5rem; padding-right: .5rem; border-radius: .75rem;">
+      <div class="border-t-4 border-[var(--color-base-300)] flex items-center justify-between bg-[var(--color-base-300)]">
         
-        <button class="flex flex-row" on:click=copy_to_clipboard>
+        <button class="btn btn-sm btn-accent" on:click=copy_to_clipboard>
           <Icon icon=COPY size="1.2rem"/>
           <b style="margin-right: .25rem">Copy</b>
         </button>
@@ -34,7 +34,7 @@ pub fn Plain(text: &'static str) -> impl IntoView {
           when= move || { do_copy.get() == true }
           fallback=|| view! {}
         >
-          <div class="opacity-0 animate-(--animation-fader) text-[var(--color-selectables-green)]">
+          <div class="opacity-0 animate-(--animation-fader) text-[var(--color-info)]">
             <span>"Copied!"</span>
           </div>
         </Show>
@@ -69,15 +69,15 @@ pub fn Code(source: &'static str) -> impl IntoView {
   let output = markdown_to_html_with_plugins(&input, &options, &plugins);
   
   view! {
-    <div class="border-4 border-[var(--color-deepblack)] rounded-[1rem] bg-[var(--color-vantablack)] max-w-full" style="margin-top: 1rem; margin-bottom: 1rem;">
+    <div class="border-4 border-[var(--color-base-300)] bg-[var(--color-base-200)] max-w-full mx-1">
     
       <pre style="padding: .5rem; margin: 0; overflow: scroll" inner_html=output></pre>
       
-      <div class="flex items-center justify-between bg-[var(--color-deepblack)] border-t-4 border-[var(--color-deepblack)]" style="padding: .25rem; padding-left: .5rem; padding-right: .5rem; border-radius: .75rem;">
+      <div class="border-t-4 border-[var(--color-base-300)] flex items-center justify-between bg-[var(--color-base-300)]">
         
         <div class="flex items-center">
         
-          <button class="flex flex-row" on:click=copy_to_clipboard>
+          <button class="btn btn-sm btn-accent" on:click=copy_to_clipboard>
             <Icon icon=COPY size="1.2rem"/>
             <b style="margin-right: .25rem">Copy</b>
           </button>
@@ -93,7 +93,7 @@ pub fn Code(source: &'static str) -> impl IntoView {
           when= move || { do_copy.get() == true }
           fallback=|| view! {}
         >
-          <div class="opacity-0 animate-(--animation-fader) text-[var(--color-selectables-green)]">
+          <div class="opacity-0 animate-(--animation-fader) text-[var(--color-info)]">
             <span>"Copied!"</span>
           </div>
         </Show>
@@ -123,6 +123,13 @@ enum FileTypeIcon {
 }
 
 impl FileTypeIcon {
+
+  fn from_info_string(info: &str) -> Self {
+    match info {
+      "rust"  => Self::Rs,
+      _       => Self::Blank
+    }
+  }
 
   fn from_extension(extension: &str) -> Self {
     match extension {
