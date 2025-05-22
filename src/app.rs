@@ -52,13 +52,22 @@ pub fn App() -> impl IntoView {
     <Link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@100;300;600;700&family=Dosis:wght@200..800&family=Fira+Code:wght@300..700&family=Flow+Circular&family=Redacted+Script&family=Ubuntu+Condensed&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu+Sans:ital,wght@0,100..800;1,100..800&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Victor+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet"/>
     <Link rel="shortcut icon" type_="image/svg+xml" href="/assets/favicon.svg"/>
 
+    <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
+
     // sets the document title
     <Title text="lily valley"/>
 
     // content for this welcome page
     <Router>
-      <main class="flex flex-col h-full">
-        <div class="flex flex-col grow h-full overflow-auto">
+      <main class="h-full w-full">
+        <div class="flex flex-col w-full h-full overflow-auto">
+          <components::navigator::Navigator/>
+          <noscript>
+            <div class="alert alert-soft alert-warning">
+            <Icon icon=WARNING size="1.5rem"/>
+            <span>"JavaScript is absent from this Browser so some features may not work as expected"</span>
+            </div>
+          </noscript>
           <Routes fallback=|| "not found">
 
             <Route path=StaticSegment("/") view=HomePage/>
@@ -88,19 +97,8 @@ pub fn App() -> impl IntoView {
             <Route path=path!("/*any") view=NotFound/>
           
           </Routes>
-          <components::favoritequotes::FavoriteQuotes/>
           <components::footer::Footer/>
-          // <components::accessibility::Handlebar/>
-          <noscript>
-            <div class="flex items-center justify-center text-[var(--color-selectables-red)]">
-              <div style="padding: .75rem; padding-right: 0"><Icon icon=COFFEE size="1.5rem"/></div>
-              <p style="padding: .75rem; margin: 0">
-                "JavaScript is absent from this Browser so some features may not work as expected"
-              </p>
-            </div>
-          </noscript>
         </div>
-        <components::navigator::Navigator/>
       </main>
     </Router>
   }
