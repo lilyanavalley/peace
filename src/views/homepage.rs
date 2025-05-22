@@ -11,20 +11,30 @@ pub fn HomePage() -> impl IntoView {
 
     <Autoscale>
 
-      <div id="profile-headshot" class="flex flex-col text-center">
+      <div id="profile-headshot" class="flex flex-col lg:flex-row justify-center text-center">
         <img src="assets/avatar.png" class="self-center w-1/4 rounded-full" alt="Profile picture of Lily"/>
-        <h1 class="self-center justify-self-center">"Lily Ana Valley"</h1>
+        <span class="flex flex-col self-center justify-self-center">
+          <h1>"Lily Ana Valley"</h1>
+          <div id="profile-pronouns" class="flex justify-center m-1">
+            <span class="badge badge-info m-1">
+              "she/her"
+            </span>
+            <span class="badge badge-success m-1">
+              "it/its"
+            </span>
+          </div>
+        </span>
       </div>
 
-      <div id="profile-badge">
-        <p class="text-center text-sm text-[var(--color-accent-content)]]">
+      <div id="profile-tagline">
+        <p class="text-center text-xs">
           <Markdown
             markdown = { placeholders::DESCRIPTION_SHORT.to_string() }
           />
         </p>
       </div>
 
-      <article id="description">
+      <article id="profile-description">
         <Markdown
           markdown = { placeholders::DESCRIPTION_LONG_MD.to_string() }
         />
