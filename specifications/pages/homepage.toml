@@ -1,0 +1,14 @@
+[MarkdownArticle]
+
+title = "About"
+
+content = """
+# Welcome to `peacelily`!
+
+This is a simple and elegant Markdown-based static site generator. It is designed to be easy to use and customize, allowing you to create beautiful portfolios, exposés, and autobiographies with minimal effort.
+
+Modify the content to your liking and enjoy the process of building your own site. You can add more pages, customize the layout and change the theme to suit your style. Everything modifiable is in the `specifications` folder.
+
+Have fun!
+"""
+

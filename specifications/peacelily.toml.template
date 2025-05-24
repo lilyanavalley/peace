@@ -1,0 +1,147 @@
+
+# root.toml template file
+# Specifications are written in TOML (Tom's Obvious Minimal Language.)
+# ? See a guide about TOML syntax here: https://toml.io/en/v1.0.0
+
+
+# ---- START OF SECTION 'ABOUT' ----
+
+# This specification file contains the full list of options for your own peacelily site.
+# Some options require you to modify their value from the default, in which case, those options will be denoted by a 
+# comment that looks exactly like this one:
+
+# ! 🔲 CHANGE REQUIRED
+
+#
+# * It is important you for you to read this section carefully:
+# 
+# Some settings may require you to specify a secret token (ie, for external APIs) and therefore, you should be very, 
+# very careful. Please treat the `specifications/` directory as though it contains secrets. Don't share your 
+# specification files (unless you strip out secretive options, and even then, you shouldn't do it!)
+#
+# ? See a guide about *NIX filesystem permissions here: [insert guide here]
+#
+# As good practice, please modify the permissions of your specifications to the appropriate values and double-check
+# your system's group settings. Even if you don't know what this means, please do not disregard this warning. Any
+# option which is crucially kept secret are denoted by a comment that looks exactly like this one:
+
+# ! 🛑 DANGER: KEEP SECRET
+
+#
+# * It is important you for you to read this section carefully:
+# 
+# If an option requires special attention, a comment containing any warning would appear like this one:
+
+# ! 🔶 NOTICE: This is an example.
+
+#
+# Finally, your best bet for maintainable specifications is to copy+paste the template files and leave the templates 
+# themselves in-tact.
+# 
+# You may wish to change some values later, and it is best to have an un-modified copy of these files for reference.
+# If you do not do so, see the appropriate version of your copy of peacelily and reference its templates. A version 
+# mismatch could prevent peacelily from starting or cause peacelily to complain about erroneous options specified.
+#
+
+# ---- END OF SECTION 'ABOUT' ----
+
+
+# Include the relative filesystem paths pointing to additional `.toml` files to compliment your specification.
+# ? This path is relative to the folder containing the `peacelily` binary, *or* if built from source, the directory 
+# ? containing your Cargo.toml file.
+# * Note: Specifying a symbolic link works as expected. peacelily will traverse a symbolic link for inclusions, if you
+# *       so choose. However, keep in mind the security implications of doing so!
+# ! 🔶 NOTICE: Symbolic links to other directories are traversed. For each inclusion you specify, check your filesystem 
+# !           permissions of each target location.
+inclusions = ["specifications/pages/homepage.toml", "secrets/alerts.toml", "secrets/database.toml"]
+
+
+[Updates]
+
+# Watch this git repo containing your specifications for automatic updates.
+git = "tillandsia@stricta.plants:/tillan/specifications"
+
+# Watch this specifc git branch of the above repo.
+git-branch = "main"
+
+# Watch this (wildcard-supported) tag of the above repo.
+git-tag = "1.2.*"
+
+# Use the key at this file path to pull git updates.
+# * A 'deploy key' is like any other SSH key, but its purpose is usually limited to *pulling* repos, not pushing 
+# * changes. Any key may be specified, peacelily will not use this key to publish changes (and shouldn't.)
+# ? Public repositories may not require a deploy key to pull repos.
+# ! 🔶 NOTICE: You may also specify your key's path with an environment variable for better security practice.
+# ! 🔲 CHANGE REQUIRED
+git-deploy-key = "~/.ssh/id_gitdeploykey"
+
+# Use the key at this file path to push git changes.
+# * A 'push key' is like any other SSH key. The key you specify will be limited to pushing new changes to your repo,
+# * for example, if the operator makes changes to the site and wants to propogate those changes.
+# ? You do not have to specify a key. You may comment-out or leave this field blank to disable pushing changes.
+# ? While you theoretically could specify the same key as your `git-deploy-key`, for opsec reasons, you should not do 
+# ? that!
+# ! 🔶 NOTICE: This field may be commented-out if you don't wish to push changes from peacelily.
+# ! 🔶 NOTICE: You may also specify your key's path with an environment variable for better security practice.
+# ! 🔲 CHANGE REQUIRED
+git-push-key = "~/.ssh/id_gitpushkey"
+
+
+# Search Engine Optimization
+[Seo]
+
+# The description of your site to show in search results
+description = "Your own peacelily site"
+
+# Keywords that describe you and the content of your site
+keywords = ["biography", "portfolio"]
+
+# Name(s) of the author(s) for your site, which would be your name or alias
+author = ["Tillandsia Stricta"]
+
+# Paths of your site you request web crawlers ignore
+crawl-ignore = ["dontcrawlme/ormycontent", "ever/again/*"]
+
+# Paths of your site you request web crawlers search and parse for SEO
+crawl-include = ["crawl/me/instead", "/"]
+
+# Paths of your site you request LLMs ignore
+llms-ignore = ["dont/teach/ai/my/content/in/here/*"]
+
+# Paths of your site you request LLMs search and parse to learn from
+llms-include = ["/"]
+
+
+# Transport Layer Security
+[Tls]
+
+# Turn on TLS support?
+# Recommended value is `true`
+# ℹ️ If set to `true`, please enable either letsencrypt or specify a TLS certificate below.
+# ℹ️ When enabled, peacelily will upgrade insecure connections to TLS. Insecure connections are not allowed.
+# ℹ️ When disabled, peacelily will not allow authentication.
+enable = true
+
+# Require clients to always connect with TLS via HSTS?
+# ! 🔶 NOTICE: If this option is set to `true`, you permanently opt-in to TLS. Therefore, you should not revert TLS to 
+# !           `false` ever again in the future. Clients who expect HSTS sites to have TLS will never let their users 
+# !           connect insecurely, and so you may turn away clients who expect you to have TLS afterwards!
+#
+# Learn more about HSTS: https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html
+# 
+# If you doubt your site will *always* be secured with TLS, leave this option as `false`.
+enforce = false
+
+# Automatically retrieve and renew a TLS certificate from Let's Encrypt?
+# If `false`, specify `local-certificate` and `local-privatekey` options.
+letsencrypt = true
+
+# Site owner/operator's email address for TLS registration:
+# ! 🔲 CHANGE REQUIRED
+letsencrypt-email = ["tillandsia@stricta.plants"]
+
+# Path to a TLS x509 (pem encoded) certificate to read from.
+local-certificate = "secrets/server.cert"
+
+# Path to a TLS (pem encoded) private key to read from.
+local-privatekey = "secrets/privatekey.pem"
