@@ -9,7 +9,8 @@ pub mod server;
 use peace::{
   app::*,
   config,
-  placeholders
+  placeholders,
+  specifications
 };
 
 // #[cfg(any(feature = "ssr", feature = "hydrate"))]
