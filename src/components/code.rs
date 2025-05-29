@@ -3,6 +3,7 @@ use leptos::prelude::*;
 use phosphor_leptos::*;
 use comrak::plugins::syntect::SyntectAdapterBuilder;
 use comrak::{ markdown_to_html_with_plugins, Options, Plugins };
+use crate::components::clipboard::copy_to_clipboard;
 
 
 #[component]
@@ -10,12 +11,9 @@ pub fn Plain(text: &'static str) -> impl IntoView {
 
   let (do_copy, set_do_copy) = create_signal(false);
   let copy_to_clipboard = move |_| {
+    copy_to_clipboard(text);
     set_do_copy.update(|v| *v = true);
-    web_sys::window()
-      .unwrap()
-      .navigator()
-      .clipboard()
-      .write_text(text);
+    set_do_copy.update(|v| *v = false);
   };
 
   view! {
@@ -50,12 +48,9 @@ pub fn Code(source: &'static str) -> impl IntoView {
 
   let (do_copy, set_do_copy) = create_signal(false);
   let copy_to_clipboard = move |_| {
+    copy_to_clipboard(source);
     set_do_copy.update(|v| *v = true);
-    web_sys::window()
-      .unwrap()
-      .navigator()
-      .clipboard()
-      .write_text(source);
+    set_do_copy.update(|v| *v = false);
   };
 
   let builder = SyntectAdapterBuilder::new().css();
