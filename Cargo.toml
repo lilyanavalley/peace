@@ -23,10 +23,10 @@ crate-type = ["cdylib", "rlib"]
 # ##### END LINKER FIX
 
 [dependencies]
-leptos = { version = "0.7.7", features = ["nightly"] }
-leptos_meta = { version = "0.7.7", features = ["ssr"] }
-leptos_actix = { version = "0.7.7", optional = true }
-leptos_router = { version = "0.7.7" }
+leptos = { version = "0.8.2", features = ["nightly"] }
+leptos_meta = { version = "0.8.2", features = ["ssr"] }
+leptos_actix = { version = "0.8.2", optional = true }
+leptos_router = { version = "0.8.2" }
 actix-files = { version = "0.6.6", optional = true }
 actix-web = { version = "4.10.2", optional = true, features = ["macros", "secure-cookies"] }
 mongodb = { version = "3.2.2", optional = true, features = ["dns-resolver"]}
