@@ -10,13 +10,13 @@ pub fn Footer() -> impl IntoView {
   view! {
     <div class="flex flex-col md:flex-row self-center items-center justify-between text-center text-sm bg-[var(--color-base-100)] w-full">
       <FavoriteQuotes/>
-      <div class="m-6">
-        <div class="m-2">
+      <div class="flex flex-col justify-center items-center m-6">
+        <div class="flex justify-center items-center m-2">
             <Icon icon=HAND_PEACE weight=IconWeight::Duotone size="1.8rem"/>
         </div>
         <span class="m-1">{ placeholders::FOOTER }</span>
         <span class="m-1">{ placeholders::FOOTER_NAME }</span>
-        <p class="m-3">
+        <p class="m-3 text-info text-sm">
           { format!("{} v{}", env!("CARGO_PKG_NAME"), env!("CARGO_PKG_VERSION")) }
         </p>
         <span class="m-2">

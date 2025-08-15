@@ -138,3 +138,21 @@ hr {
   border-width: var(--border);
   margin: 1rem 0;
 }
+
+article a, #quote-citation a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  border-radius: var(--radius-field);
+  transition: color 0.3s ease, background-color 0.3s ease;
+  padding: 0.25rem;
+}
+
+article a:hover, article a:focus, #quote-citation a:hover, #quote-citation a:focus {
+  color: var(--color-primary-content);
+  background-color: var(--color-primary);
+  text-decoration: none;
+}
+
+/* TODO: Fix images within article > a or #quote-citation > a */
+article img, #quote-citation img {
+}
