@@ -9,7 +9,7 @@ use crate::components::*;
 #[component]
 pub fn Navigator() -> impl IntoView {
   view! {
-    <nav class="navbar shadow-2xl">
+    <nav class="navbar shadow-2xl bg-base-100">
       <div class="navbar-start">
         <div class="dropdown p-0">
           <div tabindex="0" role="button" class="btn btn-sm btn-primary btn-wide md:hidden">
@@ -40,7 +40,7 @@ pub fn Navigator() -> impl IntoView {
         </div>
         <a class="btn btn-ghost text-xl">"lilyvalley.dev"</a>
       </div>
-      <div class="navbar-center hidden md:flex">
+      <div class="navbar-end hidden md:flex">
         <ul class="menu menu-horizontal">
           <For
             each=move || ROUTERBAR_SAMPLE
@@ -62,9 +62,9 @@ pub fn Navigator() -> impl IntoView {
           />
         </ul>
       </div>
-      <div class="navbar-end">
-        <ChooseThemeDropdown/>
-      </div>
+      // <div class="navbar-end">
+      //   <ChooseThemeDropdown/>
+      // </div>
     </nav>
   }
 }

@@ -19,8 +19,8 @@ pub fn HomePage() -> impl IntoView {
 
       <div id="profile-headshot" class="flex flex-col lg:flex-row justify-center text-center">
         <img src="assets/avatar.png" class="self-center w-1/4 rounded-full" alt="Profile picture of Lily"/>
-        <span class="flex flex-col self-center justify-self-center">
-          <h1>"Lily Ana Valley"</h1>
+        <span class="flex flex-col self-center justify-self-center m-4">
+          <p class="text-2xl italic">"Lily Ana Valley"</p>
           <div id="profile-pronouns" class="flex justify-center m-1">
             <span class="badge badge-info m-1">
               "she/her"

@@ -16,6 +16,7 @@ use crate::{ components::*, placeholders, views::* };
 pub fn App() -> impl IntoView {
   provide_meta_context();
   view! {
+    
     <Stylesheet id="leptos" href=format!("/pkg/{}.css", env!("CARGO_PKG_NAME"))/>
     <Link rel="preconnect" href="https://unpkg.com"/>
     <Link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -43,6 +44,15 @@ pub fn App() -> impl IntoView {
   provide_meta_context();
 
   view! {
+
+    <script async src="https://rum.cronitor.io/script.js"></script>
+    <script>
+      "window.cronitor = window.cronitor || function() { (window.cronitor.q = window.cronitor.q || []).push(arguments); };
+      cronitor('config', { clientKey: '023d177b319ea5eed8339cd8cc5392fc' });"
+    </script>
+
+    <Script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></Script>
+
     // ? injects a stylesheet into the document <head>
     // id=leptos means cargo-leptos will hot-reload this stylesheet
     <Stylesheet id="leptos" href=format!("/pkg/{}.css", env!("CARGO_PKG_NAME"))/>
@@ -105,5 +115,6 @@ pub fn App() -> impl IntoView {
         <Footer/>
       </main>
     </Router>
+
   }
 }

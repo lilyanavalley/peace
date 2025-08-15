@@ -8,7 +8,7 @@ use crate::components::FavoriteQuotes;
 #[component]
 pub fn Footer() -> impl IntoView {
   view! {
-    <div class="flex flex-col md:flex-row self-center items-center justify-between text-center text-sm bg-[var(--color-base-200)] w-full">
+    <div class="flex flex-col md:flex-row self-center items-center justify-between text-center text-sm bg-[var(--color-base-100)] w-full">
       <FavoriteQuotes/>
       <div class="m-6">
         <div class="m-2">
