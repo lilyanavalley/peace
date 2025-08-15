@@ -77,7 +77,7 @@ pub fn FavoriteQuotes() -> impl IntoView {
           let mut quote = quote.await.unwrap_or_default();
           let citation = quote.citation.clone().unwrap_or_default();
           view! {
-            <div id="quote-quotation" class="text-center m-1">
+            <div id="quote-quotation" class="text-center m-1 p-2 bg-base-200 rounded-sm">
               <Markdown markdown={ quote.quotation } />
             </div>
             <Show
@@ -88,7 +88,9 @@ pub fn FavoriteQuotes() -> impl IntoView {
                 // ? Why the double clone, you ask? Because the compiler is a bit dumb and doesn't know that the
                 // ? citation is not going to be used again. 🤡
                 // TODO: Fix this.
-                <Markdown markdown={ citation.clone() } />
+                <span>
+                  <Markdown markdown={ citation.clone() } />
+                </span>
               </div>
             </Show>
           }
