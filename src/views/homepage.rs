@@ -1,12 +1,18 @@
 
 use leptos::prelude::*;
 use phosphor_leptos::*;
+use comrak;
 use crate::{ components::*, placeholders };
 
 
 /// Renders the home page of your application.
 #[component]
 pub fn HomePage() -> impl IntoView {
+  
+  // options.render.hardbreaks = true;
+  let description_long = || comrak::markdown_to_html(placeholders::DESCRIPTION_LONG_MD, &comrak::Options::default());
+  let description_short = || comrak::markdown_to_html(placeholders::DESCRIPTION_SHORT, &comrak::Options::default());
+
   view! {
 
     <Autoscale>
@@ -26,19 +32,11 @@ pub fn HomePage() -> impl IntoView {
         </span>
       </div>
 
-      <div id="profile-tagline">
-        <p class="text-center text-xs">
-          <Markdown
-            markdown = { placeholders::DESCRIPTION_SHORT.to_string() }
-          />
-        </p>
-      </div>
+      // <div id="profile-tagline">
+      //   <p class="text-center text-xs" inner_html=description_short()></p>
+      // </div>
 
-      <article id="profile-description">
-        <Markdown
-          markdown = { placeholders::DESCRIPTION_LONG_MD.to_string() }
-        />
-      </article>
+      <article inner_html=description_long()/>
 
     </Autoscale>
 

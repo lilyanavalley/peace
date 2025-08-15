@@ -1,6 +1,6 @@
 
 pub const DESCRIPTION_SHORT:    &'static str = "*a lily on a valley grown for software engineering, social causes and artistry*";
-pub const DESCRIPTION_LONG_MD:     &'static str = "Hello, welcome to my tiny corner of the Internet! My projects, contributions, beliefs and ideas in [Open Source Software](https://en.wikipedia.org/wiki/Open-source_software) (or differential yet equally nerdy subjects) are showcased here.
+pub const DESCRIPTION_LONG_MD:     &'static str = r#"Hello, welcome to my tiny corner of the Internet! My projects, contributions, beliefs and ideas in [Open Source Software](https://en.wikipedia.org/wiki/Open-source_software) (or differential yet equally nerdy subjects) are showcased here.
 
 Quite a lot of my personal life can be elided, with the most notable points being: I started my journey in digital art at a very young age. Around the same time, I was also curious about the sciences of computers and electronics down to their very fundamentals. Soon after, I learned to write batch scripts, wrote very rudimentary game mods and continued studying for the arts of such things up to today.
 
@@ -15,8 +15,8 @@ In ceasing my endless ramblings, I’d also like to take a moment to appreciate 
 #### My Fun Facts:
 - 🥑 Fruitfully enjoying a good Avocado
 - 🐧 Daily-driving GNU Linux (Ubuntu w/ Xen Hypervisor) and Mac OS.
-	- 🙂‍↕️Yes, I know… Macs and Apple. I know. Worse yet, I have no justification for my behaviors and choices. I even have an iPhone… Flay me already, I’m guilty.
-	- See also my [[Workstations & Software]] list
+  - 🙂‍↕️Yes, I know… Macs and Apple. I know. Worse yet, I have no justification for my behaviors and choices. I even have an iPhone… Flay me already, I’m guilty.
+  - See also my [[Workstations & Software]] list
 - 🟩 Playing survival Minecraft (Java & Bedrock)
 - ☕️ Enjoying locally roasted coffees
 - ⌨️ Building a 70% DIY RP2040-based Kailh Purple Mechanical Keyboard with home-brewed firmware
@@ -25,10 +25,10 @@ In ceasing my endless ramblings, I’d also like to take a moment to appreciate 
 - ⚙️ Considers itself to be more of 'thing' than a Human being
 -  🧠 Neurodivergent
 - 🏳️‍🌈 Has many pride flags
-	- 🩵🩷🤍🩷🩵 
-	- 💙💛🩷 
-	- 🖤🩶🤍💜 
-	- 🩷💙♾️ 
+  - 🩵🩷🤍🩷🩵 
+  - 💙💛🩷 
+  - 🖤🩶🤍💜 
+  - 🩷💙♾️ 
 - Also has CLI flags `-la` `-vv` `-h` 🤭
 
 ---
@@ -39,7 +39,7 @@ In ceasing my endless ramblings, I’d also like to take a moment to appreciate 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/L4L01DWUOJ)
 
 *Of course, donations are not required, but they **are** very appreciated!*
-";
+"#;
 
 pub const ASK_DESCRIPTION_MD: &'static str = "Questions about [Rust]()? Maybe, you (and other visitors) would like to know something oddly specific to Technology, Art, Copyleft and/or the Human Condition? Ask me anything, *Reddit AMA* style.
 
