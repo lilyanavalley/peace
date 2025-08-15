@@ -104,3 +104,36 @@
         100% { opacity: 0; }
     }
 }
+
+:root {
+  --font-body: "Victor Mono", "Courier New", monospace;
+  --font-title: "Fira Sans", "Helvetica Neue", sans-serif;
+  --font-subtitle: "Fira Code", "Courier New", monospace;
+  --font-code: "Fira Code", "Courier New", monospace;
+}
+
+html {
+  background-color: var(--color-base-200);
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+code, pre {
+  font-family: var(--font-code);
+}
+
+h1 {
+  font-family: var(--font-title);
+}
+
+h2, h3, h4, h5, h6 {
+  font-family: var(--font-subtitle);
+}
+
+hr {
+  border-color: var(--color-base-300);
+  border-width: var(--border);
+  margin: 1rem 0;
+}
