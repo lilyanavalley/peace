@@ -17,7 +17,7 @@ pub fn HomePage() -> impl IntoView {
 
     <Autoscale>
 
-      <div id="profile-headshot" class="flex flex-col lg:flex-row justify-center text-center">
+      <div id="profile-headshot" class="flex flex-col lg:flex-row justify-center text-center m-4">
         <img src="assets/avatar.png" class="self-center w-1/4 rounded-full" alt="Profile picture of Lily"/>
         <span class="flex flex-col self-center justify-self-center m-4">
           <p class="text-2xl italic">"Lily Ana Valley"</p>
