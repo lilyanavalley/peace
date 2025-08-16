@@ -60,7 +60,9 @@ pub fn FavoriteQuotes() -> impl IntoView {
     <div class="self-center flex flex-col text-[var(--color-base-content)] m-6">
 
       <div class="flex flex-col items-center m-3">
-        <Icon icon=QUOTES size="1.5rem"/>
+        <div class="m-2">
+          <Icon icon=QUOTES size="1.5rem"/>
+        </div>
         <p style="margin-top: 0; margin-bottom: 0;">{ placeholders::FAVQUOTES }</p>
       </div>
       
@@ -84,11 +86,12 @@ pub fn FavoriteQuotes() -> impl IntoView {
               when=move || { quote.citation.is_some() }
               fallback=move || view! {}
             >
-              <div id="quote-citation" class="text-center text-[.8rem] m-2">
+              <div id="quote-citation">
                 // ? Why the double clone, you ask? Because the compiler is a bit dumb and doesn't know that the
                 // ? citation is not going to be used again. 🤡
                 // TODO: Fix this.
-                <span>
+                <span class="flex text-center text-[.8rem] m-2">
+                  <b class="mr-2">"—"</b>
                   <Markdown markdown={ citation.clone() } />
                 </span>
               </div>
