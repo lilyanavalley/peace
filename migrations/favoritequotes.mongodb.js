@@ -276,7 +276,6 @@ db.getCollection(collection).insertMany([
     /* This particular quote was modified to escape backslashes */
     quotation:
       `
-      \`\`\`
               (__)  
               (oo)  
         /------\\/  
@@ -284,7 +283,6 @@ db.getCollection(collection).insertMany([
       *  /\\---/\\  
           ~~   ~~  
       ...."Have you mooed today?"...
-      \`\`\`
       `,
     citation: "Super Cow Powers"
   },
