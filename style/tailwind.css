@@ -154,8 +154,8 @@ article a:not(.link):hover, article a:not(.link):focus, #quote-citation a:hover,
 }
 
 article p {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 article ul, article ol {
