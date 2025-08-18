@@ -9,7 +9,7 @@ use crate::components::*;
 #[component]
 pub fn Navigator() -> impl IntoView {
   view! {
-    <div class="fixed bottom-0 max-w-7xl md:w-3/4 md:pb-4 self-center">
+    <div class="fixed bottom-0 w-full max-w-7xl md:w-3/4 md:pb-4 self-center">
       <nav class="navbar bg-accent/50 shadow-none md:shadow-xl glass backdrop-blur-sm md:rounded-xl">
         <div class="navbar-start hidden md:block">
           <span class="font-bold text-xl text-shadow-lg">"lilyvalley.dev"</span>
