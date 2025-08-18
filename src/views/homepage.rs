@@ -1,32 +1,44 @@
 
 use leptos::prelude::*;
 use phosphor_leptos::*;
-use crate::{ components, placeholders };
+use comrak;
+use crate::{ components::*, placeholders };
 
 
 /// Renders the home page of your application.
 #[component]
 pub fn HomePage() -> impl IntoView {
+  
+  // options.render.hardbreaks = true;
+  let description_long = || comrak::markdown_to_html(placeholders::DESCRIPTION_LONG_MD, &comrak::Options::default());
+  let description_short = || comrak::markdown_to_html(placeholders::DESCRIPTION_SHORT, &comrak::Options::default());
+
   view! {
-    
-    <div id="profile" class="flex flex-col self-center text-center border-0 rounded-full" style="margin-top: 2rem">
-      <img src="assets/avatar.png" class="self-center w-1/4 rounded-full" alt="Profile picture of Lily"/>
-      <h2 class="self-center justify-self-center">Lily Ana Valley</h2>
-    </div>
 
-    <div id="profile-badges" class="w-3/4 self-center">
-      <p class="text-center">
-        <components::article::Markdown
-          markdown = { placeholders::DESCRIPTION_SHORT.to_string() }
-        />
-      </p>
-    </div>
+    <Autoscale>
 
-    <article class="w-3/4 self-center" style="margin: 2rem">
-      <components::article::Markdown
-        markdown = { placeholders::DESCRIPTION_LONG_MD.to_string() }
-      />
-    </article>
+      <div id="profile-headshot" class="flex flex-col lg:flex-row justify-center text-center m-4">
+        <img src="assets/avatar.png" class="self-center w-1/4 rounded-full" alt="Profile picture of Lily"/>
+        <span class="flex flex-col self-center justify-self-center m-4">
+          <p class="text-2xl italic">"Lily Ana Valley"</p>
+          <div id="profile-pronouns" class="flex justify-center m-1">
+            <span class="badge badge-info m-1">
+              "she/her"
+            </span>
+            <span class="badge badge-success m-1">
+              "it/its"
+            </span>
+          </div>
+        </span>
+      </div>
+
+      // <div id="profile-tagline">
+      //   <p class="text-center text-xs" inner_html=description_short()></p>
+      // </div>
+
+      <article inner_html=description_long()/>
+
+    </Autoscale>
 
   }
 }

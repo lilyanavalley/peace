@@ -1,7 +1,7 @@
 
 use leptos::prelude::*;
 use serde::{Deserialize, Serialize};
-use crate::components::{ *, article::Markdown };
+use crate::components::{ * };
 
 
 #[derive(Serialize, Deserialize)]
@@ -19,20 +19,22 @@ pub fn Stats() -> impl IntoView {
   let seedling = "40GB";
   view! {
 
-    <h1>Fun Statistics</h1>
-    
-    <article class="w-3/4 self-center" style="margin: 2rem">
-      <Markdown
-        markdown = format!(
-          "This website has served `{hits}` total requests since its inception.
+    <Autoscale>
+      <h1>"Fun Statistics"</h1>
+      
+      <article class="w-3/4 self-center" style="margin: 2rem">
+        <Markdown
+          markdown = format!(
+            "This website has served `{hits}` total requests since its inception.
 
-          My HomeLab has seeded a total of {seedling} in [FOSS Torrents](https://fosstorrents.com/).
-          
-          // TODO: add more stats :)
-          ")
-      >
-      </Markdown>
-    </article>
+            My HomeLab has seeded a total of {seedling} in [FOSS Torrents](https://fosstorrents.com/).
+            
+            // TODO: add more stats :)
+            ")
+        >
+        </Markdown>
+      </article>
+    </Autoscale>
 
   }
 }

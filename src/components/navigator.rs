@@ -2,31 +2,42 @@
 use leptos::prelude::*;
 use leptos_router::components::*;
 use phosphor_leptos::*;
+use crate::components::*;
 
 
 /// Router Bar component.
 #[component]
 pub fn Navigator() -> impl IntoView {
   view! {
-    <nav id="navigator" class="flex bg-[var(--color-deeperblack)]">
-      <For
-        each=move || ROUTERBAR_SAMPLE
-        key=|route| route.route
-        children=move |route: RouterBarItem| {
-          view! {
-            <A
-              // class="flex flex-col flex-auto font-normal items-center justify-center without-link-symbol"
-              href={route.route}
-            >
-              <p style="margin: .5rem; margin-bottom: .1rem;">
-                <Icon icon=route.icon size="2rem" weight=IconWeight::Duotone/>
-              </p>
-              <p style="margin: .5rem; margin-top: 0;">{route.label}</p>
-            </A>
-          }
-        }
-      />
-    </nav>
+    <div class="fixed bottom-0 w-full max-w-7xl md:w-3/4 md:pb-4 self-center">
+      <nav class="navbar bg-accent/50 shadow-none md:shadow-xl glass backdrop-blur-sm md:rounded-xl">
+        <div class="navbar-start hidden md:block">
+          <span class="font-bold text-xl text-shadow-lg">"lilyvalley.dev"</span>
+        </div>
+        <div class="navbar-end w-full justify-center md:justify-end">
+          <ul class="menu menu-horizontal">
+            <For
+              each=move || ROUTERBAR_SAMPLE
+              key=|route| route.route
+              children=move |route: RouterBarItem| {
+                view! {
+
+                  // * menu button container
+                  <li class="m-1">
+                    // * button itself
+                    <a class="btn btn-accent font-bold justify-start rounded-xl" href={route.route}>
+                      <Icon icon={route.icon} weight=IconWeight::Fill size="1.2rem"/>
+                      {route.label}
+                    </a>
+                  </li>
+
+                }
+              }
+            />
+          </ul>
+        </div>
+      </nav>
+    </div>
   }
 }
 

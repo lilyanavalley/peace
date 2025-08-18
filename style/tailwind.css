@@ -1,8 +1,86 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/preflight.css" layer(base);
+@import "tailwindcss/utilities.css" layer(utilities);
+@plugin "daisyui" {
+  /* themes: "synthetic"; */
+}
+
+@plugin "daisyui/theme" {
+  name: "oled";
+  default: true;
+  prefersdark: true;
+  color-scheme: "dark";
+  --color-base-100: oklch(16% 0 0);
+  --color-base-200: oklch(0% 0 0);
+  --color-base-300: oklch(20% 0 0);
+  --color-base-content: oklch(100% 0 0);
+  --color-primary: oklch(0.9036 0.1773 158.64);
+  --color-primary-content: oklch(0.20 0.1773 158.64);
+  --color-secondary: oklch(0.9036 0.1773 192.82);
+  --color-secondary-content: oklch(0.20 0.1773 192.82);
+  --color-accent: oklch(0.9036 0.1081 330.62);
+  --color-accent-content: oklch(0.20 0.1081 330.62);
+  --color-neutral: oklch(25% 0.0 0.0);
+  --color-neutral-content: oklch(85% 0 0);
+  --color-info: oklch(0.9243 0.0878 203.78);
+  --color-info-content: oklch(0.20 0.0878 203.78);
+  --color-success: oklch(0.9476 0.1027 145);
+  --color-success-content: oklch(0.20 0.1027 145);
+  --color-warning: oklch(0.9065 0.0782 66.77);
+  --color-warning-content: oklch(0.20 0.016 73.684);
+  --color-error: oklch(0.8266 0.1246 18.69);
+  --color-error-content: oklch(0.20 0.1246 18.69);
+  --radius-selector: 2rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.25rem;
+  --size-selector: 0.3125rem;
+  --size-field: 0.25rem;
+  --border: 2px;
+  --depth: 1;
+  --noise: 0;
+}
+
+
+@plugin "daisyui/theme" {
+  name: "paper";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+  --color-base-100: oklch(98% 0 0);
+  --color-base-200: oklch(100% 0 0);
+  --color-base-300: oklch(94% 0.003 48.717);
+  --color-base-content: oklch(0% 0 0);
+  --color-primary: oklch(0.7463 0.1773 158.64);
+  --color-primary-content: oklch(100% 0 0);
+  --color-secondary: oklch(0.773 0.1773 192.82);
+  --color-secondary-content: oklch(100% 0 0);
+  --color-accent: oklch(0.773 0.2201 330.62);
+  --color-accent-content: oklch(100% 0 0);
+  --color-neutral: oklch(75% 0.0 0.0);
+  --color-neutral-content: oklch(25% 0 0);
+  --color-info: oklch(0.7493 0.1828 222.73);
+  --color-info-content: oklch(100% 0 0);
+  --color-success: oklch(0.7018 0.2728 147.95);
+  --color-success-content: oklch(100% 0 0);
+  --color-warning: oklch(0.8383 0.1938 80.65);
+  --color-warning-content: oklch(100% 0 0);
+  --color-error: oklch(0.6751 0.2728 13.35);
+  --color-error-content: oklch(100% 0 0);
+  --radius-selector: 2rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.25rem;
+  --size-selector: 0.3125rem;
+  --size-field: 0.25rem;
+  --border: 2px;
+  --depth: 1;
+  --noise: 0;
+}
+
 
 @theme {
+
+    --breakpoint-sm: 0rem;
 
     --animation-rainbowswirl: rainbow 10s ease-in-out infinite;
     @keyframes rainbow {
@@ -26,4 +104,85 @@
         85% { opacity: 1; }
         100% { opacity: 0; }
     }
+}
+
+:root {
+  --font-body: "Victor Mono", "Courier New", monospace;
+  --font-title: "Fira Sans", "Helvetica Neue", sans-serif;
+  --font-subtitle: "Fira Code", "Courier New", monospace;
+  --font-code: "Fira Code", "Courier New", monospace;
+}
+
+html {
+  background-color: var(--color-base-200);
+}
+
+body {
+  font-family: var(--font-body);
+}
+
+code, pre {
+  font-family: var(--font-code);
+}
+
+h1 {
+  font-family: var(--font-title);
+}
+
+h2, h3, h4, h5, h6 {
+  font-family: var(--font-subtitle);
+}
+
+hr {
+  border-color: var(--color-base-300);
+  border-width: var(--border);
+  margin: 1rem 0;
+}
+
+article h1 {
+  font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+article h2 {
+  font-size: 1.8rem;
+  margin-top: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+article h3 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+article a:not(.link), #quote-citation a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  border-radius: var(--radius-field);
+  transition: color 0.3s ease, background-color 0.3s ease;
+  padding: 0.25rem;
+}
+
+article a:not(.link):hover, article a:not(.link):focus, #quote-citation a:hover, #quote-citation a:focus {
+  color: var(--color-primary-content);
+  background-color: var(--color-primary);
+  text-decoration: none;
+}
+
+article p {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+article ul, article ol {
+  border-radius: var(--radius-box);
+  border-left: .25rem solid var(--color-neutral);
+  padding: 1rem;
+  margin: .5rem;
+}
+
+article ul li, article ol li {
+  margin-bottom: 0.5rem;
 }
