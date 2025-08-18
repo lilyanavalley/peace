@@ -6,13 +6,13 @@ alerts:
 features:
   - buildpack-stack=ubuntu-22
 
-name: peace-prod
+name: peace-prod-tor
 region: tor
 
 ingress:
   rules:
   - component:
-      name: peace-prod
+      name: peace-prod-tor
       preserve_path_prefix: true
     match:
       path:
@@ -39,7 +39,7 @@ services:
       tag: latest
     instance_count: 1
     instance_size_slug: apps-s-1vcpu-2gb
-    name: peace-prod
+    name: peace-prod-tor
     source_dir: /
 
 databases:
