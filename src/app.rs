@@ -68,7 +68,8 @@ pub fn App() -> impl IntoView {
     // content for this welcome page
     <Router>
       <Navigator/>
-      <main class="flex flex-col h-full w-full overflow-y-scroll overflow-x-hidden">
+      // * bottom margin is provided for spacing the navigator so as to not to cut off content.
+      <main class="flex flex-col h-full w-full overflow-y-scroll overflow-x-hidden mb-20 md:mb-28">
         <noscript>
           <div class="alert alert-warning">
           <Icon icon=WARNING size="1.5rem"/>

@@ -9,15 +9,13 @@ use crate::components::*;
 #[component]
 pub fn Navigator() -> impl IntoView {
   view! {
-    <nav class="navbar shadow-2xl bg-base-100">
-      <div class="navbar-start">
-        <div class="dropdown p-0">
-          <div tabindex="0" role="button" class="btn btn-sm btn-primary btn-wide md:hidden">
-            <Icon icon=LIST weight=IconWeight::Duotone/>
-          </div>
-          <ul
-            tabindex="0"
-            class="dropdown-content bg-[var(--color-primary)] rounded-box shadow-2xl overflow-y-scroll p-0.5">
+    <div class="fixed bottom-0 w-full md:w-3/4 md:pb-4 self-center">
+      <nav class="navbar bg-accent/50 shadow-none md:shadow-xl glass backdrop-blur-sm md:rounded-xl">
+        <div class="navbar-start hidden md:block">
+          <span class="font-bold text-xl text-shadow-lg">"lilyvalley.dev"</span>
+        </div>
+        <div class="navbar-end w-full justify-center md:justify-end">
+          <ul class="menu menu-horizontal">
             <For
               each=move || ROUTERBAR_SAMPLE
               key=|route| route.route
@@ -25,10 +23,10 @@ pub fn Navigator() -> impl IntoView {
                 view! {
 
                   // * menu button container
-                  <li class="list-row my-0.5">
+                  <li class="m-1">
                     // * button itself
-                    <a class="btn btn-lg btn-block btn-primary justify-start" href={route.route}>
-                      <Icon icon={route.icon} weight=IconWeight::Duotone/>
+                    <a class="btn btn-accent font-bold justify-start rounded-xl" href={route.route}>
+                      <Icon icon={route.icon} weight=IconWeight::Fill size="1.2rem"/>
                       {route.label}
                     </a>
                   </li>
@@ -38,34 +36,8 @@ pub fn Navigator() -> impl IntoView {
             />
           </ul>
         </div>
-        <a class="btn btn-ghost text-xl">"lilyvalley.dev"</a>
-      </div>
-      <div class="navbar-end hidden md:flex">
-        <ul class="menu menu-horizontal">
-          <For
-            each=move || ROUTERBAR_SAMPLE
-            key=|route| route.route
-            children=move |route: RouterBarItem| {
-              view! {
-
-                // * menu button container
-                <li class="m-0.5 grow list-row">
-                  // * button itself
-                  <a class="btn btn-sm lg:btn-md btn-primary md:justify-start self-center m-[0.25rem]" href={route.route}>
-                    <Icon icon={route.icon} weight=IconWeight::Duotone/>
-                    {route.label}
-                  </a>
-                </li>
-
-              }
-            }
-          />
-        </ul>
-      </div>
-      // <div class="navbar-end">
-      //   <ChooseThemeDropdown/>
-      // </div>
-    </nav>
+      </nav>
+    </div>
   }
 }
 
