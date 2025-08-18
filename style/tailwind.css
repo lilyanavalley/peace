@@ -139,6 +139,24 @@ hr {
   margin: 1rem 0;
 }
 
+article h1 {
+  font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+article h2 {
+  font-size: 1.8rem;
+  margin-top: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+article h3 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
 article a:not(.link), #quote-citation a {
   color: var(--color-primary);
   text-decoration: underline;
