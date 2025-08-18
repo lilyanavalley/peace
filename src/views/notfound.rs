@@ -23,14 +23,22 @@ pub fn NotFound() -> impl IntoView {
 
   view! {
     <Autoscale>
-      <div class="flex flex-col flex-grow text-center justify-center items-center min-h-full">
+      <div class="hero min-h-screen">
 
-        <Icon icon=BUG size="3rem" weight=IconWeight::Duotone/>
-        <h1>"404: " { placeholders::NOTFOUND }</h1>
-        
-        <Article>
-          <Markdown markdown={ placeholders::NOTFOUND_DESCRIPTION_MD.to_string() }/>
-        </Article>
+        <div class="hero-content flex-col">
+          
+          <div class="flex w-min-1/4 font-bold text-warning justify-center">
+            <span class="m-4"><Icon icon=BUG size="6rem" weight=IconWeight::Duotone/></span>
+            <div class="flex flex-col justify-center">
+              <h1 class="text-4xl">"404"</h1>
+              <h2 class="text-xl">{ placeholders::NOTFOUND }</h2>
+            </div>
+          </div>
+          
+          <Article>
+            <Markdown markdown={ placeholders::NOTFOUND_DESCRIPTION_MD.to_string() }/>
+          </Article>
+        </div>
 
       </div>
     </Autoscale>
