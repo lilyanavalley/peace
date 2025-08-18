@@ -61,7 +61,7 @@ pub fn FavoriteQuotes() -> impl IntoView {
 
       <div class="flex flex-col items-center m-3">
         <div class="m-2">
-          <Icon icon=QUOTES size="1.5rem"/>
+          <Icon icon=QUOTES size="1.5rem" weight=IconWeight::Duotone/>
         </div>
         <p style="margin-top: 0; margin-bottom: 0;">{ placeholders::FAVQUOTES }</p>
       </div>
@@ -79,7 +79,7 @@ pub fn FavoriteQuotes() -> impl IntoView {
           let mut quote = quote.await.unwrap_or_default();
           let citation = quote.citation.clone().unwrap_or_default();
           view! {
-            <div id="quote-quotation" class="text-center m-1 p-2 bg-base-200 rounded-sm">
+            <div id="quote-quotation" class="text-center m-1 p-2 bg-base-300 rounded-sm">
               <Markdown markdown={ quote.quotation } />
             </div>
             <Show
@@ -91,7 +91,6 @@ pub fn FavoriteQuotes() -> impl IntoView {
                 // ? citation is not going to be used again. 🤡
                 // TODO: Fix this.
                 <span class="flex text-center text-[.8rem] m-2">
-                  <b class="mr-2">"—"</b>
                   <Markdown markdown={ citation.clone() } />
                 </span>
               </div>
