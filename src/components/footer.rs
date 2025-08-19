@@ -21,16 +21,24 @@ pub fn Footer() -> impl IntoView {
         </p>
         <span class="m-2">
           <a href="https://github.com/lilyanavalley/peace" class="btn btn-soft btn-accent btn-sm m-1">
-            <Icon icon=GITHUB_LOGO/>
+            <Icon icon=GITHUB_LOGO weight=IconWeight::Fill size="1.2rem"/>
             { placeholders::FOOTER_SOURCE }
           </a>
           <a href="https://github.com/lilyanavalley/peace/issues" class="btn btn-soft btn-accent btn-sm m-1">
-            <Icon icon=ASTERISK/>
+            <Icon icon=ASTERISK weight=IconWeight::Fill size="1.2rem"/>
             { placeholders::FOOTER_ISSUES }
           </a>
           <a href="https://www.gnu.org/licenses/agpl-3.0.en.html" class="btn btn-soft btn-accent btn-sm m-1">
-            <Icon icon=SCROLL/>
+            <Icon icon=SCROLL weight=IconWeight::Fill size="1.2rem"/>
             { placeholders::FOOTER_LICENSE }
+          </a>
+          <a href="https://lilyvalley.cronitorstatus.com" class="btn btn-soft btn-accent btn-sm m-1">
+            <Icon icon=NETWORK_X weight=IconWeight::Fill size="1.2rem"/>
+            { placeholders::FOOTER_STATUS }
+          </a>
+          <a href="https://canary.lilyvalley.dev" class="btn btn-soft btn-accent btn-sm m-1">
+            <Icon icon=BOMB weight=IconWeight::Fill size="1.2rem"/>
+            { placeholders::FOOTER_CANARY }
           </a>
         </span>
         <img class="m-2" src="assets/agplv3-155x51.png" alt="GNU AGPL version 3 License Logo"/>
