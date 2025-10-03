@@ -1,6 +1,6 @@
 
 // #![recursion_limit = "256"]
-#![warn(missing_docs)]
+// #![warn(missing_docs)]
 
 #[cfg(feature = "ssr")]
 pub mod server;
@@ -17,7 +17,7 @@ use peace::{
 #[cfg(feature = "ssr")]
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-  use std::sync::Mutex;
+  use std::sync::{Arc, Mutex};
   // extern crate jsonwebtoken;
   use actix_files::Files;
   use actix_web:: { * , dev::*, body::*, web::Data };
@@ -43,8 +43,14 @@ async fn main() -> std::io::Result<()> {
 
   log!("priming quote of the day...");
   peace_config.prime_qotd(&db_mongodb).await.unwrap();
+  
+  // Preload popular documents into cache
+  log!("preloading documents cache...");
+  let peace_config_arc = Arc::new(Mutex::new(peace_config));
+  config::document_server::preload_popular_documents(peace_config_arc.clone(), &db_mongodb).await.unwrap();
+  
   log!("...ready!");
-  let peace_config = Data::new(Mutex::new(peace_config));
+  let peace_config = Data::new(peace_config_arc);
   
   log!("Starting server...");
   HttpServer::new(move || {

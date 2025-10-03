@@ -115,6 +115,16 @@ impl PeaceConfig {
     mongodb::options::ClientOptions::parse(uris).await
   }
 
+  #[cfg(feature = "ssr")]
+  pub fn get_document(&self, document_id: &str) -> Option<document_queue::DocumentComplete> {
+    self.documents.get(&document_id.to_string())
+  }
+
+  #[cfg(feature = "ssr")]
+  pub fn cleanup_documents(&mut self) -> usize {
+    self.documents.cleanup_expired()
+  }
+
 }
 
 #[cfg(feature = "ssr")]
@@ -242,16 +252,104 @@ mod document_queue {
   use std::time;
   use std::collections::BTreeMap;
   use mongodb;
-
+  use leptos::logging::*;
+  use serde::{Deserialize, Serialize};
 
   pub type DocumentId = String;
 
   /// Collection of queued documents in cache, which were fetched by request and retained for a duration.
   /// Each document is referenced by its `DocumentId`. The value of this ID must be permenent so as to never store
   /// more than one copy of a particular document.
-  #[derive(Clone, Default)] // TODO: Consider wrapping in Arc<Mutex>
+  #[derive(Clone, Default)]
   pub struct Documents {
     queue: Box<BTreeMap<DocumentId, DocumentComplete>>
+  }
+
+  impl Documents {
+
+    pub fn get(&self, id: &DocumentId) -> Option<DocumentComplete> {
+      if let Some(mut doc) = self.queue.get(id).cloned() {
+        // Increment hit counter
+        doc.hits += 1;
+        Some(doc)
+      } else {
+        None
+      }
+    }
+
+    pub fn insert(&mut self, id: DocumentId, document: DocumentComplete) {
+      self.queue.insert(id, document);
+    }
+
+    pub fn update(&mut self, id: &DocumentId, content: String, object_id: String) -> bool {
+      if let Some(doc) = self.queue.get_mut(id) {
+        doc.content = content;
+        doc.object_id = object_id;
+        doc.update_conceived = time::Instant::now();
+        doc.updates += 1;
+        // Extend expiration for popular documents
+        if doc.hits > 10 {
+          doc.expiration = Some(time::Instant::now() + time::Duration::from_secs(86400 * 7)); // 7 days for popular docs
+        }
+        true
+      } else {
+        false
+      }
+    }
+
+    pub fn is_expired(&self, id: &DocumentId) -> bool {
+      if let Some(doc) = self.queue.get(id) {
+        if let Some(expiration) = doc.expiration {
+          time::Instant::now() > expiration
+        } else {
+          false
+        }
+      } else {
+        true // Document not found is considered "expired"
+      }
+    }
+
+    pub fn cleanup_expired(&mut self) -> usize {
+      let before_count = self.queue.len();
+      self.queue.retain(|_id, doc| {
+        if let Some(expiration) = doc.expiration {
+          time::Instant::now() <= expiration
+        } else {
+          true // Keep documents without expiration
+        }
+      });
+      let removed = before_count - self.queue.len();
+      if removed > 0 {
+        log!("Cleaned up {removed} expired documents from cache");
+      }
+      removed
+    }
+
+    pub fn size(&self) -> usize {
+      self.queue.len()
+    }
+
+    pub fn get_popular_documents(&self, threshold: usize) -> Vec<(DocumentId, usize)> {
+      self.queue
+        .iter()
+        .filter(|(_, doc)| doc.hits >= threshold)
+        .map(|(id, doc)| (id.clone(), doc.hits))
+        .collect()
+    }
+
+  }
+
+  /// Document stored in MongoDB
+  #[derive(Debug, Clone, Serialize, Deserialize)]
+  pub struct DocumentRecord {
+    #[serde(rename = "_id", skip_serializing_if = "Option::is_none")]
+    pub id: Option<mongodb::bson::oid::ObjectId>,
+    pub document_id: String,
+    pub content: String,
+    pub title: Option<String>,
+    pub created_at: mongodb::bson::DateTime,
+    pub updated_at: mongodb::bson::DateTime,
+    pub version: i32,
   }
 
   /// Document and its associated caching information.
@@ -264,6 +362,7 @@ mod document_queue {
   pub struct DocumentComplete {
 
     pub content: String,
+    pub title: Option<String>,
     pub expiration: Option<time::Instant>, // If provided, document expires at the Instant.
 
     pub conceived: time::Instant, // The point in time where this document was cached.
@@ -273,6 +372,7 @@ mod document_queue {
     pub updates: usize, // Count of total updates for this document since it was cached.
 
     object_id: String, // Internal reference to MongoDB oid field.
+    pub version: i32, // Version number from database
 
   }
 
@@ -280,14 +380,285 @@ mod document_queue {
     fn default() -> Self {
       DocumentComplete {
         content: String::new(),
-        expiration: None,
+        title: None,
+        expiration: Some(time::Instant::now() + time::Duration::from_secs(86400)), // Default 24 hour expiration
         conceived: time::Instant::now(),
         hits: 0,
         update_conceived: time::Instant::now(),
         updates: 0,
         object_id: String::new(),
+        version: 0,
       }
     }
+  }
+
+  impl From<DocumentRecord> for DocumentComplete {
+    fn from(record: DocumentRecord) -> Self {
+      DocumentComplete {
+        content: record.content,
+        title: record.title,
+        expiration: Some(time::Instant::now() + time::Duration::from_secs(86400)), // 24 hours
+        conceived: time::Instant::now(),
+        hits: 0,
+        update_conceived: time::Instant::now(),
+        updates: 0,
+        object_id: record.id.map(|oid| oid.to_hex()).unwrap_or_default(),
+        version: record.version,
+      }
+    }
+  }
+
+}
+
+/// Document server module for managing cached markdown documents
+/// 
+/// # Usage Example:
+/// ```rust
+/// // In your Leptos server function:
+/// #[server(GetDocument, "/api")]
+/// pub async fn get_document(document_id: String) -> Result<Option<String>, ServerFnError> {
+///     use actix_web::web::Data;
+///     use std::sync::{Arc, Mutex};
+/// 
+///     let config = expect_context::<Data<Arc<Mutex<PeaceConfig>>>>();
+///     let mongodb = expect_context::<Data<mongodb::Client>>();
+/// 
+///     match document_server::get_document(config.clone(), &mongodb, &document_id).await {
+///         Ok(Some(doc)) => {
+///             // Render markdown to HTML using comrak
+///             let html = comrak::markdown_to_html(&doc.content, &comrak::Options::default());
+///             Ok(Some(html))
+///         },
+///         Ok(None) => Ok(None),
+///         Err(e) => Err(ServerFnError::ServerError(format!("Database error: {}", e)))
+///     }
+/// }
+/// 
+/// // Periodic maintenance (call from a scheduled task):
+/// document_server::run_maintenance_task(config.clone(), &mongodb).await;
+/// ```
+pub mod document_server {
+
+  use super::document_queue::*;
+  use mongodb;
+  use leptos::logging::*;
+  use std::sync::{Arc, Mutex};
+
+  const DOCUMENTS_DB_DATABASE: &'static str = "profile";
+  const DOCUMENTS_DB_COLLECTION: &'static str = "documents";
+
+  /// Fetch document from cache or database
+  pub async fn get_document(
+    config: Arc<Mutex<super::PeaceConfig>>,
+    mongodb: &mongodb::Client,
+    document_id: &str,
+  ) -> mongodb::error::Result<Option<DocumentComplete>> {
+    
+    // First check cache
+    {
+      let mut config_guard = config.lock().unwrap();
+      
+      // Clean up expired documents periodically
+      config_guard.documents.cleanup_expired();
+      
+      if let Some(doc) = config_guard.documents.get(&document_id.to_string()) {
+        if !config_guard.documents.is_expired(&document_id.to_string()) {
+          log!("Document '{}' served from cache (hits: {})", document_id, doc.hits);
+          return Ok(Some(doc));
+        } else {
+          log!("Document '{}' expired in cache, fetching from database", document_id);
+        }
+      }
+    }
+
+    // Fetch from database
+    log!("Fetching document '{}' from database", document_id);
+    match fetch_from_database(mongodb, document_id).await? {
+      Some(record) => {
+        let document = DocumentComplete::from(record);
+        
+        // Store in cache
+        {
+          let mut config_guard = config.lock().unwrap();
+          config_guard.documents.insert(document_id.to_string(), document.clone());
+        }
+        
+        log!("Document '{}' cached successfully", document_id);
+        Ok(Some(document))
+      },
+      None => {
+        log!("Document '{}' not found in database", document_id);
+        Ok(None)
+      }
+    }
+  }
+
+  /// Check if document needs updating by comparing versions
+  pub async fn check_and_update_document(
+    config: Arc<Mutex<super::PeaceConfig>>,
+    mongodb: &mongodb::Client,
+    document_id: &str,
+  ) -> mongodb::error::Result<bool> {
+    
+    let current_version = {
+      let config_guard = config.lock().unwrap();
+      config_guard.documents.get(&document_id.to_string())
+        .map(|doc| doc.version)
+    };
+
+    if let Some(cached_version) = current_version {
+      // Check database for newer version
+      if let Some(db_version) = get_document_version(mongodb, document_id).await? {
+        if db_version > cached_version {
+          log!("Document '{}' has newer version ({} -> {}), updating cache", 
+               document_id, cached_version, db_version);
+          
+          // Fetch and update
+          if let Some(record) = fetch_from_database(mongodb, document_id).await? {
+            let mut config_guard = config.lock().unwrap();
+            config_guard.documents.update(
+              &document_id.to_string(), 
+              record.content.clone(), 
+              record.id.map(|oid| oid.to_hex()).unwrap_or_default()
+            );
+            return Ok(true);
+          }
+        }
+      }
+    }
+    
+    Ok(false)
+  }
+
+  /// Fetch document from MongoDB
+  async fn fetch_from_database(
+    mongodb: &mongodb::Client,
+    document_id: &str,
+  ) -> mongodb::error::Result<Option<DocumentRecord>> {
+    
+    let collection = mongodb
+      .database(DOCUMENTS_DB_DATABASE)
+      .collection::<DocumentRecord>(DOCUMENTS_DB_COLLECTION);
+
+    let filter = mongodb::bson::doc! { "document_id": document_id };
+    
+    collection.find_one(filter).await
+  }
+
+  /// Get document version from database without fetching full content
+  async fn get_document_version(
+    mongodb: &mongodb::Client,
+    document_id: &str,
+  ) -> mongodb::error::Result<Option<i32>> {
+    
+    let collection = mongodb
+      .database(DOCUMENTS_DB_DATABASE)
+      .collection::<mongodb::bson::Document>(DOCUMENTS_DB_COLLECTION);
+
+    let filter = mongodb::bson::doc! { "document_id": document_id };
+    let projection = mongodb::bson::doc! { "version": 1, "_id": 0 };
+    
+    if let Some(doc) = collection.find_one(filter).projection(projection).await? {
+      Ok(doc.get_i32("version").ok())
+    } else {
+      Ok(None)
+    }
+  }
+
+  /// Preload popular documents into cache
+  pub async fn preload_popular_documents(
+    config: Arc<Mutex<super::PeaceConfig>>,
+    mongodb: &mongodb::Client,
+  ) -> mongodb::error::Result<usize> {
+    
+    log!("Preloading popular documents...");
+    
+    let collection = mongodb
+      .database(DOCUMENTS_DB_DATABASE)
+      .collection::<DocumentRecord>(DOCUMENTS_DB_COLLECTION);
+
+    // Fetch documents that might be popular (you can adjust this query based on your needs)
+    let mut cursor = collection.find(mongodb::bson::doc! {}).limit(10).await?;
+    
+    let mut documents = Vec::new();
+    while cursor.advance().await? {
+      if let Ok(doc) = cursor.deserialize_current() {
+        documents.push(doc);
+      }
+    }
+    let count = documents.len();
+    
+    {
+      let mut config_guard = config.lock().unwrap();
+      for record in documents {
+        let document = DocumentComplete::from(record.clone());
+        config_guard.documents.insert(record.document_id, document);
+      }
+    }
+    
+    log!("Preloaded {} documents into cache", count);
+    Ok(count)
+  }
+
+  /// Background task to refresh popular documents
+  pub async fn refresh_popular_documents(
+    config: Arc<Mutex<super::PeaceConfig>>,
+    mongodb: &mongodb::Client,
+  ) -> mongodb::error::Result<usize> {
+    
+    let popular_docs = {
+      let config_guard = config.lock().unwrap();
+      config_guard.documents.get_popular_documents(5) // Documents with 5+ hits
+    };
+
+    let mut refreshed = 0;
+    for (doc_id, hits) in popular_docs {
+      log!("Refreshing popular document '{}' ({} hits)", doc_id, hits);
+      if check_and_update_document(config.clone(), mongodb, &doc_id).await? {
+        refreshed += 1;
+      }
+    }
+
+    if refreshed > 0 {
+      log!("Refreshed {} popular documents", refreshed);
+    }
+
+    Ok(refreshed)
+  }
+
+  /// Spawn a background task to periodically refresh documents and clean up expired ones
+  /// This should be called from your actix-web server setup
+  pub async fn run_maintenance_task(
+    config: Arc<Mutex<super::PeaceConfig>>,
+    mongodb: &mongodb::Client,
+  ) -> mongodb::error::Result<()> {
+    
+    log!("Running document cache maintenance...");
+    
+    // Clean up expired documents
+    {
+      let mut config_guard = config.lock().unwrap();
+      let cleaned = config_guard.documents.cleanup_expired();
+      if cleaned > 0 {
+        log!("Maintenance: cleaned {} expired documents", cleaned);
+      }
+    }
+    
+    // Refresh popular documents
+    let refreshed = refresh_popular_documents(config.clone(), mongodb).await?;
+    if refreshed > 0 {
+      log!("Maintenance: refreshed {} popular documents", refreshed);
+    }
+    
+    // Log cache statistics
+    {
+      let config_guard = config.lock().unwrap();
+      let cache_size = config_guard.documents.size();
+      let popular = config_guard.documents.get_popular_documents(5);
+      log!("Cache stats: {} documents cached, {} popular", cache_size, popular.len());
+    }
+
+    Ok(())
   }
 
 }
