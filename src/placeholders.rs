@@ -208,3 +208,5 @@ pub const FOOTER_NAME: &'static str = "Lily Ana Valley";
 pub const FOOTER_SOURCE: &'static str = "Source";
 pub const FOOTER_ISSUES: &'static str = "Issues";
 pub const FOOTER_LICENSE: &'static str = "License";
+pub const FOOTER_STATUS: &'static str = "Status";
+pub const FOOTER_CANARY: &'static str = "Canary";
