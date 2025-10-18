@@ -26,6 +26,8 @@ pub struct PeaceConfig {
   mongodb_uris:           Option<String>,
   #[cfg(feature = "ssr")]
   mongodb_tls:            Option<mongodb::options::Tls>,
+  #[cfg(feature = "ssr")]
+  documents:              document_queue::Documents,
 }
 
 impl PeaceConfig {
@@ -126,6 +128,7 @@ impl Default for PeaceConfig {
       mongodb_uris:       None,
       mongodb_tls:        None,
       quotes:             quote_queue::QuoteDocument::default(),
+      documents:          document_queue::Documents::default(),
     }
   }
 }
@@ -229,6 +232,62 @@ mod quote_server {
       expire
     })
 
+  }
+
+}
+
+#[cfg(feature = "ssr")]
+mod document_queue {
+
+  use std::time;
+  use std::collections::BTreeMap;
+  use mongodb;
+
+
+  pub type DocumentId = String;
+
+  /// Collection of queued documents in cache, which were fetched by request and retained for a duration.
+  /// Each document is referenced by its `DocumentId`. The value of this ID must be permenent so as to never store
+  /// more than one copy of a particular document.
+  #[derive(Clone, Default)] // TODO: Consider wrapping in Arc<Mutex>
+  pub struct Documents {
+    queue: Box<BTreeMap<DocumentId, DocumentComplete>>
+  }
+
+  /// Document and its associated caching information.
+  /// 
+  /// A singlet reveals how pouplar itself is to the cache and therefore how important it is for caching purposes.
+  /// Additionally, for very popular documents, they may have an extended lifetime and update more frequently.
+  /// Less popular documents are discarded from the cache if their expiration is reached, and while costs bandwidth and
+  /// response timing later-on, helps to save space for documents which are far more important to cache.
+  #[derive(Clone)]
+  pub struct DocumentComplete {
+
+    pub content: String,
+    pub expiration: Option<time::Instant>, // If provided, document expires at the Instant.
+
+    pub conceived: time::Instant, // The point in time where this document was cached.
+    pub hits: usize, // Count of total hits (requests) for this document since it was cached.
+
+    pub update_conceived: time::Instant, // the point in time where this document was last updated from Database.
+    pub updates: usize, // Count of total updates for this document since it was cached.
+
+    object_id: String, // Internal reference to MongoDB oid field.
+
+  }
+
+  impl Default for DocumentComplete {
+    fn default() -> Self {
+      DocumentComplete {
+        content: String::new(),
+        expiration: None,
+        conceived: time::Instant::now(),
+        hits: 0,
+        update_conceived: time::Instant::now(),
+        updates: 0,
+        object_id: String::new(),
+      }
+    }
   }
 
 }
