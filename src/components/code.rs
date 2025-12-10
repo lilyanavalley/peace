@@ -53,7 +53,7 @@ pub fn Code(source: &'static str) -> impl IntoView {
     set_do_copy.update(|v| *v = false);
   };
 
-  let builder = SyntectAdapterBuilder::new().css();
+  let builder = SyntectAdapterBuilder::new();
   let adapter = builder.build();
   let options = Options::default();
   let mut plugins = Plugins::default();

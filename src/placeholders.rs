@@ -203,6 +203,29 @@ Should these accommodations not satisfy, kindly [open an issue](https://github.c
 
 pub const FAVQUOTES: &'static str = "quote of the day";
 
+pub const RAMBLINGS_INDEX_MD: &'static str = "# Ramblings
+A collection of my personal essays, articles and writings on various topics. I don't really have a specific theme or niche, so expect a bit of everything and anything.";
+
+pub const RAMBLINGS_SAMPLE_POST_FEATURETEST: &'static str = r#"
+```rust
+// * Code sample
+
+fn main() {
+  println!("Hello, world!");
+  sample_me();
+}
+
+pub fn sample_me() -> u8 {
+  let mut i = 0;
+  for f in 0..10 {
+    i *= f;
+  }
+  i
+}
+
+```
+"#;
+
 pub const FOOTER: &'static str = "the home of";
 pub const FOOTER_NAME: &'static str = "Lily Ana Valley";
 pub const FOOTER_SOURCE: &'static str = "Source";

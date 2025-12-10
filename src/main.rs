@@ -1,6 +1,6 @@
 
 // #![recursion_limit = "256"]
-#![warn(missing_docs)]
+// #![warn(missing_docs)]
 
 #[cfg(feature = "ssr")]
 pub mod server;
@@ -24,6 +24,7 @@ async fn main() -> std::io::Result<()> {
   use leptos::{ prelude::*, config::get_configuration, logging::* };
   use leptos_meta::MetaTags;
   use leptos_actix::{generate_route_list, LeptosRoutes};
+  use log::{ trace, debug };
   use mongodb;
   // use webauthn_rs;
   use chrono;
@@ -31,6 +32,8 @@ async fn main() -> std::io::Result<()> {
   // use actix_web_httpauth::{ middleware::HttpAuthentication, extractors::bearer::BearerAuth };
   use serde::{Deserialize, Serialize};
 
+
+  // TODO: put logging stuff here.
 
   log!("leptos configurating...");
   let leptos_config = get_configuration(Some("Cargo.toml")).unwrap();
@@ -41,13 +44,18 @@ async fn main() -> std::io::Result<()> {
   log!("mongodb client setup...");
   let db_mongodb = peace_config.mongodb_setup().await;
 
+  log!("Connecting mongodb...");
+  peace_config.mongodb_client = Some(db_mongodb.clone());
+  log!("...connected!");
+
   log!("priming quote of the day...");
-  peace_config.prime_qotd(&db_mongodb).await.unwrap();
+  peace_config.prime_qotd().await.unwrap();
   log!("...ready!");
+
   let peace_config = Data::new(Mutex::new(peace_config));
   
   log!("Starting server...");
-  HttpServer::new(move || {
+  let server = HttpServer::new(move || {
     // Generate the list of routes in your Leptos App
     let routes = generate_route_list(App);
     let leptos_options = &leptos_config.leptos_options;
@@ -55,7 +63,7 @@ async fn main() -> std::io::Result<()> {
     // let authenticator = HttpAuthentication::bearer(server::auth_validate);
     // println!("listening on http://{}", &addr);
 
-    log!("...app launch initiated.");
+    log!("thread spawning...");
     App::new()
       // serve JS/WASM/CSS from `pkg`
       .service(Files::new("/pkg", format!("{site_root}/pkg")))
@@ -92,9 +100,11 @@ async fn main() -> std::io::Result<()> {
       .app_data(web::Data::clone(&peace_config))
       // .wrap(middleware::from_fn(server::rate_limit))
   })
-  .bind(&leptos_address)?
-  .run()
-  .await
+  .bind(&leptos_address)?;
+
+  log!("Listening on http://{}", &leptos_address);
+
+  server.run().await
 }
 
 #[cfg(feature = "ssr")]

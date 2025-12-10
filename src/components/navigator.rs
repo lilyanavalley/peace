@@ -41,7 +41,7 @@ pub fn Navigator() -> impl IntoView {
   }
 }
 
-const ROUTERBAR_SAMPLE: [RouterBarItem; 3] = [
+const ROUTERBAR_SAMPLE: [RouterBarItem; 4] = [
   RouterBarItem {
     icon: FLOWER,
     label: "About",
@@ -55,11 +55,17 @@ const ROUTERBAR_SAMPLE: [RouterBarItem; 3] = [
     colorsa: "--color-selectables-red"
   },
   RouterBarItem {
+    icon: PEN_NIB,
+    label: "Ramblings",
+    route: "/ramblings",
+    colorsa: "--color-selectables-green"
+  },
+  RouterBarItem {
     icon: PAPER_PLANE_TILT,
     label: "Contact",
     route: "/contact",
     colorsa: "--color-selectables-yellow"
-  },
+  }
   // RouterBarItem {
   //   icon: CHATS_CIRCLE,
   //   label: "Ask",

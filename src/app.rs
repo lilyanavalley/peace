@@ -102,6 +102,11 @@ pub fn App() -> impl IntoView {
           // </ParentRoute>
         
           <Route path=StaticSegment("/work") view=Work/>
+
+          <ParentRoute path=StaticSegment("/ramblings") view=Ramblings>
+            <Route path=StaticSegment("") view=RamblingsIndex/>
+            <Route path=path!(":slug") view=RamblingsPost/>
+          </ParentRoute>
         
           // <ParentRoute path=path!("/contact") view=contact::Contact>
           //   // <Route path=path!(":cid") view=contact::ContactUpdate/>
