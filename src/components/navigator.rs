@@ -9,10 +9,10 @@ use crate::components::*;
 #[component]
 pub fn Navigator() -> impl IntoView {
   view! {
-    <div class="fixed bottom-0 w-full max-w-7xl md:w-3/4 md:pb-4 self-center z-1">
-      <nav class="navbar bg-accent/50 shadow-none md:shadow-xl glass backdrop-blur-sm md:rounded-xl">
+    <div class="fixed bottom-0 w-full self-center z-1">
+      <nav class="navbar bg-base-200/50 shadow-none backdrop-blur-sm border-t-2 border-base-300/75">
         <div class="navbar-start hidden md:block">
-          <span class="font-bold text-xl text-shadow-lg">"lilyvalley.dev"</span>
+          <span class="font-bold text-shadow-lg">"lilyvalley.dev"</span>
         </div>
         <div class="navbar-end w-full justify-center md:justify-end">
           <ul class="menu menu-horizontal">
@@ -25,7 +25,8 @@ pub fn Navigator() -> impl IntoView {
                   // * menu button container
                   <li class="m-1">
                     // * button itself
-                    <a class="btn btn-accent font-bold justify-start rounded-xl" href={route.route}>
+                    <a class="btn btn-primary btn-ghost justify-start text-primary hover:text-primary-content
+                    focus:text-primary-content" href={route.route}>
                       <Icon icon={route.icon} weight=IconWeight::Fill size="1.2rem"/>
                       {route.label}
                     </a>
