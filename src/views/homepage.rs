@@ -38,6 +38,8 @@ pub fn HomePage() -> impl IntoView {
 
       <article inner_html=description_long()/>
 
+      <span id="blink-caret"></span>
+
     </Autoscale>
 
   }

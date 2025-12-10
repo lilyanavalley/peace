@@ -157,18 +157,32 @@ article h3 {
   margin-bottom: 0.5rem;
 }
 
+/* Links which are not defined as links through DaisyUI must be styled manually */
+/* ! NOTE: This does not cover `a` in whole, due to DaisyUI's link component. It wouldn't style right otherwise. */
 article a:not(.link), #quote-citation a {
   color: var(--color-primary);
+  background-color: unset;
   text-decoration: underline;
   border-radius: var(--radius-field);
   transition: color 0.3s ease, background-color 0.3s ease;
   padding: 0.25rem;
 }
 
+/* Hover and focus states for links */
 article a:not(.link):hover, article a:not(.link):focus, #quote-citation a:hover, #quote-citation a:focus {
   color: var(--color-primary-content);
   background-color: var(--color-primary);
   text-decoration: none;
+}
+
+/* Remove link style for images included in markdown articles */
+/* * NOTE: Prevents the `a` element from being styled as a link when it contains an image */
+/* TODO: It may be worth reconsidering: Prehaps we want to style text within an `a` element while still avoiding the image? */
+article a:not(.link):has(img), article a:not(.link):has(img):hover, article a:not(.link):has(img):focus {
+  color: inherit;
+  border-radius: unset;
+  background-color: unset;
+  padding: unset
 }
 
 article p {
@@ -185,4 +199,17 @@ article ul, article ol {
 
 article ul li, article ol li {
   margin-bottom: 0.5rem;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+#blink-caret {
+  animation: blink 1s step-start 0s infinite;
+  animation-timing-function: ease-out;
+  height: 1rem;
+  width: 0.6rem;
+  background-color: var(--color-base-content);
 }
