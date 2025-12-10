@@ -27,6 +27,8 @@ pub struct PeaceConfig {
   #[cfg(feature = "ssr")]
   mongodb_tls:            Option<mongodb::options::Tls>,
   #[cfg(feature = "ssr")]
+  pub mongodb_client:     Option<mongodb::Client>,
+  #[cfg(feature = "ssr")]
   documents:              document_queue::Documents,
 }
 
@@ -81,8 +83,12 @@ impl PeaceConfig {
   }
 
   #[cfg(feature = "ssr")]
-  pub async fn prime_qotd(&mut self, mongodb: &mongodb::Client) -> mongodb::error::Result<()> {
-    self.quotes = quote_server::fetch(mongodb).await?;
+  pub async fn prime_qotd(&mut self) -> mongodb::error::Result<()> {
+    if self.mongodb_client.is_none() {
+      warn!("cannot prime quote of the day without a mongodb client!");
+      return Ok(());
+    }
+    self.quotes = quote_server::fetch(self.mongodb_client.clone().unwrap().as_borrowed()).await?;
     Ok(())
   }
 
@@ -127,6 +133,7 @@ impl Default for PeaceConfig {
       webauthn_timeout:   webauthn_rs::DEFAULT_AUTHENTICATOR_TIMEOUT,
       mongodb_uris:       None,
       mongodb_tls:        None,
+      mongodb_client:     None,
       quotes:             quote_queue::QuoteDocument::default(),
       documents:          document_queue::Documents::default(),
     }

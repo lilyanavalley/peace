@@ -18,7 +18,7 @@ pub async fn quote_today() -> Result<ReturnedQuote, ServerFnError> {
 
   let request: HttpRequest = extract().await?;
   let config = request.app_data::<Data<Mutex<PeaceConfig>>>().unwrap();
-  let mongodb = request.app_data::<Data<mongodb::Client>>().unwrap();;
+  let mongodb = request.app_data::<Data<mongodb::Client>>().unwrap();
 
   let mut config = config.lock().unwrap();
   config.quotes.queued_or_fetching(mongodb).await; // todo: do something with result
