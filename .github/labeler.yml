@@ -1,0 +1,61 @@
+docs:
+- any:
+  - changed-files:
+    - any-glob-to-any-file: ['src/docs/**']
+
+source:
+- all:
+  - changed-files:
+    - any-glob-to-any-file: ['src/**/*']
+    - all-globs-to-all-files: ['!src/docs/*']
+
+components:
+- any:
+  - changed-files:
+    - any-glob-to-any-file: ['src/components/**']
+
+server:
+- any:
+  - changed-files:
+    - any-glob-to-any-file: ['src/server/**']
+
+cargo:
+- any:
+  - changed-files:
+    - any-glob-to-any-file: ['**/Cargo.*', '.cargo/*', 'rustfmt.toml', 'rust-toolchain.toml']
+
+actions:
+- any:
+  - changed-files:
+    - any-glob-to-any-file: ['.github/workflows/**']
+
+do-spec:
+- any:
+  - changed-files:
+    - any-glob-to-any-file: ['.do/**']
+
+style:
+- any:
+  - changed-files:
+    - any-glob-to-any-file: ['style/**']
+
+testing:
+- any:
+  - changed-files:
+    - any-glob-to-any-file: ['end2end/**']
+
+markdown:
+- any:
+  - changed-files:
+    - any-glob-to-any-file: ['**/*.md']
+
+docker:
+- any:
+  - changed-files:
+    - any-glob-to-any-file: ['**/.dockerfile', '**/Dockerfile']
+
+live:
+  - base-branch: 'live'
+
+canary:
+  - base-branch: 'canary'
