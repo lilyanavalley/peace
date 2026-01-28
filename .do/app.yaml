@@ -42,6 +42,14 @@ services:
     name: peace-prod-tor
     source_dir: /
 
+domains:
+- domain: lilyvalley.dev
+  type: PRIMARY
+  zone: lilyvalley.dev
+- domain: lilyanavalley.dev
+  type: ALIAS
+  zone: lilyanavalley.dev
+
 databases:
   - cluster_name: db-mongodb-tor1-94843
     engine: MONGODB
