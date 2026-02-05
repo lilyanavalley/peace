@@ -43,7 +43,7 @@ chrono = { version = "^0.4.40", optional = true }
 leptos_hotkeys = "0.2.2"
 actix-web-grants = { version = "^4.1", optional = true }
 actix-web-httpauth = { version = "^0.8", optional = true }
-jsonwebtoken = { version = "^10.0", features = ["rust_crypto"], optional = true }
+jsonwebtoken = { version = "^10.3", features = ["rust_crypto"], optional = true }
 web-sys = { version = "*", features = ["Clipboard", "Navigator", "Window"] }
 
 # ? Fix for: https://osv.dev/vulnerability/RUSTSEC-2024-0370
