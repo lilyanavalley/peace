@@ -9,35 +9,24 @@ use crate::components::*;
 #[component]
 pub fn Navigator() -> impl IntoView {
   view! {
-    <div class="fixed bottom-0 w-full self-center z-1">
-      <nav class="navbar bg-base-200/50 shadow-none backdrop-blur-sm border-t-2 border-base-300/75">
-        <div class="navbar-start hidden md:block">
-          <span class="font-bold text-shadow-lg">"lilyvalley.dev"</span>
-        </div>
-        <div class="navbar-end w-full justify-center md:justify-end">
-          <ul class="menu menu-horizontal">
-            <For
-              each=move || ROUTERBAR_SAMPLE
-              key=|route| route.route
-              children=move |route: RouterBarItem| {
-                view! {
+    <div class="fab fixed bottom-0 right-0 p-4 z-10">
+      <div tabindex="0" role="button" class="btn btn-outline btn-circle btn-lg bg-base-300/50 backdrop-blur-sm shadow-md cursor-pointer">
+        <Icon icon=FLOWER weight=IconWeight::Fill size="1.25rem" />
+      </div>
+      <For
+      each=move || ROUTERBAR_SAMPLE
+      key=|route| route.route
+      children=move |route: RouterBarItem| {
+        view! {
 
-                  // * menu button container
-                  <li class="m-1">
-                    // * button itself
-                    <a class="btn btn-primary btn-ghost justify-start text-primary hover:text-primary-content
-                    focus:text-primary-content" href={route.route}>
-                      <Icon icon={route.icon} weight=IconWeight::Fill size="1.2rem"/>
-                      {route.label}
-                    </a>
-                  </li>
-
-                }
-              }
-            />
-          </ul>
-        </div>
-      </nav>
+          <a class="btn btn-outline bg-base-300/50 backdrop-blur-sm shadow-md" href={route.route}>
+            <Icon icon={route.icon} weight=IconWeight::Fill size="1.2rem"/>
+            <span>{route.label}</span>
+          </a>
+      
+        }
+      }
+      />
     </div>
   }
 }
