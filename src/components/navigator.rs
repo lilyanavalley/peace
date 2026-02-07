@@ -10,7 +10,7 @@ use crate::components::*;
 pub fn Navigator() -> impl IntoView {
   view! {
     <div class="fab fixed bottom-0 right-0 p-4 z-10">
-      <div tabindex="0" role="button" class="btn btn-outline btn-circle btn-lg bg-base-300/50 backdrop-blur-sm shadow-md cursor-pointer">
+      <div tabindex="0" role="button" class="btn btn-outline btn-accent btn-circle btn-lg bg-base-200/68 backdrop-blur-xs ring-3 ring-base-200 shadow-lg shadow-accent/25 cursor-pointer">
         <Icon icon=FLOWER weight=IconWeight::Fill size="1.25rem" />
       </div>
       <For
@@ -19,7 +19,7 @@ pub fn Navigator() -> impl IntoView {
       children=move |route: RouterBarItem| {
         view! {
 
-          <a class="btn btn-outline bg-base-300/50 backdrop-blur-sm shadow-md" href={route.route}>
+          <a class="btn btn-outline btn-accent bg-base-200/68 backdrop-blur-xs ring-3 ring-base-200  shadow-md shadow-accent/25 cursor-pointer my-1" href={route.route}>
             <Icon icon={route.icon} weight=IconWeight::Fill size="1.2rem"/>
             <span>{route.label}</span>
           </a>
